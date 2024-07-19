@@ -1,0 +1,127 @@
+.Qtitle {
+    font-size: 45px;
+    color: #F89DFF;
+  }
+  
+  .Qti2 {
+    font-size: 25px;
+  }
+  
+  .btns {
+    background-color: white;
+    color: black;
+    --bs-btn-active-bg: #DAC4FB;
+    border-color:#DAC4FB ;
+    --bs-btn-active-color :black;
+    --bs-btn-hover-border-color :#DAC4FB; 
+    --bs-btn-active-border-color :#DAC4FB; 
+    font-weight: bold;
+
+  }
+  
+  .btns:hover {
+    background-color: #DAC4FB;
+    color: black;
+  }
+
+  
+  .Qtit3 {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 45px;
+  }
+  
+  .hover-card {
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+    width: 90%;
+    aspect-ratio: 1; 
+    border: 2px solid #F89DFF;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: white; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* padding: 20px;  */
+    font-size: 18px;
+    font-weight: bold;
+    height: 150px; 
+  }
+  
+  .hover-card:hover {
+    background-color: #F89DFF;
+    transform: scale(1.05);
+  }
+  
+  .hover-card.active {
+    background-color: #F89DFF; 
+  }
+  
+  .box_title{
+    position: relative;
+    padding-top: 41px;
+  }
+
+  .image-upload-box {
+    border: 2px dashed #F89DFF;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .image-upload-box:hover {
+    background-color: #e7f3ff;
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+
+
+.wicon {
+    width: 20px;
+    height: auto;
+}
+
+.wrfon{
+    color: lightgray;
+    margin-left: 10px;
+}
+
+  
+  .image-upload-box.uploaded {
+    background-color: #98f2a3;
+    border-color: #F89DFF; 
+  }
+
+
+  @media (max-width: 576px) {
+    .Qtitle {
+        font-size: 45px;
+        color: #F89DFF;
+      }
+      
+      .Qti2 {
+        font-size: 15px;
+      }
+
+      .Qtit3 {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+        padding-left: 45px;
+      }
+  }

@@ -1,0 +1,33 @@
+.fc-day-sun a {
+    color: red;
+}
+  
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+    color: blue;
+}
+
+
+.fc-col-header-cell{
+    color: black;
+}
+
+.fc-col-header-cell-cushion{
+    color: black;
+    text-decoration-line: none;
+}
+
+.fc-daygrid-day-number{
+    color: black;
+    text-decoration-line: none;
+}
+
+/* .fc-event-title-container{
+    background-color: lightblue;
+} */
+ 
+/* .fc-header-toolbar{
+    font-size: 0.7em;
+} */
+
+

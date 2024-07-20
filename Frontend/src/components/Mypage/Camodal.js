@@ -2,27 +2,25 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import "../css/Camodal.css";
+import axios from 'axios';
 
-const Upmodal = ({ show, handleClose, start, end,titles,mem_id,locations }) => {
-  const [startDate, setStartDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [title, setTitle] = useState('');
-  const [location, setLocation] = useState('');
+const Camodal = ({ show, handleClose, date, mem_id }) => {
+  const [startDate, setStartDate] = useState(date);
+  const [startTime, setStartTime] = useState(''); 
+  const [endDate, setEndDate] = useState(date);
+  const [endTime, setEndTime] = useState(''); 
+  const [title, setTitle] = useState(''); 
+  const [location, setLocation] = useState(''); 
   const [color, setColor] = useState('#0000FF'); // 기본 색상: 파란색
 
   useEffect(() => {
-    if (start && end) {
-      setStartDate(start.toISOString().split('T')[0]);
-      setStartTime(start.toTimeString().split(' ')[0].substring(0, 5));
-      setEndDate(end.toISOString().split('T')[0]);
-      setEndTime(end.toTimeString().split(' ')[0].substring(0, 5));
-      setTitle(titles)
-      setLocation(locations)
-    }
-  }, [start, end,titles,locations]);
+    setStartDate(date);
+    setEndDate(date);
+    setStartTime('');
+    setEndTime('');
+    setTitle('');
+    setLocation('');
+  }, [date]);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
@@ -33,21 +31,32 @@ const Upmodal = ({ show, handleClose, start, end,titles,mem_id,locations }) => {
   };
 
   const handleSave = () => {
+    // Construct the newEvent object
     const newEvent = {
       title,
-      start: `${startDate}T${startTime}`,
-      end: `${endDate}T${endTime}`,
+      start: startDate ? `${startDate}T${startTime || '00:00'}` : '',
+      end: endDate ? `${endDate}T${endTime || '23:59'}` : '',
       location,
       color,
-      mem_id,
+      mem_id
     };
-    handleClose(newEvent); // 새 이벤트를 부모에게 전달
+  
+    // Send the newEvent object to the server using axios
+    axios.post('http://localhost:5000/Calender/add', newEvent)
+      .then(response => {
+        console.log('새 이벤트가 성공적으로 추가되었습니다:', response.data);
+        handleClose(response.data); // Close modal and possibly pass data back to parent component
+      })
+      .catch(error => {
+        console.error('새 이벤트 추가 실패:', error);
+        alert('새 이벤트 추가 중 오류가 발생했습니다.');
+      });
   };
 
   return (
     <Modal show={show} onHide={() => handleClose(null)}>
       <Modal.Header closeButton style={{ backgroundColor: '#F89DFF' }}>
-        <Modal.Title>일정 수정</Modal.Title>
+        <Modal.Title>일정 추가</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Control
@@ -112,4 +121,4 @@ const Upmodal = ({ show, handleClose, start, end,titles,mem_id,locations }) => {
   );
 };
 
-export default Upmodal;
+export default Camodal;

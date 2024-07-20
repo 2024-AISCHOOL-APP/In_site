@@ -1,0 +1,13 @@
+.btnms{
+    background-color: #DAC4FB;
+    color: black;
+    font-weight: bold;
+    height: 40px;
+    border: none;
+    --bs-btn-active-bg :#DAC4FB;
+    --bs-btn-active-color :black;
+    --bs-btn-hover-color :black;
+    --bs-btn-hover-bg: #DAC4FB;
+    
+}
+

@@ -20,7 +20,11 @@ const Ecard = ({
       {Array.from({ length: 4 }).map((_, idx) => (
         <Col key={idx}>
           <Card  style={{borderRadius:'50px'}}>
-            <Card.Img variant="top" src="img/eeeee.jpg"  style={{borderTopRightRadius:'50px',borderTopLeftRadius:'50px'}} />
+          <Link to={`/rboard/${shoe_seq}`}>
+          <Card.Img
+         variant="top" src="img/eeeee.jpg"  style={{borderTopRightRadius:'50px',borderTopLeftRadius:'50px'}}
+          />
+        </Link>
             <Card.Body>
               <Card.Title>이벤트 제목</Card.Title>
               <Card.Text>

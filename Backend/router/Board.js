@@ -51,5 +51,32 @@ router.get("/", (req, res) => {
       }
     });
   });
+
+
+  router.post("/add", (req, res) => {
+    const newEvent = req.body; // 클라이언트에서 전송된 새 이벤트 객체
+  
+    // MySQL 쿼리: 새 이벤트 추가
+    const query =
+      "INSERT INTO board (mem_id, board_title, board_at, board_content,board_img) VALUES (?, ?, ?, ?, ?)";
+    const values = [
+      newEvent.title,
+      newEvent.location,
+      newEvent.color,
+      newEvent.mem_id,
+    ];
+  
+    // 쿼리 실행
+    conn.query(query, values, (err, result) => {
+      if (err) {
+        console.error("이벤트 추가 실패:", err);
+        res.status(500).send("이벤트 추가 실패");
+      } else {
+        console.log("새 이벤트가 성공적으로 추가되었습니다.");
+        newEvent.cal_idx = result.insertId; // 새로 추가된 이벤트의 인덱스(ID)를 저장
+        res.status(201).json(newEvent); // 성공 시 클라이언트에게 추가된 이벤트 객체 응답
+      }
+    });
+  });
   
   module.exports = router;

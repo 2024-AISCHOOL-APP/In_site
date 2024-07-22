@@ -1,10 +1,10 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Carousels from "../components/Carousel";
 import "aos/dist/aos.css";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import AOS from "aos";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "../css/Main.css";
 import Mcard from "../components/Mcard";
@@ -13,7 +13,9 @@ import Mnav from "../components/Mnav";
 function Main() {
   const [num, setnum] = useState();
 
-  let mem_id = window.sessionStorage.getItem("mem_id");
+  const navigate = useNavigate();
+  const navigateTo = useCallback((path) => navigate(path), [navigate]);
+
   const shoes = [
     {
       shoe_img: "img/dmer.jpg",
@@ -131,7 +133,9 @@ function Main() {
               <div className="video-overlay">
                 <h1>The First Step To Happiness</h1>
                 <p>평생을 함께 할 당신의 이 순간을 아름답게</p>
-                <Button>시작하기</Button>
+                <Button onClick={() => navigateTo("/Aichoice")}>
+                  시작하기
+                </Button>
               </div>
             </div>
           </Col>
@@ -148,14 +152,19 @@ function Main() {
             <Mnav />
           </Col>
         </Row>
-        <Row className="my-5">
+        <Row className="mt-4">
           <Col lg={6} md={12} sm={12} className="t2">
             웨딩홀
           </Col>
-          <Col lg={12} md={12} sm={12} className="text-lg-right text-md-left">
-            <Link to={"#"}>
-              <Button className="mt2btn">더보기</Button>
-            </Link>
+          <Col
+            lg={12}
+            md={12}
+            sm={12}
+            className="text-lg-right text-md-left mb-5"
+          >
+            <Button className="mt2btn" onClick={() => navigateTo("/Category")}>
+              더보기
+            </Button>
           </Col>
         </Row>
         <Row>
@@ -191,7 +200,7 @@ function Main() {
           </Col>
           <Col
             lg={6}
-            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center "
+            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
             <h1 className="text-center">캘린더</h1>
             <p className="text-center">기능</p>
@@ -204,7 +213,7 @@ function Main() {
         >
           <Col
             lg={6}
-            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center"
+            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
             <h1 className="text-center">캘린더</h1>
             <p className="text-center">기능</p>
@@ -229,7 +238,7 @@ function Main() {
           </Col>
           <Col
             lg={6}
-            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center"
+            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
             <h1 className="text-center">캘린더</h1>
             <p className="text-center">기능</p>
@@ -242,7 +251,7 @@ function Main() {
         >
           <Col
             lg={6}
-            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center"
+            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
             <h1 className="text-center">캘린더</h1>
             <p className="text-center">기능</p>

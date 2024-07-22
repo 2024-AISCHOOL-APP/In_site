@@ -103,27 +103,32 @@ html, body {
 
 /* 카루젤 스타일 */
 .carou {
-  display: none; /* Hide carousel by default */
+  display: none; 
 }
 
 @media (max-width: 767px) {
   .carou {
-    display: block; /* Show carousel on mobile devices */
+    display: block; 
   }
   .video-container {
-    display: none; /* Hide video on mobile devices */
+    display: none;
   }
-  .text-lg-right {
+  /* .text-lg-right {
     text-align: left !important;
   }
 
   .d-lg-flex {
     display: flex !important;
   }
-
   .d-lg-none {
     display: none !important;
+  } */
+
+  .mkt{
+    display: none;
   }
+
+
 
   .video-overlay h1 {
     font-size: 2rem;

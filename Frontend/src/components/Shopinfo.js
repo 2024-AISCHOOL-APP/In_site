@@ -51,7 +51,7 @@ const Shopinfo = () => {
           <Image src="img/dmerin.PNG" />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col lg={6} md={6} sm={12} className="t2">
          
          <Row>
@@ -118,7 +118,7 @@ const Shopinfo = () => {
               </Button>
       
         </Col>
-      </Row>
+      </Row> */}
       <Row>
 
         <Col lg={6} md={12} sm={12} className="t2">

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row ,Button,ButtonGroup} from 'react-bootstrap'
 import Search from '../components/Search'
 import Ecard from '../components/Ecard';
+import axios from 'axios';
 
 const Events = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [datass,setData] = useState([])
   const itemsPerPage = 8;
 
 
@@ -16,6 +18,19 @@ const Events = () => {
   ];
 
 
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/board")
+  //     .then((res) => {
+  //       console.log("게시판 데이터", res.data.board);
+  //       setData(res.data.board);
+  
+  //     })
+  //     .catch(() => {
+  //       console.log("데이터 보내기 실패");
+  //     });
+  // },[])
 
   const filteredWeds = weds.filter((we) =>
     we.wed.toLowerCase().includes(searchQuery.toLowerCase())

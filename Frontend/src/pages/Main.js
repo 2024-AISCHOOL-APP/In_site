@@ -134,7 +134,7 @@ function Main() {
   }, []);
 
   return (
-    <>
+<>
  <Container fluid>
     <Row>
       <Col>
@@ -142,14 +142,13 @@ function Main() {
           <video className="embed-responsive-item" muted autoPlay loop width="100%">
             <source src="/videos/test.mp4" type="video/mp4" />
           </video>
-          {/* <p style={{zIndex:"4", fontSize:"80px"}}>The First Step To Happiness</p> */}
         </div>
       </Col>
     </Row>
   </Container>
   <Row className="mt-4">
   </Row>
-  <Row className="mt-4">
+  <Row className="my-4">
   </Row>
       <Container className="my-5">
         <Row className="my-3">
@@ -157,7 +156,7 @@ function Main() {
           <Carousels />
           </Col>
         </Row>
-        <Row className="mt-3">
+        <Row>
           <Col>
             <Mnav/>
           </Col>
@@ -339,7 +338,8 @@ function Main() {
           </Col>
         </Row>
       </Container>
-    </>
+      </>
+ 
   );
 }
 

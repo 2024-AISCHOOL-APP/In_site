@@ -25,10 +25,11 @@ import Register from "./pages/Register";
 import FindIDPW from "./pages/FindIDPW";
 import WritePost from "./pages/WritePost";
 import Mypage from "./pages/Mypage";
-import Schedule from "./components/Mypage/Schedule";
 import Infomy from "./components/Mypage/Infomy";
 import Moneys from "./components/Mypage/Moneys";
 import Sbasket from "./components/Mypage/Sbasket";
+import Schedule from "./components/Mypage/Schedule";
+
 
 
 

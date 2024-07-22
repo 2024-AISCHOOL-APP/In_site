@@ -54,7 +54,7 @@ function Navs() {
   return (
     <>
       <Navbar expand="lg" className={`custom-navbar ${isScrolled ? 'scrolled' : ''}`}>
-        <Container style={{ maxWidth: "80%" }}>
+        <Container style={{ maxWidth: "80%" }}> {/* Changed maxWidth to 100% */}
           <Navbar.Brand onClick={() => navigateTo("/")}>
             <img
               src="img/weddd.png"
@@ -78,12 +78,12 @@ function Navs() {
                     마이페이지{" "}
                   </Nav.Link>
                   <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-                  <img
+                  {/* <img
                     // src={profileImageUrl}
                     roundedCircle
                     className="navbar-logo mx-2 d-lg-inline d-none"
                     // onClick={handleProfileClick}
-                  />
+                  /> */}
                 </>
               ) : (
                 <>

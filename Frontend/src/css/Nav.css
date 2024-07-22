@@ -76,7 +76,7 @@
     margin-left: auto;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
     .navbar-nav .nav-link::after {
         display: none;
     }
@@ -93,6 +93,6 @@
         left: 0;
         z-index: 1030;
         transition: background-color 0.3s ease;
-        background-color:#DAC4FB; /* 초기 상태에서 투명 배경 */
+        background-color: #DAC4FB; /* 초기 상태에서 투명 배경 */
     }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import "../css/DetailPage.css"; // CSS 파일을 별도로 만들어서 스타일을 적용합니다.
 
 const DetaPage = () => {
   const { board_seq } = useParams();
@@ -29,18 +30,23 @@ const DetaPage = () => {
 
   return (
     <div>
-      <h1>게시글 상세 페이지</h1>
-      {boardDetail ? (
-        <div>
-          <p>아이디: {boardDetail.id}</p>
-          <h3>제목: {boardDetail.title}</h3>
-          <p>내용: {boardDetail.content}</p>
-          <img src={ boardDetail.img} />
-      
-        </div>
-      ) : (
-        <p>로딩 중...</p>
-      )}
+      <div className="header-container">
+        <h1 className="detail-header">공지사항</h1>
+      </div>
+      <div className="detail-container">
+        {boardDetail ? (
+          <div className="detail-content">
+            <h3 className="detail-title">{boardDetail.title}</h3>
+            <p className="detail-info">작성자: 관리자 | 날짜: {boardDetail.date}</p>
+            <p className="detail-text">{boardDetail.content}</p>
+          </div>
+        ) : (
+          <p className="loading-text">로딩 중...</p>
+        )}
+        {/* <div className="btn-container">
+          <a href="/board" className="btn">목록으로 돌아가기</a>
+        </div> */}
+      </div>
     </div>
   );
 };

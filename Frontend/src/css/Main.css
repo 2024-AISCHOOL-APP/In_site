@@ -1,50 +1,50 @@
 .t2{
-    text-align: left;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.t2St{
-  text-align: center;
+  text-align: left;
   font-size: 30px;
   font-weight: bold;
 }
 
+.t2St{
+text-align: center;
+font-size: 30px;
+font-weight: bold;
+}
+
 .main-container {
-    position: relative;
-    overflow: hidden;
-    height: 100%; /* 전체 화면 높이 */
-  }
-  
-  .content {
-    position: relative;
-    z-index: 10;
-  }
+  position: relative;
+  overflow: hidden;
+  height: 100%; /* 전체 화면 높이 */
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+}
 
 
-  
+
 .mt2btn{
-  float: right; /* 오른쪽으로 플로팅 */
-  margin-right: 0; /* 오른쪽 여백 없음 */
-  border: none; /* 테두리 제거 */
-  max-width: 115px;
-  background-color: #DAC4FB;
-  border-radius: 45px;
-  color: black;
-  font-weight: bold;
+float: right; /* 오른쪽으로 플로팅 */
+margin-right: 0; /* 오른쪽 여백 없음 */
+border: none; /* 테두리 제거 */
+max-width: 115px;
+background-color: #DAC4FB;
+border-radius: 45px;
+color: black;
+font-weight: bold;
 }
 
 .carou{
-  display: none;
+display: none;
 }
 
 @media (max-width: 991px) {
 video{
-  display: none;
+display: none;
 }
 
 .carou{
-  display: block;
+display: block;
 }
 }
 

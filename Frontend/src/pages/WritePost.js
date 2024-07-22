@@ -11,7 +11,8 @@ const WritePost = () => {
       };
   return (
     <>
-    <Container>
+    <Row className='mt-5'></Row>
+    <Container className='my-5'>
         <Row>
             <Col style={{fontSize:"25px",fontWeight:'bold'}}>공지사항 작성</Col>
         </Row>

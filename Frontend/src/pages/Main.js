@@ -140,7 +140,7 @@ function Main() {
       <Col>
         <div className="embed-responsive embed-responsive-16by9 ">
           <video className="embed-responsive-item" muted autoPlay loop width="100%">
-            <source src="/videos/marry.mp4" type="video/mp4" />
+            <source src="/videos/test.mp4" type="video/mp4" />
           </video>
           {/* <p style={{zIndex:"4", fontSize:"80px"}}>The First Step To Happiness</p> */}
         </div>

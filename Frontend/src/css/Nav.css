@@ -14,6 +14,10 @@
     background-color: #DAC4FB; /* 스크롤 후 배경색 */
 }
 
+.custom-navbar:hover{
+    background-color: #DAC4FB;
+}
+
 .nav-link {
     position: relative;
     padding-bottom: 0.5rem;

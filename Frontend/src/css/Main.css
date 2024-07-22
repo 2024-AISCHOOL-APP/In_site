@@ -1,50 +1,140 @@
-.t2{
+html, body {
+  overflow-x: hidden; 
+}
+
+/* 텍스트 스타일 */
+.t2 {
   text-align: left;
   font-size: 30px;
   font-weight: bold;
 }
 
-.t2St{
-text-align: center;
-font-size: 30px;
-font-weight: bold;
+/* 버튼 스타일 */
+.mt2btn {
+  float: right; /* 오른쪽으로 플로팅 */
+  margin-right: 0; /* 오른쪽 여백 없음 */
+  border: none; /* 테두리 제거 */
+  max-width: 115px;
+  background-color: #DAC4FB;
+  border-radius: 45px;
+  color: black;
+  --bs-btn-active-bg: #DAC4FB;
+  --bs-btn-active-color: black;
+  --bs-btn-hover-color: black;
+  margin-top: 2rem; /* 버튼 상단 여백 */
 }
 
-.main-container {
+/* 비디오 컨테이너 */
+.video-container {
   position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
   overflow: hidden;
-  height: 100%; /* 전체 화면 높이 */
 }
 
-.content {
-  position: relative;
-  z-index: 10;
+/* 비디오 스타일 */
+.video-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-
-
-.mt2btn{
-float: right; /* 오른쪽으로 플로팅 */
-margin-right: 0; /* 오른쪽 여백 없음 */
-border: none; /* 테두리 제거 */
-max-width: 115px;
-background-color: #DAC4FB;
-border-radius: 45px;
-color: black;
-font-weight: bold;
+/* 비디오 위에 텍스트 및 버튼 */
+.video-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  padding: 0 20px; /* 좌우 여백 */
+  box-sizing: border-box;
 }
 
-.carou{
-display: none;
+/* 제목 스타일 */
+.video-overlay h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 991px) {
-video{
-display: none;
+/* 부제목 스타일 */
+.video-overlay p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
 
-.carou{
-display: block;
-}
+/* 버튼 스타일 */
+.video-overlay button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #DAC4FB;
+  color: black;
+  --bs-btn-active-bg: #DAC4FB;
+  --bs-btn-active-color: black;
+  --bs-btn-hover-color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+/* 컨테이너 최대 너비 */
+.container {
+  max-width: 80%;
+}
+
+/* 그리드 마진, 패딩 제거 */
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.no-gutters > .col,
+.no-gutters > [class*="col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* 카루젤 스타일 */
+.carou {
+  display: none; /* Hide carousel by default */
+}
+
+@media (max-width: 767px) {
+  .carou {
+    display: block; /* Show carousel on mobile devices */
+  }
+  .video-container {
+    display: none; /* Hide video on mobile devices */
+  }
+  .text-lg-right {
+    text-align: left !important;
+  }
+
+  .d-lg-flex {
+    display: flex !important;
+  }
+
+  .d-lg-none {
+    display: none !important;
+  }
+
+  .video-overlay h1 {
+    font-size: 2rem;
+  }
+  
+  .video-overlay p {
+    font-size: 1rem;
+  }
+
+  .video-overlay button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}

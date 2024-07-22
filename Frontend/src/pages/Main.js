@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Carousels from "../components/Carousel";
 import "aos/dist/aos.css";
 import React, { useEffect, useState } from "react";
@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import "../css/Main.css";
 import Mcard from "../components/Mcard";
 import Mnav from "../components/Mnav";
-
-// import Migs from "../components/Migs";
 
 function Main() {
   const [num, setnum] = useState();
@@ -105,18 +103,6 @@ function Main() {
       ],
       shoe_seq: 456789,
     },
-    // {
-    //   shoe_img:"img/main2.png",
-    //   positive_percentage: 70,
-    //   negative_percentage: 30,
-    //   reviewCount: 100,
-    //   shoe: "푸마 인터셉트 XT",
-    //   reviews: [
-    //     { id: 1, user: "사용자7", comment: "가격 대비 만족스러운 제품입니다.", rating: 4 },
-    //     { id: 2, user: "사용자8", comment: "디자인이 별로라고 생각합니다.", rating: 2 },
-    //   ],
-    //   shoe_seq: 456789
-    // }
   ];
 
   useEffect(() => {
@@ -134,31 +120,32 @@ function Main() {
   }, []);
 
   return (
-<>
- <Container fluid>
-    <Row>
-      <Col>
-        <div className="embed-responsive embed-responsive-16by9 ">
-          <video className="embed-responsive-item" muted autoPlay loop width="100%">
-            <source src="/videos/test.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </Col>
-    </Row>
-  </Container>
-  <Row className="mt-4">
-  </Row>
-  <Row className="my-4">
-  </Row>
-      <Container className="my-5">
+    <>
+      <Container fluid className="p-0">
+        <Row noGutters>
+          <Col>
+            <div className="video-container">
+              <video className="video-content" muted autoPlay loop>
+                <source src="/videos/test.mp4" type="video/mp4" />
+              </video>
+              <div className="video-overlay">
+                <h1>The First Step To Happiness</h1>
+                <p>평생을 함께 할 당신의 이 순간을 아름답게</p>
+                <Button>시작하기</Button>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+      <Container className="mt-4">
         <Row className="my-3">
           <Col className="carou">
-          <Carousels />
+            <Carousels />
           </Col>
         </Row>
         <Row>
           <Col>
-            <Mnav/>
+            <Mnav />
           </Col>
         </Row>
         <Row className="my-5">
@@ -171,87 +158,20 @@ function Main() {
             </Link>
           </Col>
         </Row>
-  
         <Row>
           {shoes.map((shoe, index) => (
             <Mcard
               key={index}
               shoe_img={shoe.shoe_img}
-              positivePercentage={shoe.positive_percentage} // 예시 값
-              negativePercentage={shoe.negative_percentage} // 예시 값
+              positivePercentage={shoe.positive_percentage}
+              negativePercentage={shoe.negative_percentage}
               reviewCount={shoe.reviewCount}
               shoe={shoe.shoe}
-              reviews={shoe.reviews} // 이 부분은 실제 데이터 구조에 따라 조정 필요
+              reviews={shoe.reviews}
               shoe_seq={shoe.shoe_seq}
             />
           ))}
         </Row>
-        {/* <Row
-          className="my-5"
-          data-aos="fade-left"
-          data-aos-offset="300"
-          data-aos-easing="ease-in-sine"
-        >
-          <Col lg={6} md={12} sm={12} className="t2">
-            메이크업
-          </Col>
-          <Col lg={6} md={12} sm={12} className="text-lg-right text-md-left">
-            <Link to={"#"}>
-              <Button className="t2btn">더보기</Button>
-            </Link>
-          </Col>
-        </Row>
-        <Row
-          data-aos="fade-left"
-          data-aos-offset="300"
-          data-aos-easing="ease-in-sine"
-        >
-          {shoes.map((shoe, index) => (
-            <Mcard
-              key={index}
-              shoe_img={shoe.shoe_img}
-              positivePercentage={shoe.positive_percentage} // 예시 값
-              negativePercentage={shoe.negative_percentage} // 예시 값
-              reviewCount={shoe.reviewCount}
-              shoe={shoe.shoe}
-              reviews={shoe.reviews} // 이 부분은 실제 데이터 구조에 따라 조정 필요
-              shoe_seq={shoe.shoe_seq}
-            />
-          ))}
-        </Row>
-        <Row
-          className="my-5"
-          data-aos="fade-right"
-          data-aos-offset="300"
-          data-aos-easing="ease-in-sine"
-        >
-          <Col lg={6} md={12} sm={12} className="t2">
-            드레스
-          </Col>
-          <Col lg={6} md={12} sm={12} className="text-lg-right text-md-left">
-            <Link to={"#"}>
-              <Button className="t2btn">더보기</Button>
-            </Link>
-          </Col>
-        </Row>
-        <Row
-          data-aos="fade-right"
-          data-aos-offset="300"
-          data-aos-easing="ease-in-sine"
-        >
-          {shoes.map((shoe, index) => (
-            <Mcard
-              key={index}
-              shoe_img={shoe.shoe_img}
-              positivePercentage={shoe.positive_percentage} // 예시 값
-              negativePercentage={shoe.negative_percentage} // 예시 값
-              reviewCount={shoe.reviewCount}
-              shoe={shoe.shoe}
-              reviews={shoe.reviews} // 이 부분은 실제 데이터 구조에 따라 조정 필요
-              shoe_seq={shoe.shoe_seq}
-            />
-          ))}
-        </Row> */}
         <Row className="my-2 no-gutters">
           <Col lg={12} md={12} sm={12} className="t2">
             기능
@@ -269,7 +189,6 @@ function Main() {
           >
             <img src="img/dmer.jpg" alt="Description" />
           </Col>
-
           <Col
             lg={6}
             className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center "
@@ -278,7 +197,6 @@ function Main() {
             <p className="text-center">기능</p>
           </Col>
         </Row>
-        
         <Row
           data-aos="fade-right"
           data-aos-offset="300"
@@ -298,7 +216,6 @@ function Main() {
             <img src="img/dmer.jpg" />
           </Col>
         </Row>
-
         <Row
           data-aos="fade-left"
           data-aos-offset="300"
@@ -338,8 +255,7 @@ function Main() {
           </Col>
         </Row>
       </Container>
-      </>
- 
+    </>
   );
 }
 

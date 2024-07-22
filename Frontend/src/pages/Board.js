@@ -48,7 +48,10 @@ function Board() {
 
 
   return (
-    <Container>
+    <>
+    <Row className="mt-5">
+    </Row>
+    <Container className="my-5">
         <Row className="my-3"> 
             <Col className="jusify-content-left">
                 <h3>공지사항</h3>
@@ -107,6 +110,7 @@ function Board() {
             </Col>
         </Row>
     </Container>
+    </>
   );
 }
 

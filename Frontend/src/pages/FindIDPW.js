@@ -126,7 +126,7 @@ const FindIDPW = () => {
     }
   };
   return (
-    <div className="find-id-pw">
+    <div className="find-id-pw mt-5">
       <Container className="my-custom-content py-5">
         <Row className="justify-content-center">
           <Col lg={6} md={8} sm={10} xs={12} className="text-center">

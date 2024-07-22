@@ -74,7 +74,10 @@ function Login() {
   const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
   return (
-    <div>
+    <>
+    <Row className="mt-5">
+    </Row>
+    <div className="mt-5">
       <div id="content" className="my-custom-content">
         <Container>
           <Row className="justify-content-md-center">
@@ -145,6 +148,7 @@ function Login() {
         </Container>
       </div>
     </div>
+    </>
   );
 }
 

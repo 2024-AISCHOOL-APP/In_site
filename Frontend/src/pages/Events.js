@@ -46,8 +46,11 @@ const Events = () => {
   };
   
   return (
-    <Container >
-      <Row className='my-5'>
+    <>
+    <Row className="mt-5">
+    </Row>
+    <Container className='my-5'>
+      <Row>
         <Col lg={6} md={12} sm={12} className="t2">
           이벤트
         </Col>
@@ -83,8 +86,8 @@ const Events = () => {
               variant="light"
               size="sm"
               style={{
-                backgroundColor: currentPage === i ? "black" : "lightgray",
-                color: currentPage === i ? "white" : "black",
+                backgroundColor: currentPage === i ? "#DAC4FB" : "lightgray",
+                color: currentPage === i ? "black" : "black",
               }}
             >
               {i + 1}
@@ -109,6 +112,7 @@ const Events = () => {
         </ButtonGroup>
       </div>
     </Container>
+    </>
   )
 }
 

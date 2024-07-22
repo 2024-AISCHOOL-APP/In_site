@@ -4,7 +4,10 @@ import { Outlet } from 'react-router-dom'
 
 const Aicho = () => {
   return (
-    <Container>
+    <>
+    <Row className="mt-5">
+    </Row>
+    <Container className='my-5'>
     <Row>
         <Col style={{fontSize:'60px'}}>
             AI추천
@@ -12,6 +15,7 @@ const Aicho = () => {
     </Row>
         <Outlet/>
 </Container>
+</>
   )
 }
 

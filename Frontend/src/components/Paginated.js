@@ -112,8 +112,8 @@ function Paginated({ columns, data }) {
               variant={pageIndex === number ? "primary" : "light"}
               size="sm"
               style={{
-                backgroundColor: pageIndex === number ? "black" : "lightgray",
-                color: pageIndex === number? "white" : "black",
+                backgroundColor: pageIndex === number ? "#DAC4FB" : "lightgray",
+                color: pageIndex === number? "black" : "black",
               }}
             >
               {number + 1}

@@ -112,8 +112,8 @@ const Category = () => {
               variant="light"
               size="sm"
               style={{
-                backgroundColor: currentPage === i ? "black" : "lightgray",
-                color: currentPage === i ? "white" : "black",
+                backgroundColor: currentPage === i ? "#DAC4FB" : "lightgray",
+                color: currentPage === i ? "black" : "black",
               }}
             >
               {i + 1}

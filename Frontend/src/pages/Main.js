@@ -22,18 +22,18 @@ function Main() {
       positive_percentage: 80,
       negative_percentage: 20,
       reviewCount: 150,
-      shoe: "나이키 에어 포스 1dddddddddddd",
+      shoe: "드메르",
       reviews: [
         {
           id: 1,
           user: "사용자1",
-          comment: "편안하고 디자인이 좋아요!",
+          comment: "예뻐요",
           rating: 5,
         },
         {
           id: 2,
           user: "사용자2",
-          comment: "사이즈가 작아서 아쉬웠습니다.",
+          comment: "정말 분위기가 좋았어요 !!!!.",
           rating: 3,
         },
       ],
@@ -44,19 +44,19 @@ function Main() {
       positive_percentage: 75,
       negative_percentage: 25,
       reviewCount: 120,
-      shoe: "아디다스 울트라부스트",
+      shoe: "드메르",
       reviews: [
         {
           id: 1,
-          user: "사용자3",
-          comment: "훌륭한 쿠션감과 편안한 착용감입니다.",
+          user: "사용자1",
+          comment: "예뻐요",
           rating: 5,
         },
         {
           id: 2,
-          user: "사용자4",
-          comment: "디자인이 예쁜데 내구성이 좀 아쉬워요.",
-          rating: 4,
+          user: "사용자2",
+          comment: "정말 분위기가 좋았어요 !!!!.",
+          rating: 3,
         },
       ],
       shoe_seq: 234567,
@@ -66,15 +66,20 @@ function Main() {
       positive_percentage: 85,
       negative_percentage: 15,
       reviewCount: 180,
-      shoe: "언더아머 커리 8",
+      shoe: "드메르",
       reviews: [
         {
           id: 1,
-          user: "사용자5",
-          comment: "뛰어난 그립감과 효율적인 디자인입니다.",
+          user: "사용자1",
+          comment: "예뻐요",
           rating: 5,
         },
-        { id: 2, user: "사용자6", comment: "무게가 좀 무겁습니다.", rating: 3 },
+        {
+          id: 2,
+          user: "사용자2",
+          comment: "정말 분위기가 좋았어요 !!!!.",
+          rating: 3,
+        },
       ],
       shoe_seq: 345678,
     },
@@ -83,19 +88,19 @@ function Main() {
       positive_percentage: 70,
       negative_percentage: 30,
       reviewCount: 100,
-      shoe: "푸마 인터셉트 XT",
+      shoe: "드메르",
       reviews: [
         {
           id: 1,
-          user: "사용자7",
-          comment: "가격 대비 만족스러운 제품입니다.",
-          rating: 4,
+          user: "사용자1",
+          comment: "예뻐요",
+          rating: 5,
         },
         {
           id: 2,
-          user: "사용자8",
-          comment: "디자인이 별로라고 생각합니다.",
-          rating: 2,
+          user: "사용자2",
+          comment: "정말 분위기가 좋았어요 !!!!.",
+          rating: 3,
         },
       ],
       shoe_seq: 456789,
@@ -130,13 +135,29 @@ function Main() {
 
   return (
     <>
-      <Container>
+ <Container fluid>
+    <Row>
+      <Col>
+        <div className="embed-responsive embed-responsive-16by9 ">
+          <video className="embed-responsive-item" muted autoPlay loop width="100%">
+            <source src="/videos/marry.mp4" type="video/mp4" />
+          </video>
+          {/* <p style={{zIndex:"4", fontSize:"80px"}}>The First Step To Happiness</p> */}
+        </div>
+      </Col>
+    </Row>
+  </Container>
+  <Row className="mt-4">
+  </Row>
+  <Row className="mt-4">
+  </Row>
+      <Container className="my-5">
         <Row className="my-3">
-          <Col>
+          <Col className="carou">
           <Carousels />
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-3">
           <Col>
             <Mnav/>
           </Col>
@@ -245,14 +266,14 @@ function Main() {
         >
           <Col
             lg={6}
-            className="my-3 d-flex justify-content-center align-items-center"
+            className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
             <img src="img/dmer.jpg" alt="Description" />
           </Col>
 
           <Col
             lg={6}
-            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center"
+            className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center "
           >
             <h1 className="text-center">캘린더</h1>
             <p className="text-center">기능</p>
@@ -273,7 +294,7 @@ function Main() {
           </Col>
           <Col
             lg={6}
-            className="my-3 d-flex justify-content-center align-items-center"
+            className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
             <img src="img/dmer.jpg" />
           </Col>
@@ -286,7 +307,7 @@ function Main() {
         >
           <Col
             lg={6}
-            className="my-3 d-flex justify-content-center align-items-center"
+            className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
             <img src="img/dmer.jpg" />
           </Col>
@@ -312,7 +333,7 @@ function Main() {
           </Col>
           <Col
             lg={6}
-            className="my-3 d-flex justify-content-center align-items-center"
+            className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
             <img src="img/dmer.jpg" />
           </Col>

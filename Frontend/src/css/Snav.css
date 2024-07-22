@@ -3,17 +3,18 @@
 .navlinks {
     position: relative;
     padding-bottom: 0.5rem; /* 링크 하단의 패딩 */
-    color: white;
+    color: black;
     overflow: hidden; /* 글자를 넘어가는 부분 숨기기 */
 }
 
 .custom-snavbar {
-    background-color:black; /* 원하는 배경색으로 변경하세요 */
-    color: white;
+    background-color:#DAC4FB; /* 원하는 배경색으로 변경하세요 */
+    color: black;
+    border-radius: 25px;
 }
 
 .navlinks:hover {
-    color: white; /* 호버 시 노란색으로 변경 */
+    color: black; /* 호버 시 노란색으로 변경 */
 }
 
 
@@ -46,8 +47,8 @@
 
 .navlinks:hover::after {
     width: 100%; /* 너비를 100%로 확장하여 하이라이트 바 표시 */
-    background-color: white; /* 하이라이트 바의 색상을 흰색으로 변경 */
-    color: white;
+    background-color: black; /* 하이라이트 바의 색상을 흰색으로 변경 */
+    color: black;
 }
 
 /* 프로필 이미지 스타일 */

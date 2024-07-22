@@ -101,16 +101,17 @@
 
 /* 페이지네이션 버튼 기본 스타일 */
 .pagination-container .btn-group .btn {
-  color: white; /* 기본 버튼 텍스트 색상 */
-  background-color: black; /* 배경 투명 */
+  color: black; /* 기본 버튼 텍스트 색상 */
+  background-color: #DAC4FB; /* 배경 투명 */ 
  
 }
 
 /* 페이지네이션 버튼 호버 스타일 */
 .pagination-container .btn-group .btn:hover {
-  background-color:black; /* 호버 시 배경 색상 */
-  color: white; /* 호버 시 텍스트 색상 */
+  background-color:#DAC4FB; /* 호버 시 배경 색상 */
+  color: black; /* 호버 시 텍스트 색상 */
 }
+
 
 /* 반응형 디자인을 위해 "글쓰기" 버튼 스타일 재조정 */
 @media (max-width: 768px) {

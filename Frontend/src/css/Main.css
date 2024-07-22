@@ -4,6 +4,12 @@
     font-weight: bold;
 }
 
+.t2St{
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
 .main-container {
     position: relative;
     overflow: hidden;
@@ -28,3 +34,16 @@
   font-weight: bold;
 }
 
+.carou{
+  display: none;
+}
+
+@media (max-width: 991px) {
+video{
+  display: none;
+}
+
+.carou{
+  display: block;
+}
+}

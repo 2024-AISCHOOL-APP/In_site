@@ -136,7 +136,10 @@ function Register() {
   }
 
   return (
-    <div className="register-page">
+    <>
+    <Row className="mt-5">
+    </Row>
+    <div className="register-pag mt-5">
       <Container>
         <Row className="justify-content-md-center">
           <Col md={6} className="login-form-container">
@@ -259,6 +262,7 @@ function Register() {
         </Row>
       </Container>
     </div>
+    </>
   );
 }
 

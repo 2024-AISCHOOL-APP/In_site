@@ -8,8 +8,8 @@ import { Appdata } from '../../App';
 
 const Aistep4 = () => {
 
-  const [persons,setPersons] = useState(0);
-  const [pluspersons,setplusPersons] = useState(0);
+  const [persons,setPersons] = useState('');
+  const [pluspersons,setplusPersons] = useState('');
 
   const navigate = useNavigate();
   
@@ -17,8 +17,8 @@ const Aistep4 = () => {
 
   const data = useContext(Appdata);
 
-  let peref = useRef();
   let perefs = useRef();
+  let moneysref = useRef();
 
 
   console.log(data,"4단게");
@@ -29,14 +29,14 @@ const Aistep4 = () => {
 
 
   function Next(){
-    setPersons(peref.current.value)
-    setplusPersons(perefs.current.value)
+    setPersons(perefs.current.value)
+    setplusPersons(moneysref.current.value)
 
   }
 
 
   useEffect(()=>{
-  if(persons!== 0 && pluspersons!== 0) {
+  if(persons!== '' && pluspersons!== '') {
     
     let result ={
         lref : data.shareData.lref,
@@ -72,7 +72,14 @@ const Aistep4 = () => {
 
             <Row>
               <Col md={11} sm={10} xs={10} className="m-auto">
-                <Form.Control type="number" ref={peref} />
+              <Form.Select  ref={perefs}>
+                  <option>200명 이하</option>
+                  <option>200명 ~ 250명</option>
+                  <option>250명 ~ 300명</option>
+                  <option>300명 ~ 350명</option>
+                  <option>350명 이상</option>
+                </Form.Select>
+                {/* <Form.Control type="number" ref={peref} /> */}
               </Col>
             </Row>
 
@@ -84,7 +91,11 @@ const Aistep4 = () => {
 
             <Row >
               <Col md={11} sm={10} xs={10} className="m-auto">
-                <Form.Control type="number" ref={perefs} />
+              <Form.Select  ref={moneysref}>
+                  <option>YES</option>
+                  <option>NO</option>
+                </Form.Select>
+                {/* <Form.Control type="number" ref={perefs} /> */}
               </Col>
             </Row>
             </Col></Row>

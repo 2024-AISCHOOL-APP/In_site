@@ -1,53 +1,158 @@
-import React, { useEffect, useState } from 'react'
-import {
-  faCommentDots,
-  faEnvelope,
-  faLock,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from 'react';
+import { faCommentDots, faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { Button,Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
-import MyDonutChart from './MyDonutChart'
-import '../../css/Infomy.css'
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import MyDonutChart from './MyDonutChart';
+import '../../css/Infomy.css';
+import Swal from 'sweetalert2';
 import axios from "../../axios";
+import md5 from 'md5';
 
 const Infomy = () => {
+  const [InfoId, setInfoId] = useState('');
+  const [InfoEmail, setInfoEmail] = useState('');
+  const [InfoNick, setInfoNick] = useState('');
+  const [InfoPhon, setInfoPhon] = useState('');
+  const [InfoPw, setInfoPw] = useState(''); // 해시된 비밀번호
+  const [InfoPws, setInfoPws] = useState(''); // 새 비밀번호
 
-  const [InfoMydata,setInfoMydata] = useState('');
-  const [InfoId,setInfoId] = useState('');
-  const [InfoEmail,setInfoEmail] = useState('');
-  const [InfoNick,setInfoNick] = useState('');
-  const [InfoPhon,setInfoPhon] = useState('');
-  const [InfoPw,setInfoPw] = useState('');
+  const mem_id = window.sessionStorage.getItem('mem_id');
 
-
-  let mem_id = window.sessionStorage.getItem('mem_id')
-  
   useEffect(() => {
-    axios.get(`/Myinfo/${mem_id}`)
+    axios.post(`/Myinfo/${mem_id}`)
       .then((res) => {
-        setInfoId(res.data.Myinfo[0].mem_id)
-        setInfoEmail(res.data.Myinfo[0].mem_email)
-        setInfoNick(res.data.Myinfo[0].mem_nick)
-        setInfoPhon(res.data.Myinfo[0].mem_phone)
-        setInfoPw(res.data.Myinfo[0].mem_pw)
-
-        console.log("내 정보",res.data.Myinfo);
+        setInfoId(res.data.Myinfo[0].mem_id);
+        setInfoEmail(res.data.Myinfo[0].mem_email);
+        setInfoNick(res.data.Myinfo[0].mem_nick);
+        setInfoPhon(res.data.Myinfo[0].mem_phone);
+        setInfoPw(res.data.Myinfo[0].mem_pw); // 해시된 비밀번호
       })
       .catch((error) => {
-        console.error("Error fetching events:", error);
+        console.error("Error fetching:", error);
       });
-  }, []);
-  console.log(InfoMydata);
+  }, [mem_id]);
 
-  function Upbutton(){
-  if(InfoEmail !='' && InfoPw !='' && InfoNick !=''&& InfoPhon !=''){
-    alert('정보변경되었습니다')
-  }else{
-    alert('값을 써주세요')
-  }
-}
+  const handleUpdate = (event) => {
+    event.preventDefault(); 
+
+    Swal.fire({
+      title: '현재 비밀번호를 입력하세요',
+      input: 'password',
+      inputAttributes: {
+        autocapitalize: 'off',
+        required: 'required',
+        minLength: 4
+      },
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then((passwordResult) => {
+      if (passwordResult.isConfirmed) {
+        const inputPassword = passwordResult.value;
+        const hashedInputPassword = md5(inputPassword); 
+        console.log(hashedInputPassword,'입력받은 번호');
+        console.log(InfoPw,'db저장번호');
+
+
+        if (hashedInputPassword === InfoPw) {
+        
+          console.log("여기까지 들어오니?");
+          const updatedInfo = {
+            mem_email: InfoEmail,
+            mem_nick: InfoNick,
+            mem_phone: InfoPhon,
+            mem_pw: InfoPws ? md5(InfoPws) : InfoPw 
+          };
+
+          axios.post(`/Myinfo/UpdateMyinfo/${mem_id}`, updatedInfo)
+            .then(() => {
+              Swal.fire({
+                icon: 'success',
+                text: '정보변경이 완료되었습니다.',
+                confirmButtonText: '확인'
+              });
+            })
+            .catch((error) => {
+              console.error("Error updating:", error);
+              Swal.fire({
+                icon: 'error',
+                text: '정보변경 실패하였습니다.',
+                confirmButtonText: '확인'
+              });
+            });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: '비밀번호가 일치하지 않습니다.',
+            confirmButtonText: '확인'
+          });
+        }
+      }
+    });
+  };
+
+  const deleteMember = () => {
+    Swal.fire({
+      icon: 'question',
+      text: '정말 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+            Swal.fire({
+              title: '현재 비밀번호를 입력하세요',
+              input: 'password',
+              inputAttributes: {
+                autocapitalize: 'off',
+                required: 'required',
+                minLength: 4
+              },
+              showCancelButton: true,
+              confirmButtonText: '확인',
+              cancelButtonText: '취소'
+            }).then((passwordResult) => {
+              if (passwordResult.isConfirmed) {
+                const inputPassword = passwordResult.value;
+                const hashedInputPassword = md5(inputPassword); 
+                console.log(hashedInputPassword,'입력받은 번호');
+                console.log(InfoPw,'db저장번호');
+        
+        
+                if (hashedInputPassword === InfoPw) {
+                
+                  console.log("여기까지 들어오니?");   
+                  axios.delete(`/Myinfo/Delete/${mem_id}`)
+                    .then(() => {
+                      Swal.fire({
+                        icon: 'success',
+                        text: '계정이 삭제 되었습니다..',
+                        confirmButtonText: '확인'
+                      });
+                    }).then(()=>{
+                      window.location.href = '/';
+                    })
+                    .catch((error) => {
+                      console.error("Error updating:", error);
+                      Swal.fire({
+                        icon: 'error',
+                        text: '계정삭제 실패하였습니다.',
+                        confirmButtonText: '확인'
+                      });
+                    });
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    text: '비밀번호가 일치하지 않습니다.',
+                    confirmButtonText: '확인'
+                  });
+                }
+              }
+            });;
+      }
+    });
+  };
+
   return (
     <Container>
       <Row>
@@ -56,109 +161,104 @@ const Infomy = () => {
         </Col>
       </Row>
       <Row>
-      {/* <Row className="justify-content-md-center"> */}
-          <Col lg={6}>
+        <Col lg={6}>
+          <Form onSubmit={handleUpdate}>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faUser} />
+              </InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="아이디"
+                name="mem_id"
+                disabled
+                value={InfoId}
+              />
+            </InputGroup>
 
-            <Form >
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faUser} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="아이디"
-                  name="mem_id"
-                  disabled
-                  value={InfoId}
-                 
-                />
-              </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faLock} />
+              </InputGroup.Text>
+              <Form.Control
+                type="password"
+                placeholder="새 비밀번호"
+                name="mem_pw"
+                value={InfoPws}
+                onChange={(e) => setInfoPws(e.target.value)}
+              />
+            </InputGroup>
 
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faLock} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="password"
-                  placeholder="비밀번호"
-                  name="mem_pw"
-                  onChange={(e) => setInfoPw(e.target.value)}
+            <InputGroup className="mb-3">
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faEnvelope} />
+              </InputGroup.Text>
+              <Form.Control
+                type="email"
+                placeholder="이메일"
+                name="mem_email"
+                value={InfoEmail}
+                onChange={(e) => setInfoEmail(e.target.value)}
+              />
+            </InputGroup>
 
-                />
-                {/* <Button className='btnms'>변경</Button> */}
-              </InputGroup>
-            
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faEnvelope} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="email"
-                  placeholder="이메일"
-                  name="mem_email"
-                  value={InfoEmail}
-                  onChange={(e) => setInfoEmail(e.target.value)}
-                />
-                {/* <Button className='btnms'>변경</Button> */}
-              </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faCommentDots} />
+              </InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="닉네임"
+                name="mem_nick"
+                value={InfoNick}
+                onChange={(e) => setInfoNick(e.target.value)}
+              />
+            </InputGroup>
 
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faCommentDots} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="닉네임"
-                  name="mem_nick"
-                  value={InfoNick}
-                />
-                {/* <Button className='btnms'>변경</Button> */}
-              </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faCommentDots} />
+              </InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="전화번호 (010-xxxx-xxxx)"
+                name="mem_phone"
+                maxLength="13"
+                value={InfoPhon}
+                onChange={(e) => setInfoPhon(e.target.value)}
+              />
+            </InputGroup>
 
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faCommentDots} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="전화번호 (010-xxxx-xxxx)"
-                  name="mem_phone"
-                  maxLength="13"
-                  value={InfoPhon}
-                />
-                {/* <Button className='btnms'>변경</Button> */}
-              </InputGroup>
-              <Row>
-                <Col lg={6}>
-              <Button
-                variant="success"
-                type="submit"
-                className="login-button mb-3"
-                onClick={Upbutton()}
-              >
-                정보변경
-              </Button>
+            <Row>
+              <Col lg={6}>
+                <Button
+                  variant="success"
+                  type="submit"
+                  className="login-button mb-3"
+                >
+                  정보변경
+                </Button>
               </Col>
               <Col lg={6}>
-              <Button
-                variant="success"
-                type="submit"
-                className="login-button mb-3"
-              >
-                회원탈퇴
-              </Button>
+                <Button
+                  variant="danger"
+                  type="button"
+                  className="login-button mb-3"
+                  onClick={deleteMember}
+                >
+                  회원탈퇴
+                </Button>
               </Col>
-              </Row>
-            </Form>
-          </Col>
+            </Row>
+          </Form>
+        </Col>
 
-        <Col lg={6} >
-          <MyDonutChart/>
+        <Col lg={6}>
+          <MyDonutChart />
         </Col>
       </Row>
     </Container>
-   
-  )
-}
+  );
+};
 
-export default Infomy
+export default Infomy;

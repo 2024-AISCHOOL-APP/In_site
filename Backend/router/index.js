@@ -11,34 +11,45 @@ router.get("/", (req, res) => {
 router.post('/login', (req, res) => {
   const { mem_id, mem_pw } = req.body;
 
+  // 입력 값 확인
+  if (!mem_id || !mem_pw) {
+    return res.status(400).json({ error: '아이디와 비밀번호를 입력하세요.' });
+  }
+
+  // 비밀번호 해시
   const hashedPassword = md5(mem_pw);
-  let sql = `SELECT * FROM members WHERE mem_id = ? AND mem_pw = ?`;
+
+  // SQL 쿼리
+  const sql = `SELECT * FROM tbl_member WHERE mem_id = ? AND mem_pw = ?`;
   conn.query(sql, [mem_id, hashedPassword], (err, result) => {
     if (err) {
       console.error('Error executing query', err);
       return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
     }
 
+    // 사용자 존재 여부 확인
     if (result.length > 0) {
-
       const user = result[0];
+      
+      // 세션 설정
       req.session.isLoggedIn = true;
       req.session.mem_id = user.mem_id;
-      req.session.mem_name = user.mem_name;
-      req.session.mem_birth = user.mem_birth;
-      req.session.mem_profile = user.mem_profile;
+      req.session.mem_nick = user.mem_nick;
       req.session.mem_phone = user.mem_phone;
+      req.session.mem_phone = user.mem_seq;
+
+
+      // 성공 응답
       res.status(200).json({
         success: true,
         id: user.mem_id,
-        name: user.mem_name,
-        birth: user.mem_birth,
-        profile: user.mem_profile,
+        nick: user.mem_nick,
         phone: user.mem_phone,
+        seq : user.mem_seq,
         session: true
       });
     } else {
-     
+      // 로그인 실패 응답
       res.status(401).json({ error: '아이디 또는 비밀번호를 잘못 입력했습니다.' });
     }
   });
@@ -59,7 +70,7 @@ router.post('/logout', (req, res) => {
 router.get("/checkId/:mem_id", (req, res) => {
   const mem_id = req.params.mem_id;
 
-  let sql = "SELECT COUNT(*) AS count FROM members WHERE mem_id = ?";
+  let sql = "SELECT COUNT(*) AS count FROM tbl_member WHERE mem_id = ?";
   conn.query(sql, [mem_id], (error, results) => { // 수정된 부분
     if (error) {
       return res.status(500).json({ error: error.message });
@@ -72,12 +83,12 @@ router.get("/checkId/:mem_id", (req, res) => {
 
 
 router.post("/register", (req, res) => {
-  const { mem_id, mem_pw, mem_name, mem_phone, mem_email } = req.body;
+  const { mem_id, mem_pw, mem_nick, mem_phone, mem_email } = req.body;
 
   const hashedPassword = md5(mem_pw);
 
-  const sql = "INSERT INTO members (mem_id, mem_pw, mem_name, mem_phone, mem_email) VALUES (?, ?, ?, ?, ?)";
-  conn.query(sql, [mem_id, hashedPassword, mem_name, mem_phone, mem_email], (err, result) => {
+  const sql = "INSERT INTO tbl_member (mem_id, mem_pw, mem_nick, mem_phone, mem_email, joined_at) VALUES (?, ?, ?, ?, ?, NOW())";
+  conn.query(sql, [mem_id, hashedPassword, mem_nick, mem_phone, mem_email], (err, result) => {
     if (err) {
       console.error("회원가입 실패:", err);
       return res.status(500).json({ message: "회원가입에 실패하였습니다." });
@@ -85,6 +96,7 @@ router.post("/register", (req, res) => {
     res.status(201).json({ message: "회원가입 성공" });
   });
 });
+
 
 
 module.exports = router;

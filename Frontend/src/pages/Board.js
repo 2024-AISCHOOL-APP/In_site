@@ -14,6 +14,7 @@ function Board() {
 
 
     let mem_id = window.sessionStorage.getItem('mem_id');
+    let seq = window.sessionStorage.getItem('mem_seq')
     useEffect(() => {
       axios
         .get("http://localhost:5000/board")

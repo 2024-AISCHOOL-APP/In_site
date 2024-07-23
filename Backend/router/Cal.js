@@ -6,7 +6,7 @@ router.get("/:mem_id", (req, res) => {
   let mem_id = req.params.mem_id; // URL에서 mem_id를 가져옴
   console.log("캘린더 라우터 mem_id:", mem_id);
 
-  let sql = "SELECT * FROM calendar WHERE mem_id = ?"; // mem_id를 이용한 SQL 쿼리
+  let sql = "SELECT * FROM tb_calendar WHERE mem_id = ?"; // mem_id를 이용한 SQL 쿼리
 
   conn.query(sql, [mem_id], (err, rows) => {
     if (err) {
@@ -31,7 +31,7 @@ router.post("/add", (req, res) => {
 
   // MySQL 쿼리: 새 이벤트 추가
   const query =
-    "INSERT INTO calendar (cal_title, cal_st_dt, cal_st_tm, cal_ed_dt, cal_ed_tm, cal_loc, cal_color, mem_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO tb_calendar (cal_title, cal_st_dt, cal_st_tm, cal_ed_dt, cal_ed_tm, cal_loc, cal_color, mem_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   const values = [
     newEvent.title,
     newEvent.start.substring(0, 10), // 날짜 부분만 추출하여 사용 (YYYY-MM-DD 형식)
@@ -64,7 +64,7 @@ router.post("/Update", (req, res) => {
 
   // UPDATE 쿼리 준비
   const sql = `
-    UPDATE calendar
+    UPDATE tb_calendar
     SET cal_title = ?,
         cal_st_dt = ?,
         cal_st_tm = ?,
@@ -107,7 +107,7 @@ router.post("/Update", (req, res) => {
 
 router.delete('/delete/:cal_idx', (req, res) => {
   const calIdx = req.params.cal_idx;
-  const sql = `DELETE FROM calendar WHERE cal_idx=?`;
+  const sql = `DELETE FROM tb_calendar WHERE cal_idx=?`;
   conn.query(sql, [calIdx], (err, result) => {
     if (err) {
       console.error('Error deleting event:', err);

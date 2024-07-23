@@ -11,7 +11,6 @@ import Shopinfo from "./components/Shopinfo";
 import Sgal from "./components/Sgal";
 import Smoon from "./components/Smoon";
 import Category from "./pages/Category";
-import Events from "./pages/Events";
 import Login from "./pages/Login";
 import DetaPage from "./pages/DetaPage";
 import Aicho from "./pages/Aicho";
@@ -29,10 +28,6 @@ import Infomy from "./components/Mypage/Infomy";
 import Moneys from "./components/Mypage/Moneys";
 import Sbasket from "./components/Mypage/Sbasket";
 import Schedule from "./components/Mypage/Schedule";
-import EdetaPage from "./pages/EdetaPage";
-
-
-
 
 export  const Appdata = createContext();
 
@@ -50,10 +45,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/Board" element={<Board />} />
         <Route path="/Board/:board_seq" element={<DetaPage />} />
-        <Route path="/Events/:board_seq" element={<EdetaPage />} />
-
         <Route path="/Category" element={<Category />} />
-        <Route path="/Events" element={<Events />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register"  element= {<Register/>}/>
         <Route path="/FindIDPW"  element= {<FindIDPW/>}/>

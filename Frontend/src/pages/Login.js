@@ -25,18 +25,18 @@ function Login() {
           const data = response.data;
           console.log("로그인페이지 데이터",data);
 
-          if (data.name) {
+          if (data.nick) {
             // 로그인 성공 시 처리
             window.sessionStorage.setItem("mem_id", data.id);
-            window.sessionStorage.setItem("mem_name", data.name);
-            window.sessionStorage.setItem("mem_birth", data.birth);
-            window.sessionStorage.setItem("mem_profile", data.profile);
+            window.sessionStorage.setItem("mem_nick", data.nick);
             window.sessionStorage.setItem("mem_phone", data.phone);
             window.sessionStorage.setItem("session", data.session);
+            window.sessionStorage.setItem("mem_seq", data.seq);
+
             Swal.fire({
               icon: 'success',
               title: '로그인 성공!',
-              text: `${data.name}님 반갑습니다!`,
+              text: `${data.nick}님 반갑습니다!`,
               confirmButtonText: '확인'
             }).then((result) => {
               if (result.isConfirmed) {
@@ -81,7 +81,7 @@ function Login() {
       <div id="content" className="my-custom-content">
         <Container>
           <Row className="justify-content-md-center">
-            <Col md={6} className="login-form-container">
+            <Col lg={8} md={12} className="login-form-container">
               <div className="text-center mb-4">
                 <img
                   src="/img/weddd2.png"

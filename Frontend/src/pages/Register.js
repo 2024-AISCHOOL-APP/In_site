@@ -18,7 +18,7 @@ function Register() {
     mem_id: "",
     mem_pw: "",
     confirm_pw: "",
-    mem_name: "",
+    mem_nick: "",
     mem_phone: "",
     mem_email: "",
   });
@@ -105,7 +105,7 @@ function Register() {
     const userData = {
       mem_id: formData.mem_id,
       mem_pw: formData.mem_pw,
-      mem_name: formData.mem_name,
+      mem_nick: formData.mem_nick,
       mem_phone: formData.mem_phone,
       mem_email: formData.mem_email,
     };
@@ -230,8 +230,8 @@ function Register() {
                 <Form.Control
                   type="text"
                   placeholder="닉네임"
-                  name="mem_name"
-                  value={formData.mem_name}
+                  name="mem_nick"
+                  value={formData.mem_nick}
                   onChange={handleInputChange}
                 />
               </InputGroup>

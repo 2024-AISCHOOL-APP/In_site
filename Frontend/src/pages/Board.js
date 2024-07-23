@@ -1,6 +1,6 @@
 import { Container,Row,Col,Button } from "react-bootstrap";
 import Paginated from "../components/Paginated";
-import axios from "axios";
+import axios from "../axios";
 import { useEffect, useState,useCallback } from "react";
 import { useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ function Board() {
     let seq = window.sessionStorage.getItem('mem_seq')
     useEffect(() => {
       axios
-        .get("http://localhost:5000/board")
+        .get("/board")
         .then((res) => {
           console.log("게시판 데이터", res.data.board);
           setData(res.data.board);
@@ -58,9 +58,9 @@ function Board() {
                 <h3>공지사항</h3>
             </Col>
         </Row>
-        <Row className="mt-3 mt-md-0">
+        {/* <Row className="mt-3 mt-md-0">
           <Col xs={12} className="d-flex justify-content-end">
-        
+
                   <Button
                     id="write-button"
                     variant="primary"
@@ -74,16 +74,30 @@ function Board() {
                   </Button>
            
           </Col>
+        </Row> */}
+         {seq == 0 && (
+       <Row className="mt-3 mt-md-0">
+          <Col xs={12} className="d-flex justify-content-end">    
+                  <Button
+                    id="write-button"
+                    variant="primary"
+                 >
+                    글쓰기
+                  </Button>
+           
+          </Col>
         </Row>
+         )}
         <Row className="my-5">
             <Col>
             <Paginated
           data={datass.map((board, cnt) => ({
             index: cnt + 1,
             board_seq: board.board_seq,
-            id: board.mem_id,
+            id: '관리자',
+            time : board.board_at.substring(0, 10),
             board_title: board.board_title,
-            region:board.board_seq,
+            view:board.board_views,
           }))}
 
           columns={[
@@ -105,7 +119,7 @@ function Board() {
             },
             { accessor: "id", Header: "작성자" },
             { accessor: "time", Header: "날짜" }, // 포매팅된 날짜 표시
-            { accessor: "region", Header: "조회" },
+            { accessor: "view", Header: "조회" },
           ]}
         />
             </Col>

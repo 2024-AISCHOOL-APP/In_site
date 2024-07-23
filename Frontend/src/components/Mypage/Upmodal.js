@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
+import axios from "../../axios";
 import "../../css/Camodal.css";
 
 const Upmodal = ({ show, handleClose, start, end, titles, mem_id, locations, cal_Idx }) => {
@@ -47,7 +47,7 @@ const Upmodal = ({ show, handleClose, start, end, titles, mem_id, locations, cal
       cal_idx: cal_Idx
     };
 
-    axios.post('http://localhost:5000/Calender/Update', updatedEvent)
+    axios.post('/Calender/Update', updatedEvent)
       .then(response => {
         console.log(response.data);
         handleClose(updatedEvent);

@@ -3,7 +3,7 @@ import Carousels from "../components/Carousel";
 import "aos/dist/aos.css";
 import React, { useCallback, useEffect, useState } from "react";
 import AOS from "aos";
-import axios from "axios";
+import axios from "../axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import "../css/Main.css";

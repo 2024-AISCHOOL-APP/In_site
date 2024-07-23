@@ -5,7 +5,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
+import axios from "../axios";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ function Register() {
       const validId = validateId(value);
       setIsIdValid(validId);
       if (validId) {
-        const response = await axios.get(`http://localhost:5000/checkId/${value}`);
+        const response = await axios.get(`/checkId/${value}`);
         setIsIdValid(!response.data);
         setErrorMessage(response.data ? "이미 사용중인 아이디입니다." : "사용 가능한 아이디입니다.");
       } else {
@@ -111,7 +111,7 @@ function Register() {
     };
 
     try {
-      await axios.post("http://localhost:5000/register", userData, {
+      await axios.post("/register", userData, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -6,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import Swal from 'sweetalert2';
 import '../../css/FullCalendarPage.css';
 import Camodal from './Camodal';
-import axios from 'axios';
+import axios from "../../axios";
 import Upmodal from './Upmodal';
 
 const FullCalendarPage = ({ mem_id }) => {
@@ -25,7 +25,7 @@ const FullCalendarPage = ({ mem_id }) => {
   }, [showModal, showeModal, calIdx]);
 
   const fetchEvents = () => {
-    axios.get(`http://localhost:5000/Calender/${mem_id}`)
+    axios.get(`/Calender/${mem_id}`)
       .then((res) => {
         const formattedEvents = res.data.calendar.map(event => ({
           title: event.cal_title,

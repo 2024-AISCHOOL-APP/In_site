@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Col, Container, Image, Nav, Navbar, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/Nav.css";
-import axios from "axios";
+import axios from "../axios";
 
 function Navs() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function Navs() {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:5000/logout');
+      await axios.post('/logout');
       sessionStorage.clear(); 
       setIsLoggedIn(false); 
       window.location.href = "../"

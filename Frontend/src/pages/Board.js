@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 function Board() {
     const [datass,setData] = useState([])
     const navigate = useNavigate();
-    const navigateTo = useCallback((path) => navigate(path), [navigate]);
+    // const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
 
     let mem_id = window.sessionStorage.getItem('mem_id');
@@ -108,14 +108,14 @@ function Board() {
               accessor: "board_title",
               Header: "제목",
               width: "70%",
-              Cell: ({ row }) => (
-                <span
-                onClick={() => navigateTo(`/board/${row.original.board_seq}`)}
-                >
-                    {row.values.board_title}
+              // Cell: ({ row }) => (
+              //   // <span
+              //   // onClick={() => navigateTo(`/board/${row.original.board_seq}`)}
+              //   // >
+              //   //     {row.values.board_title}
 
-                </span>
-              ),
+              //   // </span>
+              // ),
             },
             { accessor: "id", Header: "작성자" },
             { accessor: "time", Header: "날짜" }, // 포매팅된 날짜 표시

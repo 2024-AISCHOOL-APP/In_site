@@ -1,38 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button, ButtonGroup } from "react-bootstrap";
 import Cnav from "../components/Cnav";
 import Ccard from "../components/Ccard";
 import Search from "../components/Search";
+import axios from "../axios";
 
 const Category = () => {
-  const weds = [
-    { wed_img: "img/dmer.jpg", wed: "드메르", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-    { wed_img: "img/dmer.jpg", wed: "에시", wed_seq: 123456 },
-  ];
+  const [categorys, setCategorys] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({
+    category_idx: "",
+    category_p_name: "",
+    category_name: "웨딩홀",
+  });
+
+  const handleCategorySelect = (selectedCategory) => {
+    setSelectedCategory({
+      category_idx: selectedCategory.category_idx,
+      category_p_name: selectedCategory.category_p_name,
+      category_name: selectedCategory.category_name,
+    });
+  };
+
+  useEffect(() => {
+    const fetchCa = async () => {
+      let apiUrl = "/Category/all/wedding";
+
+      if (selectedCategory.category_p_name) {
+        apiUrl = `/Category/all/${selectedCategory.category_p_name}`;
+        console.log(selectedCategory.category_p_name, "클릭 되서 나오니?");
+      }
+
+      try {
+        const response = await axios.get(apiUrl);
+        console.log(response.data, "API 응답");
+        setCategorys(response.data.Categorys || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchCa();
+  }, [selectedCategory.category_p_name]);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const itemsPerPage = 8;
 
-  const filteredWeds = weds.filter((we) =>
-    we.wed.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredWeds = categorys.filter((we) => {
+    const storeName = we.store_name.replace(/\s+/g, "").toLowerCase();
+    const storeInfo = we.store_info.replace(/\s+/g, "").toLowerCase();
+    const query = searchQuery.replace(/\s+/g, "").toLowerCase();
+    return storeName.includes(query) || storeInfo.includes(query);
+  });
+
+  console.log(filteredWeds, "어떻게 되니??");
 
   const totalPages = Math.ceil(filteredWeds.length / itemsPerPage);
 
@@ -55,7 +76,7 @@ const Category = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    setCurrentPage(0); // Reset to the first page on new search
+    setCurrentPage(0);
   };
 
   return (
@@ -67,12 +88,12 @@ const Category = () => {
       </Row>
       <Row>
         <Col>
-          <Cnav />
+          <Cnav onCategorySelect={handleCategorySelect} />
         </Col>
       </Row>
       <Row className="my-5 no-gutters">
         <Col lg={12} md={12} sm={12} className="t2">
-          드레스샵
+          {selectedCategory.category_name}
         </Col>
       </Row>
 
@@ -80,9 +101,10 @@ const Category = () => {
         {paginatedWeds.map((we, index) => (
           <Ccard
             key={index}
-            wed_img={we.wed_img}
-            wed={we.wed}
-            wed_seq={we.wed_seq}
+            store_img={we.store_img}
+            store={we.store_name}
+            store_seq={we.store_seq}
+            store_info={we.store_info}
           />
         ))}
       </Row>

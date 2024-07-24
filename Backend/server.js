@@ -7,6 +7,7 @@ const indexRouter = require("./router/index");
 const BoardRouter = require("./router/Board")
 const CalenderRouter = require("./router/Cal")
 const InfoRouter = require('./router/MyInfo')
+const CategoryRouter = require('./router/Category')
 
 
 
@@ -30,6 +31,7 @@ app.use("/", indexRouter);
 app.use("/board", BoardRouter);
 app.use("/Calender",CalenderRouter)
 app.use("/Myinfo",InfoRouter)
+app.use("/Category",CategoryRouter)
 
 // 서버 시작
 const port = 8300;

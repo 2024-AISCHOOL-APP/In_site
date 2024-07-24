@@ -4,24 +4,30 @@ import "../css/Mcard.css";
 import { Link } from "react-router-dom";
 
 const Ccard = ({
-  wed_img,
-  wed,
-  wed_seq
+  store_img,
+  store,
+  store_seq,
+  store_info
 }) => {
   return (
     <Col xs={12} sm={6} md={6} lg={3} xl={3} className="mb-4">
-      <Card className="product-card">
-      {/* <Link to={`/rboard/${wed_seq}`}> */}
-      <Link to={'/Shop'}>
+         <Card className="product-card">
+      <Link to={`/Shop/${store_seq}`}>
           <Card.Img
             variant="top"
-            src={wed_img}
+            src={store_img}
             alt="Product"
             className="product-image"
           />
         </Link>
         <Card.Body className="card-body-custom">
-          <Card.Title className="product-title">{wed}</Card.Title>
+          <Card.Title className="product-title">{store}</Card.Title>
+          <div
+            className="review-container"
+          >
+              <span className="review-text">{store_info}</span>
+     
+          </div>
         </Card.Body>
       </Card>
     </Col>

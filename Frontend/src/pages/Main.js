@@ -11,115 +11,55 @@ import Mcard from "../components/Mcard";
 import Mnav from "../components/Mnav";
 
 function Main() {
-  const [num, setnum] = useState();
 
   const navigate = useNavigate();
   const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
-  const shoes = [
-    {
-      shoe_img: "img/dmer.jpg",
-      positive_percentage: 80,
-      negative_percentage: 20,
-      reviewCount: 150,
-      shoe: "드메르",
-      reviews: [
-        {
-          id: 1,
-          user: "사용자1",
-          comment: "예뻐요",
-          rating: 5,
-        },
-        {
-          id: 2,
-          user: "사용자2",
-          comment: "정말 분위기가 좋았어요 !!!!.",
-          rating: 3,
-        },
-      ],
-      shoe_seq: 123456,
-    },
-    {
-      shoe_img: "img/dmer.jpg",
-      positive_percentage: 75,
-      negative_percentage: 25,
-      reviewCount: 120,
-      shoe: "드메르",
-      reviews: [
-        {
-          id: 1,
-          user: "사용자1",
-          comment: "예뻐요",
-          rating: 5,
-        },
-        {
-          id: 2,
-          user: "사용자2",
-          comment: "정말 분위기가 좋았어요 !!!!.",
-          rating: 3,
-        },
-      ],
-      shoe_seq: 234567,
-    },
-    {
-      shoe_img: "img/dmer.jpg",
-      positive_percentage: 85,
-      negative_percentage: 15,
-      reviewCount: 180,
-      shoe: "드메르",
-      reviews: [
-        {
-          id: 1,
-          user: "사용자1",
-          comment: "예뻐요",
-          rating: 5,
-        },
-        {
-          id: 2,
-          user: "사용자2",
-          comment: "정말 분위기가 좋았어요 !!!!.",
-          rating: 3,
-        },
-      ],
-      shoe_seq: 345678,
-    },
-    {
-      shoe_img: "img/dmer.jpg",
-      positive_percentage: 70,
-      negative_percentage: 30,
-      reviewCount: 100,
-      shoe: "드메르",
-      reviews: [
-        {
-          id: 1,
-          user: "사용자1",
-          comment: "예뻐요",
-          rating: 5,
-        },
-        {
-          id: 2,
-          user: "사용자2",
-          comment: "정말 분위기가 좋았어요 !!!!.",
-          rating: 3,
-        },
-      ],
-      shoe_seq: 456789,
-    },
-  ];
 
+  const [categorys, setCategorys] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({
+    category_idx: "",
+    category_p_name: "",
+    category_name: "웨딩홀"
+  });
+  
+  const handleCategorySelect = (selectedCategory) => {
+    setSelectedCategory({
+      category_idx: selectedCategory.category_idx,
+      category_p_name: selectedCategory.category_p_name,
+      category_name: selectedCategory.category_name, // 클릭된 카테고리의 이름으로 업데이트
+    });
+    
+  };
+
+
+
+  
   useEffect(() => {
-    axios
-      .get("/")
-      .then((res) => {
-        console.log("연결");
-        setnum(2);
-      })
-      .catch(() => {
-        console.log("데이터 보내기 실패");
-      });
+    const fetchCa = () => {
+    
+      let apiUrl = "/Category/wedding";
 
+      
+      if (selectedCategory.category_p_name) {
+        apiUrl = `/Category/${selectedCategory.category_p_name}`;
+        console.log(selectedCategory.category_p_name,"클릭 되서 나오니?");
+      }
+
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          setCategorys(response.data.Categorys);
+          console.log(response.data.Categorys,"카테고리스 웨딩");
+          
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    };
+    fetchCa();
     AOS.init();
-  }, []);
+  }, [selectedCategory.category_p_name]);
 
   return (
     <>
@@ -149,12 +89,12 @@ function Main() {
         </Row>
         <Row>
           <Col>
-            <Mnav />
+            <Mnav  onCategorySelect={handleCategorySelect} />
           </Col>
         </Row>
         <Row className="mt-4">
           <Col lg={6} md={12} sm={12} className="t2">
-            웨딩홀
+          {selectedCategory.category_name}          
           </Col>
           <Col
             lg={12}
@@ -168,16 +108,16 @@ function Main() {
           </Col>
         </Row>
         <Row>
-          {shoes.map((shoe, index) => (
+          {categorys.map((ca, index) => (
             <Mcard
               key={index}
-              shoe_img={shoe.shoe_img}
-              positivePercentage={shoe.positive_percentage}
-              negativePercentage={shoe.negative_percentage}
-              reviewCount={shoe.reviewCount}
-              shoe={shoe.shoe}
-              reviews={shoe.reviews}
-              shoe_seq={shoe.shoe_seq}
+              store_img={ca.store_img}
+              positivePercentage={50}
+              negativePercentage={50}
+              reviewCount={45}
+              store={ca.store_name}
+              reviews={ca.store_info}
+              store_seq={ca.store_idx}
             />
           ))}
         </Row>

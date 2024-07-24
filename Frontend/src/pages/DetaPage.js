@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 import "../css/DetailPage.css"; // CSS 파일을 별도로 만들어서 스타일을 적용합니다.
 import { Row } from "react-bootstrap";
 
@@ -12,7 +12,7 @@ const DetaPage = () => {
     const fetchBoardDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/board/${board_seq}`
+          `/board/${board_seq}`
         );
         // 서버에서 받아온 상세 정보를 상태에 저장
         setBoardDetail(response.data);

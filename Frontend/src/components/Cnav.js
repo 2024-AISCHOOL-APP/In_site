@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Nav } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 import "../css/Cnav.css";
 
 const Cnav = ({ onCategorySelect }) => {
@@ -8,7 +8,7 @@ const Cnav = ({ onCategorySelect }) => {
 
 //   useEffect(() => {
 //     axios
-//       .get("http://localhost:8081/api/categories")
+//       .get("/categories")
 //       .then((response) => {
 //         const categoryData = response.data;
 //         const groupedCategories = categoryData.reduce((acc, cur) => {

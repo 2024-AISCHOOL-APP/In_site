@@ -12,12 +12,12 @@ const Mypage = () => {
     return (
       <Container className='my-5'>
           <Row>
-              <Col className='my-3' >
+              <Col className='my-3 mt-5' >
                   {/* <FullCalendarPage mem_id={mem_id}/> */}
-                  <h1>마이페이지</h1>
+                  <h1 className='t2'>마이페이지</h1>
               </Col>
           </Row>
-          <Mypnavs/>
+          <Mypnavs />
           <Outlet/>
       </Container>
     )

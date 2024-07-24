@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, InputGroup, Nav, Row } from "react-bootst
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css"; // CSS 파일의 실제 경로로 확인하세요.
 import Swal from 'sweetalert2';
-import axios from 'axios'; // axios import 추가
+import axios from "../axios";
 
 
 function Login() {
@@ -20,7 +20,7 @@ function Login() {
       console.log(password);
       console.log("로그인 버튼이 클릭되었습니다.");
 
-      axios.post("http://localhost:5000/login", { mem_id: username, mem_pw: password })
+      axios.post("/login", { mem_id: username, mem_pw: password })
         .then((response) => {
           const data = response.data;
           console.log("로그인페이지 데이터",data);

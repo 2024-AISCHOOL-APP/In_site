@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
+import axios from "../../axios";
 
 const Camodal = ({ show, handleClose, date, mem_id }) => {
   const [startDate, setStartDate] = useState(date);
@@ -42,7 +42,7 @@ const Camodal = ({ show, handleClose, date, mem_id }) => {
     };
   
     // Send the newEvent object to the server using axios
-    axios.post('http://localhost:5000/Calender/add', newEvent)
+    axios.post('/Calender/add', newEvent)
       .then(response => {
         console.log('새 이벤트가 성공적으로 추가되었습니다:', response.data);
         handleClose(response.data); // Close modal and possibly pass data back to parent component

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form';
 import "../css/WritePost.css"
-import axios from 'axios';
+import axios from "../axios";
 
 const WritePost = () => {
 
@@ -31,7 +31,7 @@ const WritePost = () => {
       //   };
       
       //   // Send the newEvent object to the server using axios
-      //   axios.post('http://localhost:5000/board/add', newEvent)
+      //   axios.post('/board/add', newEvent)
       //     .then(response => {
       //       console.log('새 이벤트가 성공적으로 추가되었습니다:', response.data);
       //       handleClose(response.data); // Close modal and possibly pass data back to parent component

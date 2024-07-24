@@ -68,7 +68,6 @@ function Navs() {
               <Nav.Link onClick={() => navigateTo("/")}>홈</Nav.Link>
               <Nav.Link onClick={() => navigateTo("/Board")}>공지사항</Nav.Link>
               <Nav.Link onClick={() => navigateTo("/Category")}>카테고리</Nav.Link>
-              <Nav.Link onClick={() => navigateTo("/Events")}>이벤트</Nav.Link>
               <Nav.Link onClick={() => navigateTo("/Aichoice")}>AI추천</Nav.Link>
             </Nav>
             <Nav className="align-items-center">

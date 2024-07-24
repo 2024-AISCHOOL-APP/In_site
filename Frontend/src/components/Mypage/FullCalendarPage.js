@@ -22,7 +22,7 @@ const FullCalendarPage = ({ mem_id }) => {
 
   useEffect(() => {
     fetchEvents();
-  }, [showModal, showeModal,calIdx]);
+  }, [showModal, showeModal, calIdx]);
 
   const fetchEvents = () => {
     axios.get(`http://localhost:5000/Calender/${mem_id}`)
@@ -89,7 +89,7 @@ const FullCalendarPage = ({ mem_id }) => {
             </div>
           </div>
         </div>`,
-      icon: 'info', // Changing the icon to an information icon
+      icon: 'info',
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

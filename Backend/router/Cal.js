@@ -105,7 +105,7 @@ router.post("/Update", (req, res) => {
 });
 
 
-router.delete('/delete/:cal_idx', (req, res) => {
+router.delete('/Delete/:cal_idx', (req, res) => {
   const calIdx = req.params.cal_idx;
   const sql = `DELETE FROM tb_calendar WHERE cal_idx=?`;
   conn.query(sql, [calIdx], (err, result) => {

@@ -112,7 +112,7 @@ const FullCalendarPage = ({ mem_id }) => {
   };
 
   const deleteEvent = (calIdx) => {
-    axios.delete(`http://localhost:5000/Calender/Delete/${calIdx}`)
+    axios.delete(`/Calender/Delete/${calIdx}`)
       .then(response => {
         console.log(response.data);
         // 삭제가 성공적으로 이루어졌을 때, 캘린더에서도 해당 이벤트를 제거

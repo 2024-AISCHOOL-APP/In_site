@@ -12,13 +12,13 @@ import "../css/Mcard.css"; // 스타일 시트 경로를 확인하세요.
 import { Link } from "react-router-dom";
 
 const Mcard = ({
-  shoe_img,
+  store_img,
   positivePercentage,
   negativePercentage,
   reviewCount,
-  shoe,
+  store,
   reviews,
-  shoe_seq
+  store_seq
 }) => {
   const [reviewIndex, setReviewIndex] = useState(0);
   const [hoverReview, setHoverReview] = useState(false); // 리뷰 텍스트 호버 상태 관리
@@ -44,22 +44,22 @@ const Mcard = ({
   return (
     <Col xs={12} sm={6} md={6} lg={3} xl={3} className="mb-4">
       <Card className="product-card">
-      <Link to={`/rboard/${shoe_seq}`}>
+      <Link to={`/Shop/${store_seq}`}>
           <Card.Img
             variant="top"
-            src={shoe_img}
+            src={store_img}
             alt="Product"
             className="product-image"
           />
         </Link>
         <Card.Body className="card-body-custom">
-          <Card.Title className="product-title">{shoe}</Card.Title>
+          <Card.Title className="product-title">{store}</Card.Title>
           <div
             className="review-container"
-            onMouseEnter={() => setHoverReview(true)}
-            onMouseLeave={() => setHoverReview(false)}
+            // onMouseEnter={() => setHoverReview(true)}
+            // onMouseLeave={() => setHoverReview(false)}
           >
-            {hoverReview && (
+            {/* {hoverReview && (
               // 왼쪽 버튼이 이전 리뷰를 보여줍니다.
               <Button
                 variant="link"
@@ -68,12 +68,12 @@ const Mcard = ({
               >
                 <FontAwesomeIcon icon={faChevronLeft} />
               </Button>
-            )}
-            {currentReview && (
-              <span className="review-text">{currentReview}</span>
-            )}
+            )} */}
+            {/* {currentReview && ( */}
+              <span className="review-text">{reviews}</span>
+            {/* )} */}
             {/* 리뷰 텍스트 표시 */}
-            {hoverReview && (
+            {/* {hoverReview && (
               // 오른쪽 버튼이 다음 리뷰를 보여줍니다.
               <Button
                 variant="link"
@@ -82,7 +82,7 @@ const Mcard = ({
               >
                 <FontAwesomeIcon icon={faChevronRight} />
               </Button>
-            )}
+            )} */}
           </div>
           <hr className="product-divider" />
           <div className="product-hover-info">

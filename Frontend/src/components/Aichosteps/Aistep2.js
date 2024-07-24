@@ -87,7 +87,14 @@ const Aistep2 = () => {
 
             <Row>
               <Col md={11} sm={10} xs={10} className="m-auto">
-                <Form.Control type="number" className="my-3"  ref={moneysref}/>
+              <Form.Select  ref={moneysref}>
+                  <option>400만원 이하</option>
+                  <option>400만원 ~ 500만원</option>
+                  <option>500만원 ~ 600만원</option>
+                  <option>600만원 ~ 700만원</option>
+                  <option>700만원 이상</option>
+                </Form.Select>
+                {/* <Form.Control type="number" className="my-3"  ref={moneysref}/> */}
               </Col>
             </Row>
 

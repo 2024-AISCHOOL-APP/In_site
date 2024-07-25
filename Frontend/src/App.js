@@ -65,10 +65,10 @@ function App() {
             <Route path="/Aichoice/2/3/4/5" element={<Aistep5 />} />
             <Route path="/Aichoice/2/3/4/5/6" element={<Aistep6 />} />
         </Route>
-        <Route path="/Shop" element={<Shop />}>
-          <Route path="/Shop" element={<Shopinfo />} />
-          <Route path="/Shop/Sgal" element={<Sgal />} />
-          <Route path="/Shop/Smoon" element={<Smoon />} />
+        <Route path="/Shop/:store_idx" element={<Shop />}>
+          <Route path="/Shop/:store_idx" element={<Shopinfo />} />
+          <Route path="/Shop/:store_idx/Sgal" element={<Sgal />} />
+          <Route path="/Shop/:store_idx/Smoon" element={<Smoon />} />
         </Route>
       </Routes>
       </Appdata.Provider>

@@ -8,7 +8,7 @@ const BoardRouter = require("./router/Board")
 const CalenderRouter = require("./router/Cal")
 const InfoRouter = require('./router/MyInfo')
 const CategoryRouter = require('./router/Category')
-
+const ShopRouter = require('./router/Shop')
 
 
 app.use(express.json());
@@ -32,6 +32,7 @@ app.use("/board", BoardRouter);
 app.use("/Calender",CalenderRouter)
 app.use("/Myinfo",InfoRouter)
 app.use("/Category",CategoryRouter)
+app.use("/Shop",ShopRouter)
 
 // 서버 시작
 const port = 8300;

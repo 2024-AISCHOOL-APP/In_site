@@ -1,35 +1,27 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Col, Container, Row, Button, Card } from "react-bootstrap";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Col, Container, Row, Button, Card, Form } from "react-bootstrap";
 import "../../css/Aichost.css";
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { Appdata } from '../../App';
 
 
-
 const Aistep3 = () => {
-  const venues = [
-    "일반/컨벤션홀",
-    "호텔",
-    "하우스 웨딩홀",
-    "채플웨딩홀",
-    "야외웨딩홀",
-    "한옥웨딩",
-  ];
-  const data = useContext(Appdata);
 
-  console.log(data);
+  const [persons,setPersons] = useState('');
+  const [pluspersons,setplusPersons] = useState('');
 
   const navigate = useNavigate();
-  const [selectedBox, setSelectedBox] = useState(null);
-
+  
   const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
-  const handleBoxClick = (venue) => {
-    setSelectedBox(venue);
-  };
+  const data = useContext(Appdata);
 
-  console.log(selectedBox);
+  let perefs = useRef();
+  let moneysref = useRef();
+
+
+  console.log(data,"4단게");
 
   function Back(){
     navigateTo(-1)
@@ -37,25 +29,28 @@ const Aistep3 = () => {
 
 
   function Next(){
-    navigateTo("/Aichoice/2/3/4")
+    setPersons(perefs.current.value)
+    setplusPersons(moneysref.current.value)
+
   }
 
 
   useEffect(()=>{
-  if(selectedBox!== '') {
+  if(persons!== '' && pluspersons!== '') {
     
     let result ={
-        lref : data.shareData.lref,
-        sref : data.shareData.sref,
-        dates : data.shareData.dates,
-        times : data.shareData.times,
-        moneys : data.shareData.moneys,
-        selectedBox :selectedBox
+      lref : data.shareData.lref,
+      sref : data.shareData.sref,
+      dates : data.shareData.dates,
+      times : data.shareData.times,
+      moneys : data.shareData.moneys,
+        persons : persons,
+        pluspersons : pluspersons,
     }
-    
+    navigateTo("/Aichoice/2/3/4/")
     data.setShare(result)
 }
-},[selectedBox])
+},[persons,pluspersons])
 
   return (
     <Container className="my-5">
@@ -70,22 +65,39 @@ const Aistep3 = () => {
                 예식을 원하는 희망날짜와 시간을 선택 해주세요
               </Col>
             </Row>
-            <Row className="my-4 text-center">
-              {venues.map((venue, index) => (
-                <Col xs={12} sm={6} md={6} lg={4} key={index} className="mb-3">
-                  <Card
-                    className={`hover-card text-center square-card ${
-                      selectedBox === venue ? "active" : ""
-                    }`}
-                    onClick={() => handleBoxClick(venue)}
-                  >
-                    <Card.Body>
-                      <Card.Text className="box_title">{venue}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
+            <Row className="my-3">
+              <Col className="Qtit3">예상 하객수를 알려주세요</Col>
             </Row>
+
+            <Row>
+              <Col md={11} sm={10} xs={10} className="m-auto">
+              <Form.Select  ref={perefs}>
+                  <option>200명 이하</option>
+                  <option>200명 ~ 250명</option>
+                  <option>250명 ~ 300명</option>
+                  <option>300명 ~ 350명</option>
+                  <option>350명 이상</option>
+                </Form.Select>
+                {/* <Form.Control type="number" ref={peref} /> */}
+              </Col>
+            </Row>
+
+            <Row className="my-5">
+              <Col> 
+            <Row className="my-2" >
+              <Col className="Qtit3">예상 하객수에 맞는 일정이 없을 경우 조정이 가능하신가요?</Col>
+            </Row>
+
+            <Row >
+              <Col md={11} sm={10} xs={10} className="m-auto">
+              <Form.Select  ref={moneysref}>
+                  <option>YES</option>
+                  <option>NO</option>
+                </Form.Select>
+                {/* <Form.Control type="number" ref={perefs} /> */}
+              </Col>
+            </Row>
+            </Col></Row>
             <Row>
               <Col className="my-5 text-center">
               <Button  onClick={Back} className="me-4 btns">취소</Button>

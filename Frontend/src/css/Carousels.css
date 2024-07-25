@@ -1,8 +1,49 @@
-img{
+/* img{
     height: 470px;
     width:100%;
 }
 
 .main{
     width: 100%;
-}
+} */
+
+.custom-carousel {
+    width: 100%;
+    max-width: 1200px; /* 필요에 따라 조정 */
+    margin: auto;
+    padding-bottom: 20px;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-img {
+    width: 150px; /* 이미지를 작게 설정 */
+    height: 150px;
+    margin: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  .custom-carousel .carousel-control-prev,
+  .custom-carousel .carousel-control-next {
+    width: 5%;
+  }
+  
+  .custom-carousel .carousel-control-prev-icon,
+  .custom-carousel .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+  
+  .modal-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
-import Snavs from "../components/Snavs";
-import { Outlet, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import axios from "../axios";
+import Map from "../components/Map";
+import Carousels from "../components/Carousel";
 
 
 const Shop = () => {
@@ -36,8 +37,8 @@ const Shop = () => {
     <Row className="mt-5">
     </Row>
     <Container>
-      <Row className="my-4">
-        <Col lg={12} md={12} sm={12} className="t2St">
+      <Row className="mt-5">
+        <Col lg={12} md={12} sm={12} className="t2">
           {storeDetail.store_name}
         </Col>
       </Row>
@@ -87,9 +88,43 @@ const Shop = () => {
     </Row>
   </Col>
 </Row>
+<Row className="my-5">
+        <Col lg={12} md={12} sm={12} className="t2">
+          갤러리
+        </Col>
+      </Row>
+      <Row className="my-5 d-flex justify-content-center">
+        <Col lg={12} md={12} sm={12} className="t2">
+          <Carousels />
+        </Col>
+      </Row>
+      <Row className="my-5">
+        <Col lg={6} md={12} sm={12} className="t2">
+          정보
+        </Col>
+      </Row>
+      <Row className="my-5">
+        <Col lg={6}>
+            정보내용니나 상품정보들
+        </Col>
+        <Col lg={6}>
 
-      <Snavs />
-      <Outlet />
+          <Image src={storeDetail.store_img} />
+        </Col>
+      </Row>
+      <Row>
+
+        <Col lg={6} md={12} sm={12} className="t2">
+          오시는 길
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Map
+          lat={storeDetail.lat} 
+          lon ={storeDetail.lon}/>
+        </Col>
+      </Row>
     </Container>
     </>
   );

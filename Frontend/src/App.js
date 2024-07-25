@@ -7,9 +7,6 @@ import Main from "./pages/Main";
 import Navs from "./components/Navs";
 import Board from "./pages/Board";
 import Shop from "./pages/Shop";
-import Shopinfo from "./components/Shopinfo";
-import Sgal from "./components/Sgal";
-import Smoon from "./components/Smoon";
 import Category from "./pages/Category";
 import Login from "./pages/Login";
 import DetaPage from "./pages/DetaPage";
@@ -65,11 +62,7 @@ function App() {
             <Route path="/Aichoice/2/3/4/5" element={<Aistep5 />} />
             <Route path="/Aichoice/2/3/4/5/6" element={<Aistep6 />} />
         </Route>
-        <Route path="/Shop/:store_idx" element={<Shop />}>
-          <Route path="/Shop/:store_idx" element={<Shopinfo />} />
-          <Route path="/Shop/:store_idx/Sgal" element={<Sgal />} />
-          <Route path="/Shop/:store_idx/Smoon" element={<Smoon />} />
-        </Route>
+        <Route path="/Shop/:store_idx" element={<Shop />}/>
       </Routes>
       </Appdata.Provider>
     </div>

@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Image, InputGroup, Row } from "react-bootstrap";
 import Map from "./Map";
 import Carousels from "./Carousel";
 import "../css/Shopinfo.css"
-import {
-    faCommentDots
-  } from "@fortawesome/free-solid-svg-icons";
-  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "../axios";
+import { useParams } from "react-router-dom";
 
 const Shopinfo = () => {
+
+  const { store_idx } = useParams();
+  const [storeDetails, setStoreDetails] = useState({});
+
+  useEffect(() => {
+    const fetchBoardDetail = async () => {
+      try {
+        const response = await axios.get(
+          `/shop/${store_idx}`
+        );
+        // 서버에서 받아온 상세 정보를 상태에 저장
+        setStoreDetails(response.data.Storeinfo[0]);
+
+        console.log(response.data.Storeinfo[0], "나오니");
+      } catch (error) {
+        console.error("게시글 상세 정보를 가져오는 도중 오류 발생:", error);
+      }
+    };
+
+    // board_seq가 변경될 때마다 fetchBoardDetail 함수 호출
+    fetchBoardDetail();
+  }, [store_idx]);
+
+  console.log(storeDetails.lat,'나오니');
+
   return (
     <Container>
       <Row className="my-5">
@@ -48,7 +71,7 @@ const Shopinfo = () => {
                 광주 최대 규모의 단독 웨딩홀 드메르웨딩홀이
                 다신 없을 인생 최고의 순간을 선사하겠습니다 */}
 
-          <Image src="img/dmerin.PNG" />
+          <Image src={storeDetails.store_img} />
         </Col>
       </Row>
       {/* <Row>
@@ -127,7 +150,9 @@ const Shopinfo = () => {
       </Row>
       <Row>
         <Col>
-          <Map />
+          <Map 
+          lat={storeDetails.lat} 
+          lon ={storeDetails.lon}/>
         </Col>
       </Row>
     </Container>

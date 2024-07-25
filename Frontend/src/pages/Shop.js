@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import Snavs from "../components/Snavs";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import axios from "../axios";
+
 
 const Shop = () => {
+
+  const { store_idx } = useParams();
+  const [storeDetail, setStoreDetail] = useState([]);
+
+  useEffect(() => {
+    const fetchBoardDetail = async () => {
+      try {
+        const response = await axios.get(
+          `/shop/${store_idx}`
+        );
+        // 서버에서 받아온 상세 정보를 상태에 저장
+        setStoreDetail(response.data.Storeinfo[0]);
+
+        console.log(response.data.Storeinfo[0], "나오니");
+      } catch (error) {
+        console.error("게시글 상세 정보를 가져오는 도중 오류 발생:", error);
+      }
+    };
+
+    // board_seq가 변경될 때마다 fetchBoardDetail 함수 호출
+    fetchBoardDetail();
+  }, [store_idx]);
+
+
+
   return (
     <>
     <Row className="mt-5">
@@ -11,13 +38,13 @@ const Shop = () => {
     <Container>
       <Row className="my-4">
         <Col lg={12} md={12} sm={12} className="t2St">
-          드메르 웨딩홀
+          {storeDetail.store_name}
         </Col>
       </Row>
 
       <Row className="my-5">
   <Col lg={6} md={6} sm={12}>
-    <Image src="img/dmer.jpg" />
+    <Image src={storeDetail.store_img} />
   </Col>
   <Col lg={6} md={6} sm={12} className="t2 login-form-container">
     <Row className="mb-3 mt-4">

@@ -103,7 +103,7 @@ const Category = () => {
             key={index}
             store_img={we.store_img}
             store={we.store_name}
-            store_seq={we.store_seq}
+            store_idx={we.store_idx}
             store_info={we.store_info}
           />
         ))}

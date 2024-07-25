@@ -10,13 +10,13 @@ const Snavs = () => {
     return (
         <Nav justify variant="tabs"  className='custom-snavbar' >
           <Nav.Item>
-            <Nav.Link className='navlinks' onClick={() => navigateTo("/Shop")}>정보</Nav.Link>
+            <Nav.Link className='navlinks' onClick={() => navigateTo("/Shop/:store_idx")}>정보</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link className='navlinks' onClick={() => navigateTo("/Shop/Sgal")}>리뷰(5)</Nav.Link>
+            <Nav.Link className='navlinks' onClick={() => navigateTo("/Shop/:store_idx/Sgal")}>리뷰(5)</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link  className='navlinks' onClick={() => navigateTo("/Shop/Smoon")}>문의</Nav.Link>
+            <Nav.Link  className='navlinks' onClick={() => navigateTo("/Shop/:store_idx/Smoon")}>문의</Nav.Link>
           </Nav.Item>
         </Nav>
       );

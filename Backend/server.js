@@ -8,8 +8,7 @@ const BoardRouter = require("./router/Board")
 const CalenderRouter = require("./router/Cal")
 const InfoRouter = require('./router/MyInfo')
 const CategoryRouter = require('./router/Category')
-
-
+const MoneyRouter = require('./router/Money')
 
 app.use(express.json());
 app.use(cors());
@@ -32,6 +31,8 @@ app.use("/board", BoardRouter);
 app.use("/Calender",CalenderRouter)
 app.use("/Myinfo",InfoRouter)
 app.use("/Category",CategoryRouter)
+app.use("/Money",MoneyRouter)
+
 
 // 서버 시작
 const port = 8300;

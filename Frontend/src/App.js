@@ -28,7 +28,6 @@ import Infomy from "./components/Mypage/Infomy";
 import Moneys from "./components/Mypage/Moneys";
 import Sbasket from "./components/Mypage/Sbasket";
 import Schedule from "./components/Mypage/Schedule";
-import Moneys_Chart from "./components/Mypage/Moneys_Chart";
 
 export  const Appdata = createContext();
 
@@ -55,7 +54,6 @@ function App() {
            <Route path="/Mypage"  element= {<Infomy/>}/>
            <Route path="/Mypage/schedule"  element= {<Schedule/>}/>
            <Route path="/Mypage/moneys"  element= {<Moneys/>}/>
-           <Route path="/Mypage/moneys_Chart"  element= {<Moneys_Chart/>}/>
            <Route path="/Mypage/Sbasket"  element= {<Sbasket/>}/>
         </Route>
 

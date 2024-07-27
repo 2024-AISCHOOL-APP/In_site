@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { faCommentDots, faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
-import MyDonutChart from './MyDonutChart';
+import MyDonutCharts from './MyDonutCharts';
 import '../../css/Infomy.css';
 import Swal from 'sweetalert2';
 import axios from "../../axios";
@@ -254,7 +254,7 @@ const Infomy = () => {
         </Col>
 
         <Col lg={6}>
-          <MyDonutChart />
+          <MyDonutCharts />
         </Col>
       </Row>
     </Container>

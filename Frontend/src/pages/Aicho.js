@@ -10,7 +10,7 @@ const Aicho = () => {
     <Container className='my-5'>
     <Row>
         <Col style={{fontSize:'60px'}}>
-            AI추천
+            AI 웨딩플랜
         </Col>
     </Row>
         <Outlet/>

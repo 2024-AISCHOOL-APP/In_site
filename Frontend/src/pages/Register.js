@@ -93,10 +93,45 @@ function Register() {
       });
       return;
     }
+
+    if (!formData.mem_pw.trim() ) {
+      Swal.fire({
+        icon: 'error',
+        text: '비밀번호를 입력해주세요',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
+
+    if (!formData.confirm_pw.trim() ) {
+      Swal.fire({
+        icon: 'error',
+        text: '비밀번호 확인을 입력해주세요',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
     if (!formData.mem_email.trim()) {
       Swal.fire({
         icon: 'error',
         text: '이메일을 입력해주세요.',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
+    if (!formData.mem_phone.trim()) {
+      Swal.fire({
+        icon: 'error',
+        text: '전화번호를 입력해주세요.',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
+
+    if (!formData.mem_nick.trim()) {
+      Swal.fire({
+        icon: 'error',
+        text: '닉네임을 입력해주세요.',
         confirmButtonText: '확인'
       });
       return;

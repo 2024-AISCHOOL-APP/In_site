@@ -1,125 +1,232 @@
-// import React, { useEffect, useState } from 'react';
-// import { Button, Col, Container, Row } from 'react-bootstrap';
-// import MyDonutChart from './MyDonutChart';
-// import FullCalendarPage from './FullCalendarPage'
-// import axios from "../../axios";
-// import Moneyss from '../Moneyss';
-// import { DateComponent } from '@fullcalendar/core/internal';
-// import Table from 'react-bootstrap/Table';
-// // import Dropdown from 'react-bootstrap/Dropdown';
-// import Tab from 'react-bootstrap/Tab';
-// import Tabs from 'react-bootstrap/Tabs';
-// import ButtonGroup from 'react-bootstrap/ButtonGroup';
-// import MyDonutCharts from './MyDonutCharts';
-// import ProgressBar from 'react-bootstrap/ProgressBar';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Row, Table, Tab, Tabs, ButtonGroup, ProgressBar, Form} from 'react-bootstrap';
+import MyDonutChart from './MyDonutChart';
+import FullCalendarPage from './FullCalendarPage'
+import axios from "../../axios";
+import Moneyss from '../Moneyss';
+import { DateComponent } from '@fullcalendar/core/internal';
+import MyDonutCharts from './MyDonutCharts';
+import Money_Modal from './Money_Modal';
+import Money_Cal from './Money_Cal';
 
-// const Moneys = () => {
+const Moneys = () => {
 
-//   const [dataMoney,setDataMoney] = useState([])
+  const [dataMoney,setDataMoney] = useState([]);
+  const [showModal,setShowModal] = useState(false);
+  const [selectMoney, setSelectMoney] = useState(null); //수정할 항목
+  //체크된 아이템 담을 배열
+  const [checkItems, setCheckItems] = useState([]);
+  // mem_id로 연결
+  const mem_id = window.sessionStorage.getItem('mem_id');
+  //체크박스 단일 선택
+  const handleSingleCheck = (checked, moneys_idx) => {
+    if (checked) {
+      //단일 선택시 체크된 아이템 배열에 추가
+      setCheckItems(prev => [...prev, moneys_idx]);
+    } else{{
+      //단일 선택 해제 시 체크된 아이템 제외한 배열(필터)
+      setCheckItems(checkItems.filter((el) => el !== moneys_idx));
+    }}
+  };
 
-//   let mem_id = window.sessionStorage.getItem('mem_id');
-//   let seq = window.sessionStorage.getItem('mem_seq')
+  //체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      //전체 선택 클릭시 데이터 모든 아이템(id)을 담은 배열로 checkitems 상태 업데이트
+      const idArray = dataMoney.map((el) => el.moneys_idx);
+      setCheckItems(idArray);
+    } else {
+      //전체 선택 해제시 checkitems 을 빈 배열로 상태 업데이트
+      setCheckItems([]);
+    }
+  };
 
-//   useEffect(() => {
-//   //   axios
-//   //     .post(`/Money/${mem_id}`)
-//   //     .then((res) => {
-//   //       console.log("게시판 데이터", res.data.MyMoney);
-//   //       setDataMoney(res.data.MyMoney)
-//   //     })
-//   //     .catch(() => {
-//   //       console.log("데이터 보내기 실패");
-//   //     });
-//   // },[])
-//     const 
-//   })
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    // return new Date(dateString).substring(0,11)
+    return new Date(dateString).toLocaleDateString('ko-KR', options).replace('/\./g', '-').replace('/\s+/g', '');
+  };
 
-//   let today = new Date();
-//   let day = ['일', '월', '화', '수', '목', '금', '토'];
+  const sortDataByDateDesc = (data) => {
+    return data.sort((a, b) => new Date(b.moneys_created_at) - new Date(a.moneys_created_at));
+  };
 
-//   return (
-//     <Container>
-//       <Row className='mt-4'>
-//         <Col className='my-3'></Col>
-//       </Row>
-//       <Row>
-//         <Tabs
-//           defaultActiveKey="profile"
-//           id="uncontrolled-tab-example"
-//           className="mb-3"
-//         >
-//           <Tab eventKey="input" title="입력">
-//             <Table responsive="sm">
-//               <thead>
-//                 <tr>
-//                   <th colSpan={12} style={{position : 'relative', left : 0, color : 'gray'}}>{today.getMonth()+1}월 {today.getDate()}일 {day[today.getDay()]}요일</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 <tr>
-//                   <td>1</td>
-//                   <td>드레스</td> 
-//                   {/* 구분 */}
-//                   <td>(본식) 드레스 1벌</td>
-//                   {/* 내용 */}
-//                   <td>1,080,000원</td>
-//                   {/* 가격 */}
-//                   <td>신한</td>
-//                   {/* 계좌관리 */}
-//                   <td>내용없음</td>
-//                   {/* 비고 */}
-//                 </tr>
-//               </tbody>
-//             </Table>
-//             <ButtonGroup aria-label="Basic example">
-//               <Button variant="secondary" onClick={() => {}}>추가</Button>
-//               <Button variant="secondary">수정</Button>
-//               <Button variant="secondary">삭제</Button>
-//             </ButtonGroup>
-//           </Tab>
-//           <Tab eventKey="calendar" title="캘린더">
-//             <FullCalendarPage></FullCalendarPage>
-//             <br/><br/>
-//             <ButtonGroup aria-label="Basic example">
-//               <Button variant="secondary"onClick={() => {}}>입력</Button>
-//               <Button variant="secondary">수정</Button>
-//               <Button variant="secondary">삭제</Button>
-//             </ButtonGroup>
-//           </Tab>
-//           <Tab eventKey="chart" title="차트">
-//             <MyDonutCharts></MyDonutCharts>
-//             <br></br><br></br>
-//             <div>
-//               <Row xs={12}>
-//                 <Col xs={2} className='mt-4'>웨딩홀</Col>
-//                 <Col xs={10}>              
-//                   <ProgressBar className='mt-4' striped variant="success" animated now={40} />
-//                 </Col>
-//               </Row>
-//               <Row xs={12}>
-//                 <Col xs={2} className='mt-4'>드레스</Col>
-//                 <Col xs={10}>              
-//                   <ProgressBar className='mt-4' striped variant="info" animated now={20} />
-//                 </Col>
-//               </Row>
-//               <Row xs={12}>
-//                 <Col xs={2} className='mt-4'>메이크업</Col>
-//                 <Col xs={10}>              
-//                   <ProgressBar className='mt-4' striped variant="warning" animated now={60} />
-//                 </Col>
-//               </Row>
-//               <Row xs={12}>
-//                 <Col xs={2} className='mt-4'>스튜디오</Col>
-//                 <Col xs={10}>              
-//                   <ProgressBar className='mt-4' striped variant="danger" animated now={80} />
-//                 </Col>
-//               </Row>
-//             </div>
-//           </Tab>
-//         </Tabs>
-//         </Row>
-//     </Container>
-//   );
-// };
+  useEffect(() => {
+    axios
+      .post(`/Money/${mem_id}`)
+      .then((res) => {
+        console.log("백엔드 응답 데이터:", res.data);
+        if (res.data.MyMoney) {
+            const formattedData = res.data.MyMoney.map(item => {
+              const formattedDate = formatDate(item.moneys_created_at);
+              return {
+                ...item,
+                moneys_created_at : formattedDate
+              };
+        });
+          setDataMoney(sortDataByDateDesc(formattedData));
+      } else{
+        console.error("MyMoney 데이터가 없습니다.");
+      }
+    })
+      .catch((err) => {
+        console.error("데이터 보내기 실패:", err);
+      });
+    }, [mem_id,showModal]);
 
-// export default Moneys;
+  const handleShowModal = () => {
+    setSelectMoney(null); // 새로운 항목 추가 시 선택된 항목 초기화
+    setShowModal(true);
+  }
+
+  const updatedData = () => {
+    axios.post(`/Money/${mem_id}`)
+    .then((res) => {
+      if (res.data.MyMoney) {
+        const formattedData = res.data.MyMoney.map(item => {
+          const formattedDate = formatDate(item.moneys_created_at);
+          return {
+            ...item,
+            moneys_created_at: formattedDate
+          };
+        });
+        setDataMoney(sortDataByDateDesc(formattedData));
+       
+      } else {
+        console.error("MyMoney 데이터가 없습니다.");
+      }
+    })
+    .catch((err) => {
+      console.error("데이터 가져오기 실패:", err);
+    });
+  }
+
+  const handleEditModal = () => {
+    if (checkItems.length === 1) { 
+      const moneyEdit = dataMoney.find(item => item.moneys_idx === checkItems[0]);
+      setSelectMoney(moneyEdit); // 선택된 항목을 수정 상태로 변경
+      setShowModal(true);
+
+    } else {
+      alert ('하나의 항목만 선택해주세요.')
+    }
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete('/Money/m/delete', {data : {ids : checkItems} })
+      .then((res) => {
+        if(res.data) {
+          //삭제되면 프론트의 상태 업데이트
+          setDataMoney(dataMoney.filter((item) => !checkItems.includes(item.moneys_idx)));
+          setCheckItems([]);
+          alert('정말 삭제하시겠습니까?')
+        } else{
+          console.error("삭제 실패:", res.data);
+        }
+      })
+      .catch((err) => {
+        console.error("삭제 요청 실패:", err);
+      });
+  }
+
+  const handleCloseModal = () => setShowModal(false);
+
+  let today = new Date();
+  let day = ['일', '월', '화', '수', '목', '금', '토'];
+  const formattedDate = `${today.getMonth() + 1}월 ${today.getDate()}일 ${day[today.getDay()]}요일`;
+  console.log(checkItems);
+
+  return (
+    <styledTable>
+    <Container>
+      <Row className='mt-4'>
+        <Col className='my-3'></Col>
+      </Row>
+      <Row>
+        <Tabs
+          defaultActiveKey="input"
+          id="uncontrolled-tab-example"
+          className="mb-3"
+        >
+          <Tab eventKey="input" title="입력">
+            <Table responsive="sm" className='mt-4'>
+              <thead>
+                <tr>
+                  <th colSpan={12} style={{position : 'relative', left : 0, color : 'gray'}}>오늘은 {formattedDate}입니다.</th>
+                </tr>
+                <tr>
+                  <td className='second-row'>
+                    <input 
+                      type='checkbox' 
+                      name='select-all' 
+                      onChange={(e) => handleAllCheck(e.target.checked)}
+                      checked={checkItems.length === dataMoney.length}/> 전체선택</td>
+                  <th>카테고리</th>
+                  <th>내용</th>
+                  <th>금액</th>
+                  <th>계좌구분</th>
+                  <th>날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dataMoney.map((dataMoney) => (
+                  <tr key={dataMoney.moneys_idx}>
+                    <td>
+                      <input type='checkbox' name={`select-${dataMoney.moneys_idx}`} 
+                        onChange={(e) => handleSingleCheck(e.target.checked, dataMoney.moneys_idx)}
+                        //체크된 아이템 배열에 해당 아이템이 있으면 선택 활성화, 아닐시 해제
+                        checked={checkItems.includes(dataMoney.moneys_idx)} />
+                    </td>
+                    <td>{dataMoney.category_name}</td>
+                    <td>{dataMoney.moneys_contents}</td>
+                    <td>{dataMoney.moneys_amount}</td>
+                    <td>{dataMoney.moneys_bank}</td>
+                    <td>{dataMoney.moneys_created_at}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <ButtonGroup aria-label="Basic example" >
+              <Button variant="secondary" onClick={handleShowModal}>추가</Button>              
+              <Button variant="secondary" onClick={handleEditModal}>수정</Button>
+              <Button variant="secondary" onClick={handleDelete}>삭제</Button>
+            </ButtonGroup>
+          </Tab>
+          <Tab eventKey="calendar" title="캘린더">
+            <Money_Cal></Money_Cal>
+            <br/><br/>
+            <ButtonGroup aria-label="Basic example">
+              <Button variant="secondary">입력</Button>
+              <Button variant="secondary">수정</Button>
+              <Button variant="secondary">삭제</Button>
+            </ButtonGroup>
+          </Tab>
+          <Tab eventKey="chart" title="차트">
+            <MyDonutCharts></MyDonutCharts>
+            <br></br><br></br>
+            <div>
+              {[
+                { label: '웨딩홀', value: 40, variant: 'success' },
+                { label: '드레스', value: 20, variant: 'info' },
+                { label: '메이크업', value: 60, variant: 'warning' },
+                { label: '스튜디오', value: 80, variant: 'danger' },
+              ].map((item, index) => (
+                <Row xs={12} key={index} className='mt-4'>
+                  <Col xs={2}>{item.label}</Col>
+                  <Col xs={10}>
+                    <ProgressBar striped variant={item.variant} animated now={item.value} />
+                  </Col>
+                </Row>
+              ))}
+            </div>
+          </Tab>
+        </Tabs>
+      </Row>
+      <Money_Modal show={showModal} handleClose={handleCloseModal} data={selectMoney} onUpdate={updatedData}></Money_Modal>
+    </Container>
+    </styledTable>
+  );
+};
+
+export default Moneys;

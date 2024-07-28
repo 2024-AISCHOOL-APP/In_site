@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require('express-session');
 const app = express();
+const multer = require('multer');
+const path = require('path');
+
 const indexRouter = require("./router/index");
 const BoardRouter = require("./router/Board")
 const CalenderRouter = require("./router/Cal")
@@ -34,6 +37,29 @@ app.use("/Myinfo",InfoRouter)
 app.use("/Category",CategoryRouter)
 app.use("/Money",MoneyRouter)
 app.use("/Shop",ShopRouter)
+
+
+// 'uploads/Board' 디렉토리 설정
+const uploadDir = path.join(__dirname, 'uploads', 'Board');
+
+// Multer 설정: 파일 저장 위치 및 파일 이름 설정
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// 정적 파일 서빙 설정
+app.use('/uploads/Board', express.static(uploadDir));
+
+
+
+
 
 // 서버 시작
 const port = 8300;

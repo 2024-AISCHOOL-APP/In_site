@@ -19,9 +19,13 @@ const FullCalendarPage = ({ mem_id }) => {
   const [endDate, setEndDate] = useState('');
   const [events, setEvents] = useState([]);
   const [calIdx, setCalIdx] = useState('');
+  const [weatherData, setWeatherData] = useState([]);
+
+  const key = 'a9f2686d2edb739fcbb28be70d6e4cfe';
 
   useEffect(() => {
     fetchEvents();
+    fetchWeatherData();
   }, [showModal, showeModal, calIdx]);
 
   const fetchEvents = () => {
@@ -40,6 +44,23 @@ const FullCalendarPage = ({ mem_id }) => {
       .catch((error) => {
         console.error("Error fetching events:", error);
       });
+  };
+
+  const fetchWeatherData = async () => {
+    try {
+      const lat = 35.1595;
+      const lon = 126.8526;
+
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric&lang=kr`);
+      const data = await response.json();
+      const dailyForecasts = data.list.filter(item => item.dt_txt.endsWith('18:00:00')).map(item => ({
+        ...item,
+        dt_txt: new Date(new Date(item.dt_txt).toLocaleString('en-US', { timeZone: 'Asia/Seoul' }))
+      }));
+      setWeatherData(dailyForecasts);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
   };
 
   const combineDateTime = (dateStr, timeStr) => {
@@ -115,7 +136,6 @@ const FullCalendarPage = ({ mem_id }) => {
     axios.delete(`/Calender/Delete/${calIdx}`)
       .then(response => {
         console.log(response.data);
-        // 삭제가 성공적으로 이루어졌을 때, 캘린더에서도 해당 이벤트를 제거
         setEvents(events.filter(event => event.cal_idx !== calIdx));
         Swal.fire('삭제되었습니다.', '화끈하시네요~!', 'success');
       })
@@ -123,6 +143,25 @@ const FullCalendarPage = ({ mem_id }) => {
         console.error('삭제 실패:', error);
         Swal.fire('삭제 실패', '문제가 발생하여 삭제하지 못했습니다.', 'error');
       });
+  };
+
+  const renderWeatherEvent = (date) => {
+    const weather = weatherData.find(item => {
+      const weatherDate = item.dt_txt.toISOString().split('T')[0];
+      return weatherDate === date;
+    });
+    if (!weather) return null;
+
+    return (
+      <div>
+        <img
+          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+          alt={weather.weather[0].description}
+          style={{ width: '30px', height: '30px' }}
+        />
+        <p>{weather.weather[0].description}</p>
+      </div>
+    );
   };
 
   return (
@@ -140,18 +179,25 @@ const FullCalendarPage = ({ mem_id }) => {
           today: '오늘'
         }}
         initialView="dayGridMonth"
-        // editable={true}
-        // selectable={true}
         nowIndicator={true}
         locale="ko"
         events={events}
-        timeZone="local"
+        timeZone="Asia/Seoul"
         dateClick={dateClick}
         eventClick={eventClick}
         eventTimeFormat={{
           hour: 'numeric',
           minute: '2-digit',
           meridiem: false
+        }}
+        dayCellContent={(args) => {
+          const date = args.date.toISOString().split('T')[0];
+          return (
+            <>
+              <div>{args.dayNumberText}</div>
+              {renderWeatherEvent(date)}
+            </>
+          );
         }}
       />
 

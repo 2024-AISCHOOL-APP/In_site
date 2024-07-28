@@ -3,7 +3,9 @@ import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import {useParams } from "react-router-dom";
 import axios from "../axios";
 import Map from "../components/Map";
-import Carousels from "../components/Carousel";
+// import Carousels from "../components/Carousel";
+// import Carousels2 from "../components/Carousel2";
+import Carousels3 from "../components/Carousel3";
 
 
 const Shop = () => {
@@ -90,30 +92,26 @@ const Shop = () => {
 </Row>
 <Row className="my-5">
         <Col lg={12} md={12} sm={12} className="t2">
-          갤러리
-        </Col>
-      </Row>
-      <Row className="my-5 d-flex justify-content-center">
-        <Col lg={12} md={12} sm={12} className="t2">
-          <Carousels />
-        </Col>
-      </Row>
-      <Row className="my-5">
-        <Col lg={6} md={12} sm={12} className="t2">
           정보
         </Col>
       </Row>
-      <Row className="my-5">
-        <Col lg={6}>
-            정보내용니나 상품정보들
-        </Col>
-        <Col lg={6}>
-
-          <Image src={storeDetail.store_img} />
+      <Row className="my-5 d-flex justify-content-center">
+        <Col>
+          <Carousels3 />
         </Col>
       </Row>
+      {/* <Row className="my-5">
+        <Col lg={6} md={12} sm={12} className="t2">
+          정보
+        </Col>
+      </Row> */}
+      {/* <Row className="my-5">
+        <Col>
+            <Carousels2 />
+        </Col>
+      </Row> */}
+      
       <Row>
-
         <Col lg={6} md={12} sm={12} className="t2">
           오시는 길
         </Col>

@@ -3,6 +3,9 @@ const router = express.Router();
 const session = require('express-session');
 const conn = require("../config/database");
 const md5 = require('md5');
+const multer = require('multer');
+const path = require('path');
+
 
 router.get("/", (req, res) => {
   console.log("Welcome!!!! ");
@@ -96,6 +99,36 @@ router.post("/register", (req, res) => {
     res.status(201).json({ message: "회원가입 성공" });
   });
 });
+
+// 현재 작업 디렉토리에서 상위 디렉토리로 이동하여 'uploads' 폴더를 설정합니다.
+const uploadDir = path.join(__dirname, '../uploads', 'Aichoice');
+
+console.log('업로드 디렉토리:', uploadDir);
+
+// Multer 설정: 파일 저장 위치 및 파일 이름 설정
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir); // 절대 경로 사용
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // 파일 이름 설정
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// 파일 업로드 처리 엔드포인트
+router.post('/upload', upload.fields([{ name: 'groomImage' }, { name: 'brideImage' }]), (req, res) => {
+    console.log('업로드된 파일:', req.files);
+    res.json({
+        message: '파일 업로드 완료',
+        files: req.files
+    });
+});
+
+
+
+
 
 
 

@@ -169,7 +169,7 @@ const FindIDPW = () => {
               onSubmit={handleFindPw}
               className="p-4 bg-white rounded shadow"
             >
-              <h2 className="mb-3">비밀번호 발급</h2>
+              <h2 className="mb-3">비밀번호 찾기</h2>
               <Form.Control
                 type="text"
                 placeholder="아이디"

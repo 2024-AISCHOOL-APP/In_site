@@ -1,17 +1,18 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState, useEffect } from "react";
 import { Col, Container, Row, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "../../axios";
 import { Appdata } from '../../App';
 import "../../css/Aichost.css";
 
-const InfoCard = ({ item, onClick, showArrow}) => (
+const InfoCard = ({ item, onClick, showArrow }) => (
   <Card onClick={onClick} className="mb-3 purple-border">
     <Row noGutters>
       <Col md={4}>
         <Card.Img src={item.img} />
       </Col>
       <Col md={8}>
-        <Card.Body >
+        <Card.Body>
           <Card.Text className="mb-1 text-align-left">{item.hall}</Card.Text>
           {item.sit && <Card.Text className="mb-1 text-align-left">{item.sit}</Card.Text>}
           <Card.Text className="mb-1 text-align-left">{item.price}</Card.Text>
@@ -49,8 +50,8 @@ const Aistep5 = () => {
   const [mainItem, setMainItem] = useState({
     img: '/img/dmer.jpg',
     hall: '도메인호텔 호텔 홀',
-    sit : '좌석수: 200~300석',
-    price : '가격: 4,000,000원',
+    sit: '좌석수: 200~300석',
+    price: '가격: 4,000,000원',
     date: '예약 가능 날짜 : 2024.07.19'
   });
 
@@ -58,15 +59,15 @@ const Aistep5 = () => {
     {
       img: '/img/dmer.jpg',
       hall: '도메인호텔 호텔 홀',
-      sit : '좌석수: 200~300석',
-      price : '가격: 3,000,000원',
+      sit: '좌석수: 200~300석',
+      price: '가격: 3,000,000원',
       date: '예약 가능 날짜 : 2024.07.19'
     },
     {
       img: '/img/dmer.jpg',
       hall: '도메인호텔 호텔 홀',
-      sit : '좌석수: 200~300석',
-      price : '가격: 2,000,000원',
+      sit: '좌석수: 200~300석',
+      price: '가격: 2,000,000원',
       date: '예약 가능 날짜 : 2024.07.19'
     }
   ]);
@@ -76,7 +77,6 @@ const Aistep5 = () => {
   const toggleHiddenItems = () => {
     setShowHidden(!showHidden);
   };
-  
 
   const swapContent = (index) => {
     const newMainItem = hiddenItems[index];
@@ -208,6 +208,31 @@ const Aistep5 = () => {
     return total.toLocaleString();
   };
 
+  useEffect(() => {
+    // FastAPI 서버로부터 데이터 요청
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://localhost:8500/upload');
+        console.log('Server response:', response.data); // 응답 데이터를 로그로 출력
+        
+        // 서버로부터 응답 받은 이미지 경로를 상태에 저장
+        const { groomImagePath, brideImagePath } = response.data;
+        console.log('Groom Image Path:', groomImagePath);
+        console.log('Bride Image Path:', brideImagePath);
+
+        // 서버에서 받은 경로를 사용하는 상태를 설정할 수 있음
+        // 예를 들어:
+        // setGroomImage(groomImagePath);
+        // setBrideImage(brideImagePath);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // 빈 배열을 의존성으로 전달하여 컴포넌트 마운트 시 한 번만 호출
+
   return (
     <Container className="my-5">
       <Row className="justify-content-center">
@@ -218,9 +243,9 @@ const Aistep5 = () => {
             </Row>
             <Row className="my-4">
               <Col className="m-auto text-center">
-              <div className="image-upload-box">
-                <img src="/img/dmer.jpg"></img>
-              </div>
+                <div className="image-upload-box">
+                  <img src="/img/dmer.jpg" alt="Upload" />
+                </div>
                 {/* <div className={`image-upload-box ${groomUploaded ? 'uploaded' : ''}`}>
                   <label 
                     htmlFor="groom-upload" 
@@ -252,7 +277,7 @@ const Aistep5 = () => {
                 ))}
               </Col>
             </Row>
-                <hr/>
+            <hr />
             <Row className="mt-3 justify-content-center">
               <Col md={9}>
                 <InfoCard item={studioItem} onClick={toggleStudioHiddenItems} showArrow={true} />
@@ -261,7 +286,7 @@ const Aistep5 = () => {
                 ))}
               </Col>
             </Row>
-            <hr/>
+            <hr />
             <Row className="mt-3 justify-content-center">
               <Col md={9}>
                 <InfoCard item={dressItem} onClick={toggleDressHiddenItems} showArrow={true} />
@@ -270,7 +295,7 @@ const Aistep5 = () => {
                 ))}
               </Col>
             </Row>
-            <hr/>
+            <hr />
             <Row className="mt-3 justify-content-center">
               <Col md={9}>
                 <InfoCard item={makeupItem} onClick={toggleMakeupHiddenItems} showArrow={true} />

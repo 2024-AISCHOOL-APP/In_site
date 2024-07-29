@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const conn = require("../config/database");
+const path = require('path');
+const multer = require('multer');
 
 
 router.get("/", (req, res) => {
@@ -53,30 +55,63 @@ router.get("/", (req, res) => {
   });
 
 
-  router.post("/add", (req, res) => {
-    const newEvent = req.body; // 클라이언트에서 전송된 새 이벤트 객체
   
-    // MySQL 쿼리: 새 이벤트 추가
-    const query =
-      "INSERT INTO board (mem_id, board_title, board_at, board_content,board_img) VALUES (?, ?, ?, ?, ?)";
-    const values = [
-      newEvent.title,
-      newEvent.location,
-      newEvent.color,
-      newEvent.mem_id,
-    ];
+// 'uploads/Board' 디렉토리 설정
+const uploadDir = path.join(__dirname, '..', 'uploads', 'Board');
+
+
+// Multer 설정: 파일 저장 위치 및 파일 이름 설정
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir); // 실제 파일 시스템 경로 사용
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); // 파일 이름 설정
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// 정적 파일 서빙 설정
+router.use('/uploads/Board', express.static(uploadDir));
+
+
+
+
+  router.post('/create', upload.single('board_img'), (req, res) => {
+    const { board_title, board_content } = req.body;
+    const mem_id = req.body.mem_id || ''; // mem_id를 클라이언트로부터 받아오며 기본값으로 빈 문자열 설정
+    const board_img = req.file ? `/uploads/Board/${req.file.filename}` : ''; // 웹에서 접근할 상대 경로
   
-    // 쿼리 실행
-    conn.query(query, values, (err, result) => {
+    const sql = "INSERT INTO board (mem_id, board_title, board_content, board_img, board_views) VALUES (?, ?, ?, ?, ?)";
+    const values = [mem_id, board_title, board_content, board_img, 0]; // board_views 기본값으로 0 설정
+    conn.query(sql, values, (err, result) => {
       if (err) {
-        console.error("이벤트 추가 실패:", err);
-        res.status(500).send("이벤트 추가 실패");
-      } else {
-        console.log("새 이벤트가 성공적으로 추가되었습니다.");
-        newEvent.cal_idx = result.insertId; // 새로 추가된 이벤트의 인덱스(ID)를 저장
-        res.status(201).json(newEvent); // 성공 시 클라이언트에게 추가된 이벤트 객체 응답
+        console.error('게시글 생성 중 오류 발생:', err);
+        res.status(500).json({ error: '서버 오류' });
+        return;
       }
+      console.log('게시글이 성공적으로 생성되었습니다.');
+      res.status(201).json({ message: '게시글이 성공적으로 생성되었습니다.' });
     });
   });
   
+  router.get('/images', (req, res) => {
+    const sql = "SELECT board_img FROM board";  // 이미지 경로를 저장한 컬럼명을 사용
+
+    conn.query(sql, (err, results) => {
+        if (err) {
+            console.error('이미지 경로를 가져오는 중 오류 발생:', err);
+            res.status(500).json({ error: '서버 오류' });
+            return;
+        }
+
+        const imagePaths = results.map(row => ({ path: row.board_img }));
+        res.json({ imagePaths });
+    });
+});
+
+
+
+
   module.exports = router;

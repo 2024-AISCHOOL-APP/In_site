@@ -81,7 +81,7 @@ function Board() {
                   <Button
                     id="write-button"
                     variant="primary"
-                    onClick={()=> navigateTo('/writePost')}
+                    onClick={()=> navigate('/writePost')}
                  >
                     글쓰기
                   </Button>
@@ -109,14 +109,14 @@ function Board() {
               accessor: "board_title",
               Header: "제목",
               width: "70%",
-              // Cell: ({ row }) => (
-              //   // <span
-              //   // onClick={() => navigateTo(`/board/${row.original.board_seq}`)}
-              //   // >
-              //   //     {row.values.board_title}
+              Cell: ({ row }) => (
+                <span
+                onClick={() => navigate(`/board/${row.original.board_seq}`)}
+                >
+                    {row.values.board_title}
 
-              //   // </span>
-              // ),
+                </span>
+              )
             },
             { accessor: "id", Header: "작성자" },
             { accessor: "time", Header: "날짜" }, // 포매팅된 날짜 표시

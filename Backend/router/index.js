@@ -129,10 +129,11 @@ router.post('/upload', upload.fields([{ name: 'groomImage' }, { name: 'brideImag
     });
 });
 
-
 // 아이디 찾기
 router.post('/findId', (req, res) => {
   const { mem_name, mem_phone } = req.body;
+
+  
 
   if (!mem_name || !mem_phone) {
     return res.status(400).json({ error: '이름과 휴대전화 번호를 입력하세요.' });

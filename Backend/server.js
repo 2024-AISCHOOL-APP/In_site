@@ -11,8 +11,8 @@ const BoardRouter = require("./router/Board")
 const CalenderRouter = require("./router/Cal")
 const InfoRouter = require('./router/MyInfo')
 const CategoryRouter = require('./router/Category')
+const MoneyRouter = require('./router/Money')
 const ShopRouter = require('./router/Shop')
-
 
 app.use(express.json());
 app.use(cors());
@@ -35,6 +35,7 @@ app.use("/board", BoardRouter);
 app.use("/Calender",CalenderRouter)
 app.use("/Myinfo",InfoRouter)
 app.use("/Category",CategoryRouter)
+app.use("/Money",MoneyRouter)
 app.use("/Shop",ShopRouter)
 
 

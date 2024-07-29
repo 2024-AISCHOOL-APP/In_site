@@ -5,8 +5,7 @@ const conn = require("../config/database");
 const md5 = require('md5');
 const multer = require('multer');
 const path = require('path');
-const crypto = require('crypto');  // 임시 비밀번호 생성을 위한 패키지
-const bcrypt = require('bcrypt');   // 비밀번호 해시 처리용 패키지
+
 
 router.get("/", (req, res) => {
   console.log("Welcome!!!! ");

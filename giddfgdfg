@@ -1,0 +1,286 @@
+[33mcommit f1e6b4a9cad8b953e85ab80bc54bf7d7a69b510a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Merge: 37ca93d b8ec2cb
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Tue Jul 30 15:32:22 2024 +0900
+
+    예지 최종합니다
+
+[33mcommit 37ca93dd0cadce3419b883a985c58a338b43aecb[m
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Tue Jul 30 15:31:22 2024 +0900
+
+    예지 최종
+
+[33mcommit b8ec2cb5c2d5b92fdbf9d61c9d0538a2cbb1fc1b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: kim-Ji-Man <ax6615@naver.com>
+Date:   Tue Jul 30 15:24:33 2024 +0900
+
+    지만
+
+[33mcommit 1262a693d15b88dc27b160051dba7f559f42264c[m
+Merge: 97448b6 5b01ea8
+Author: kim-Ji-Man <ax6615@naver.com>
+Date:   Tue Jul 30 14:15:35 2024 +0900
+
+    지만
+
+[33mcommit 97448b648a73edbe3fbf13c785e7d3a2975ac466[m
+Author: kim-Ji-Man <ax6615@naver.com>
+Date:   Tue Jul 30 14:13:56 2024 +0900
+
+    지만
+
+[33mcommit 5b01ea8175569b74e90e0cbf75cd7554a72a7b55[m
+Merge: 2660272 1935ecc
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Tue Jul 30 12:51:28 2024 +0900
+
+    yy
+
+[33mcommit 26602726f0fa99fd64a98f175791e1ae3ab8ee25[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Tue Jul 30 12:50:18 2024 +0900
+
+    yy
+
+[33mcommit 1935ecce4bbdb52455e2727cc493615b217867fd[m
+Merge: 6382fd3 d13d35d
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Tue Jul 30 11:30:34 2024 +0900
+
+    예지 저장
+
+[33mcommit 6382fd342473e2872e7e2d955f1cd90797a0baa3[m
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Tue Jul 30 11:28:37 2024 +0900
+
+    예지 커밋
+
+[33mcommit d13d35dbae91becece27fdfa8db9351693500dc2[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Tue Jul 30 11:25:05 2024 +0900
+
+    일단 fastapi 텍스트데이터 리액트로 넘어옴
+
+[33mcommit bbab449378e902fe0cf17c3faf7f7a333af2f124[m
+Merge: 95925e8 4b18f9c
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Tue Jul 30 10:20:04 2024 +0900
+
+    저장  하기위 위한 커밋
+
+[33mcommit 95925e89ec4003e8a6190633d83ab4b120f43e4f[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Tue Jul 30 10:12:49 2024 +0900
+
+    pull 받기 위한 커밋
+
+[33mcommit 4b18f9c89fd200581c3ff680a63c4d1dfc0f2ab6[m
+Merge: 645d6d5 19b3801
+Author: kim-Ji-Man <ax6615@naver.com>
+Date:   Tue Jul 30 09:35:09 2024 +0900
+
+    지만
+
+[33mcommit 645d6d55bf0aa263d91be64269faea37a0cbb952[m
+Author: kim-Ji-Man <ax6615@naver.com>
+Date:   Tue Jul 30 09:22:33 2024 +0900
+
+    지만 커밋
+
+[33mcommit 97690108cf855c2a99e97cd53e0dd75ebb6cebb8[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Tue Jul 30 08:54:35 2024 +0900
+
+    풀받기위한 커밋
+
+[33mcommit 19b3801b5107f865d6af02a6b0b21068b7cb8d05[m
+Merge: 56e868c 1149c44
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Mon Jul 29 14:41:16 2024 +0900
+
+    y
+
+[33mcommit 56e868cfcb5c44ecd36a431a9deb4967b767e3f3[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Mon Jul 29 14:30:32 2024 +0900
+
+    yujeong
+
+[33mcommit 1149c44d3fc959fbd5dc64e0bb6aff28218fe8f9[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Mon Jul 29 14:28:58 2024 +0900
+
+    가게이미지프로젝트저장
+
+[33mcommit 5ff384630f64036f40c7c92a1653cf01c2ce616f[m
+Merge: 0db5bb7 d0b774e
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Mon Jul 29 14:28:39 2024 +0900
+
+    yujeong
+
+[33mcommit ef343cf435c8e8469033b328135abc7fc850c720[m
+Merge: 32a4e3d e81b540
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Sun Jul 28 14:48:31 2024 +0900
+
+    megie  커밋
+
+[33mcommit 32a4e3dbbcf139d1bdd175141d61a96f5402add6[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Sun Jul 28 14:47:54 2024 +0900
+
+    푸쉬받기위한 커밋
+
+[33mcommit e81b540f517a884b03e3b157486f5430393da8a0[m
+Merge: 6a8d803 d0b774e
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Sun Jul 28 14:39:13 2024 +0900
+
+    가계부 입력 최종
+
+[33mcommit 6a8d803aa2cca1c9b3a2a1c30bfb48ef327029eb[m
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Sun Jul 28 14:38:07 2024 +0900
+
+    가계부
+
+[33mcommit 0db5bb727123b195006abb57a178689e93fc0726[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Sat Jul 27 16:16:19 2024 +0900
+
+    yuyu
+
+[33mcommit d0b774e6a327fcc2ef75b0fa7280b888ba3f0b20[m
+Merge: 8502099 02a5c68
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Sat Jul 27 14:38:32 2024 +0900
+
+    merge를 위한 커밋
+
+[33mcommit 8502099ae04db7f4d678cd57684919ec4477faca[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Sat Jul 27 14:37:35 2024 +0900
+
+    python fasapi 연동 등등
+
+[33mcommit 02a5c68ef7424ebf38897f7f0e3ad2d7d5f252f1[m
+Merge: 73edd7b ddcbd5a
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Thu Jul 25 18:22:15 2024 +0900
+
+    Merge branch 'main' of https://github.com/2024-AISCHOOL-APP/In_site
+
+[33mcommit 73edd7bf0a65f1d9a4cb571676d2fe0a5aa1a59d[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Thu Jul 25 18:20:22 2024 +0900
+
+    yuyu
+
+[33mcommit 912206acb840adb4c8f64c87e32732ebf4d90945[m
+Merge: 5e68cda ddcbd5a
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Thu Jul 25 10:34:34 2024 +0900
+
+    저장3
+
+[33mcommit 5e68cda0dd0a4718c2fdc7a4ad6ea5981bab64ee[m
+Merge: 0ea57d8 3af4b1d
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Thu Jul 25 10:28:06 2024 +0900
+
+    저장2
+
+[33mcommit ddcbd5aa5596bcc211989ba7c0344752e07dec9d[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Thu Jul 25 10:25:30 2024 +0900
+
+    ai추천 기능 수정(아이디 없을시 결과창 못넘어감)
+
+[33mcommit 3af4b1deb52840ce0253ac669ecd6a530ddcce67[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Thu Jul 25 09:42:02 2024 +0900
+
+    상세가게게시판 1차수정 커밋
+
+[33mcommit 0ea57d8b13aef45b48fde89968f117b268e00efa[m
+Merge: a9ad764 9881127
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Thu Jul 25 09:24:59 2024 +0900
+
+    커밋
+
+[33mcommit a9ad7648da8fddcd59d1c8a39cf1c5ccc4994fc5[m
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Thu Jul 25 09:22:40 2024 +0900
+
+    저장
+
+[33mcommit 9881127062a127f0df4df04816eb004717d74ac5[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Thu Jul 25 09:18:17 2024 +0900
+
+    커밋용 푸쉬
+
+[33mcommit f6d20fefa4ed17b9870eae21ebcee380f2d21b04[m
+Merge: 609032a 9f99cc3
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Wed Jul 24 20:03:23 2024 +0900
+
+    가계부 커밋용
+
+[33mcommit 609032aa7bd0473816f5a5e2db290e42159f71e8[m
+Author: yejij00ngji <hyi704336@gmail.com>
+Date:   Wed Jul 24 20:00:50 2024 +0900
+
+    가계부
+
+[33mcommit 9f99cc38f7861b0578dd02ee9fe10eb2b7116d9b[m
+Merge: 5a8327b 2827e7c
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Wed Jul 24 19:54:40 2024 +0900
+
+    과연 날아갈까??
+
+[33mcommit 5a8327b6dfceb1806e60c44b68e08720fcd1c1b5[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Wed Jul 24 19:50:45 2024 +0900
+
+    카테고리,홈 카드 db 정보 불러오기
+
+[33mcommit 2827e7c3e0c5a55e06e82a0815699c6056a3a092[m
+Merge: f00e279 7de94f6
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Wed Jul 24 17:14:22 2024 +0900
+
+    Merge branch 'main' of https://github.com/2024-AISCHOOL-APP/In_site
+
+[33mcommit f00e27937c3b77ddbed4eb826083b41afca99729[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Wed Jul 24 17:09:59 2024 +0900
+
+    AI추천
+
+[33mcommit 4d968e1b454cc67e2c68ca5cb275ea33dadfdc02[m
+Merge: 28d501f ac32443
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Wed Jul 24 17:09:33 2024 +0900
+
+    AI추천
+
+[33mcommit 7de94f6c4deb4e4b8ae049dcf696d7869fed6d22[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Wed Jul 24 08:53:42 2024 +0900
+
+    내정보 수정및 계정 삭제 완료
+
+[33mcommit fe353c5a26eff18bff05622031dda336758018fd[m
+Author: jingeunlee4559 <wlsrms4559@gmail.com>
+Date:   Tue Jul 23 16:11:39 2024 +0900
+
+    서버연결방힉 변경 및 내정보 보이기
+
+[33mcommit 28d501f7b89edfe4f17eebc62053c65a75934904[m
+Author: startho <154859404+startho@users.noreply.github.com>
+Date:   Tue Jul 23 14:50:11

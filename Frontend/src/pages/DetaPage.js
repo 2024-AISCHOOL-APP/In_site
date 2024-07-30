@@ -56,13 +56,23 @@ const DetailPage = () => {
     }
 
     try {
-      await axios.put(`/board/update/${board_seq}`, formData, {
+      const response = await axios.put(`/board/update/${board_seq}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       setIsEditing(false);
-      navigate(`/board/${board_seq}`);
+      // 업데이트된 데이터를 상태에 반영
+      setBoardDetail({
+        ...boardDetail,
+        title: editedTitle,
+        content: editedContent,
+        img: response.data.img || boardDetail.img
+      });
+      // 이미지가 변경된 경우, 미리보기 이미지를 업데이트
+      if (response.data.img) {
+        setPreviewImage(`http://localhost:8300${response.data.img}?${new Date().getTime()}`);
+      }
     } catch (error) {
       console.error("게시글 수정 도중 오류 발생:", error);
     }
@@ -167,7 +177,7 @@ const DetailPage = () => {
               </p>
               {boardDetail?.img && (
                 <img
-                  src={`http://localhost:8300${boardDetail.img}`}
+                  src={previewImage}
                   alt="Board Detail"
                   style={{ maxWidth: '100%' }}
                 />

@@ -10,7 +10,7 @@ const MyDonutCharts = () => {
     legend: {
       show: false,
     },
-    labels: ['웨딩홀', '스듀디오', '드레스', '메이크업'],
+    labels: ['웨딩홀', '스튜디오', '드레스', '메이크업'],
     series: [200,150,300,250],
     responsive: [{
       breakpoint: 480,

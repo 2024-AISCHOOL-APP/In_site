@@ -155,6 +155,7 @@ const FullCalendarPage = ({ mem_id }) => {
     return (
       <div>
         <img
+         /* 날씨 이미지와 설명을 렌더링하는 부분입니다 */
           src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
           alt={weather.weather[0].description}
           style={{ width: '30px', height: '30px' }}

@@ -1,57 +1,56 @@
-// src/components/Mypage/Sbasket.js
-import React, { useContext } from "react";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button"; // Button 임포트 추가
-import  CartContext  from "../CartContext";
+import React, { useContext, useState, useEffect } from "react";
+import { Container, Row, Col, Table, Button, Image } from "react-bootstrap";
+import CartContext from "../CartContext";
+import "../../css/Sbasket.css";
 
 const Sbasket = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cartItems, removeItem } = useContext(CartContext);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleRemove = (item) => {
-    removeFromCart(item);
-  };
+  useEffect(() => {
+    const calculateTotal = () => {
+      const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+      setTotalPrice(total);
+    };
+
+    calculateTotal();
+  }, [cartItems]);
 
   return (
-    <div>
-      <h1 className='mt-4'>장바구니</h1>
-      <Table className='mt-4' striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>카테고리</th>
-            <th colSpan={2}>제품 정보</th>
-            <th>예상금액</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.map((item, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.category}</td>
-              <td><img src={item.store_img} alt={item.store_name} width="100" /></td>
-              <td>{item.store_name}</td>
-              <td>{item.price}</td>
-              <td>
-                <Button
-                  variant="danger"
-                  onClick={() => handleRemove(item)}
-                >
-                  삭제
-                </Button>
-              </td>
+    <Container className="my-5">
+      <h2 className="text-center mb-4">장바구니</h2>
+      {cartItems.length === 0 ? (
+        <p className="text-center">장바구니가 비어 있습니다.</p>
+      ) : (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>이미지</th>
+              <th>상품명</th>
+              <th>가격</th>
+              <th>삭제</th>
             </tr>
-          ))}
-          <tr>
-            <td></td>
-            <td colSpan={4}>합계</td>
-            <td>
-              {/* 총 합계 계산 필요 */}
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-    </div>
+          </thead>
+          <tbody>
+            {cartItems.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <Image src={item.store_img} rounded style={{ width: "100px", height: "100px" }} />
+                </td>
+                <td>{item.store}</td>
+                <td>{item.price ? item.price.toLocaleString() : "0"}원</td>
+                <td>
+                  <Button variant="danger" onClick={() => removeItem(index)}>
+                    삭제
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+      <h3 className="text-end">총 가격: {totalPrice.toLocaleString()}원</h3>
+    </Container>
   );
 };
 

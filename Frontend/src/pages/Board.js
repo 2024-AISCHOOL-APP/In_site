@@ -81,7 +81,7 @@ function Board() {
                   <Button
                     id="write-button"
                     variant="primary"
-                    onClick={()=> navigateTo('/writePost')}
+                    onClick={()=> navigate('/writePost')}
                  >
                     글쓰기
                   </Button>

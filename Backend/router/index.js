@@ -11,6 +11,8 @@ router.get("/", (req, res) => {
   console.log("Welcome!!!! ");
 });
 
+module.exports = router;
+
 router.post('/login', (req, res) => {
   const { mem_id, mem_pw } = req.body;
 
@@ -126,11 +128,105 @@ router.post('/upload', upload.fields([{ name: 'groomImage' }, { name: 'brideImag
     });
 });
 
+// 아이디 찾기
+router.post('/findId', (req, res) => {
+  const { mem_name, mem_phone } = req.body;
 
   
 
+  if (!mem_name || !mem_phone) {
+    return res.status(400).json({ error: '이름과 휴대전화 번호를 입력하세요.' });
+  }
 
+  const sql = 'SELECT mem_id FROM tbl_member WHERE mem_nick = ? AND mem_phone = ?';
+  conn.query(sql, [mem_name, mem_phone], (error, results) => {
+    if (error) {
+      console.error('아이디 찾기 오류:', error);
+      return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+    }
+    if (results.length > 0) {
+      return res.json({ mem_id: results[0].mem_id });
+    } else {
+      return res.status(404).json({ error: '아이디를 찾을 수 없습니다.' });
+    }
+  });
+});
 
+// 비밀번호 찾기 라우트
+router.post('/findPw', (req, res) => {
+  const { mem_id, mem_phone } = req.body;
+
+  if (!mem_id || !mem_phone) {
+    return res.status(400).json({ error: '아이디와 휴대전화 번호를 입력하세요.' });
+  }
+
+  // 사용자 존재 확인
+  const sql = 'SELECT mem_id FROM tbl_member WHERE mem_id = ? AND mem_phone = ?';
+  conn.query(sql, [mem_id, mem_phone], (error, results) => {
+    if (error) {
+      console.error('비밀번호 찾기 오류:', error);
+      return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+    }
+
+    if (results.length > 0) {
+      res.json({ message: '비밀번호 변경 요청이 처리되었습니다. 새 비밀번호를 입력하세요.' });
+    } else {
+      return res.status(404).json({ error: '정보를 찾을 수 없습니다.' });
+    }
+  });
+});
+
+// 비밀번호 변경 요청 API
+router.post('/changePw', async (req, res) => {
+  const { mem_id, mem_phone, new_password } = req.body;
+
+  // 입력 값 확인
+  if (!mem_id || !mem_phone || !new_password) {
+    console.error('입력 값 오류:', { mem_id, mem_phone, new_password });
+    return res.status(400).json({ error: '아이디, 휴대전화 번호, 새 비밀번호를 입력하세요.' });
+  }
+
+  try {
+    // 비밀번호 해시화
+    const hashedPassword =  md5(new_password);
+
+    // 사용자 존재 확인
+    const userSql = 'SELECT mem_id FROM tbl_member WHERE mem_id = ? AND mem_phone = ?';
+
+    // Promise를 사용한 비동기 쿼리 처리
+    const userResults = await new Promise((resolve, reject) => {
+      conn.query(userSql, [mem_id, mem_phone], (error, results) => {
+        if (error) {
+          console.error('사용자 확인 쿼리 오류:', error);
+          return reject(error);
+        }
+        resolve(results);
+      });
+    });
+
+    if (userResults.length > 0) {
+      // 비밀번호 업데이트
+      const updatePasswordSql = 'UPDATE tbl_member SET mem_pw = ? WHERE mem_id = ?';
+
+      await new Promise((resolve, reject) => {
+        conn.query(updatePasswordSql, [hashedPassword, mem_id], (updateError) => {
+          if (updateError) {
+            console.error('비밀번호 업데이트 쿼리 오류:', updateError);
+            return reject(updateError);
+          }
+          resolve();
+        });
+      });
+
+      return res.json({ message: '비밀번호가 성공적으로 변경되었습니다.' });
+    } else {
+      return res.status(404).json({ error: '정보를 찾을 수 없습니다.' });
+    }
+  } catch (err) {
+    console.error('비밀번호 처리 중 오류 발생:', err);
+    return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+  }
+});
 
 
 

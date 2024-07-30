@@ -44,10 +44,7 @@ const DetailPage = () => {
               {/* <p className="detail-text">{boardDetail.content}</p> */}
               <p className="detail-text">
                 {boardDetail.content}
-                여기에 공지사항의 상세 내용이 들어갑니다. 예를 들어, 새로운
-                기능 업데이트, 이벤트 공지, 중요한 알림 등이 포함될 수
-                있습니다. 내용을 구체적으로 작성하여 사용자들이 쉽게 이해할 수
-                있도록 합니다.
+               
               </p>
               <img
                 src={`http://localhost:8300${boardDetail.img}`}

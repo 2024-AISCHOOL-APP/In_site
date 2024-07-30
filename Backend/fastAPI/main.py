@@ -1,11 +1,13 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import os
 import logging
 import uvicorn
 from datetime import datetime
 import uuid
+import shutil
 
 app = FastAPI()
 
@@ -39,36 +41,38 @@ def generate_unique_filename(original_filename: str) -> str:
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')  # Current timestamp
     return f"{timestamp}_{unique_id}{extension}"
 
-@app.post("/upload")
-async def upload_file(
-    groomImage: UploadFile = File(None),
-    brideImage: UploadFile = File(None),
-    lref: str = Form(None),
-    sref: str = Form(None),
-    dates: str = Form(None),
-    times: str = Form(None),
-    moneys: str = Form(None),
-    persons: str = Form(None),
-    pluspersons: str = Form(None)
+class UploadResponse(BaseModel):
+    groomImagePath: str
+    brideImagePath: str
+
+@app.post("/upload", response_model=UploadResponse)
+async def upload_images(
+    groomImage: UploadFile = File(...),
+    brideImage: UploadFile = File(...),
+    lref: str = Form(...),
+    sref: str = Form(...),
+    dates: str = Form(...),
+    times: str = Form(...),
+    moneys: str = Form(...),
+    persons: str = Form(...),
+    pluspersons: str = Form(...)
 ):
-    groom_path = ''
-    bride_path = ''
     groom_image_url = ''
     bride_image_url = ''
 
     if groomImage:
         unique_groom_filename = generate_unique_filename(groomImage.filename)
         groom_path = os.path.join(UPLOAD_FOLDER, unique_groom_filename)
-        with open(groom_path, "wb") as file:
-            file.write(groomImage.file.read())
+        with open(groom_path, "wb") as buffer:
+            shutil.copyfileobj(groomImage.file, buffer)
         logging.info(f"Groom image uploaded to: {groom_path}")
         groom_image_url = f"/files/{unique_groom_filename}"
 
     if brideImage:
         unique_bride_filename = generate_unique_filename(brideImage.filename)
         bride_path = os.path.join(UPLOAD_FOLDER, unique_bride_filename)
-        with open(bride_path, "wb") as file:
-            file.write(brideImage.file.read())
+        with open(bride_path, "wb") as buffer:
+            shutil.copyfileobj(brideImage.file, buffer)
         logging.info(f"Bride image uploaded to: {bride_path}")
         bride_image_url = f"/files/{unique_bride_filename}"
 
@@ -82,19 +86,7 @@ async def upload_file(
     logging.info(f"persons: {persons}")
     logging.info(f"pluspersons: {pluspersons}")
 
-    # Return the URL of the uploaded files and the form data
-    return JSONResponse({
-        'groomImagePath': groom_image_url,
-        'brideImagePath': bride_image_url,
-        'lref': lref,
-        'sref': sref,
-        'dates': dates,
-        'times': times,
-        'moneys': moneys,
-        'persons': persons,
-        'pluspersons': pluspersons,
-        'message': 'Images and data received successfully'
-    })
+    return {"groomImagePath": groom_image_url, "brideImagePath": bride_image_url}
 
 @app.get("/files/{filename}")
 async def get_file(filename: str):
@@ -107,5 +99,35 @@ async def get_file(filename: str):
     else:
         return JSONResponse({"error": "File not found"}, status_code=404)
 
+@app.get("/data")
+async def get_data():
+    data = {
+        "mainItem": {
+            "img": '/img/dmer.jpg',
+            "hall": '드메르호텔 호텔 홀',
+            "sit": '좌석수: 200~300석',
+            "price": '가격: 4,000,000원',
+            "date": '예약 가능 날짜 : 2024.07.19'
+        },
+        "hiddenItems": [
+            {
+                "img": '/img/dmer.jpg',
+                "hall": '드메호텔 호텔 홀',
+                "sit": '좌석수: 200~300석',
+                "price": '가격: {moneys}',
+                "date": '예약 가능 날짜 : {dates}'
+            },
+            {
+                "img": '/img/dmer.jpg',
+                "hall": '드메르호텔 호텔 홀',
+                "sit": '좌석수: 200~300석',
+                "price": '가격: 2,000,000원',
+                "date": '예약 가능 날짜 : 2024.07.19'
+            }
+        ]
+    }
+    return JSONResponse(content=data)
+
 if __name__ == '__main__':
+    
     uvicorn.run(app, host='127.0.0.1', port=8500)

@@ -72,243 +72,51 @@ const Aistep5 = () => {
     }
   ]);
 
-  const [showHidden, setShowHidden] = useState(false);
-
-  const toggleHiddenItems = () => {
-    setShowHidden(!showHidden);
-  };
-
-  const swapContent = (index) => {
-    const newMainItem = hiddenItems[index];
-    const newHiddenItems = [...hiddenItems];
-    newHiddenItems[index] = mainItem;
-    setMainItem(newMainItem);
-    setHiddenItems(newHiddenItems);
-  };
-
-  const [studioItem, setStudioItem] = useState({
-    img: '/img/dmer.jpg',
-    hall: '프라이빗 스튜디오',
-    price: '가격: 4,000,000원',
-    date: '예약 가능 날짜 : 2024.07.19'
-  });
-
-  const [studioHiddenItems, setStudioHiddenItems] = useState([
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 스튜디오',
-      price: '가격: 3,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    },
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 스튜디오',
-      price: '가격: 2,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    }
-  ]);
-
-  const [studioShowHidden, setStudioShowHidden] = useState(false);
-
-  const toggleStudioHiddenItems = () => {
-    setStudioShowHidden(!studioShowHidden);
-  };
-
-  const swapStudioContent = (index) => {
-    const newStudioItem = studioHiddenItems[index];
-    const newStudioHiddenItems = [...studioHiddenItems];
-    newStudioHiddenItems[index] = studioItem;
-    setStudioItem(newStudioItem);
-    setStudioHiddenItems(newStudioHiddenItems);
-  };
-
-  const [dressItem, setDressItem] = useState({
-    img: '/img/dmer.jpg',
-    hall: '프라이빗 드레스',
-    price: '가격: 4,000,000원',
-    date: '예약 가능 날짜 : 2024.07.19'
-  });
-
-  const [dressHiddenItems, setDressHiddenItems] = useState([
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 드레스',
-      price: '가격: 3,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    },
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 드레스',
-      price: '가격: 2,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    }
-  ]);
-
-  const [dressShowHidden, setDressShowHidden] = useState(false);
-
-  const toggleDressHiddenItems = () => {
-    setDressShowHidden(!dressShowHidden);
-  };
-
-  const swapDressContent = (index) => {
-    const newDressItem = dressHiddenItems[index];
-    const newDressHiddenItems = [...dressHiddenItems];
-    newDressHiddenItems[index] = dressItem;
-    setDressItem(newDressItem);
-    setDressHiddenItems(newDressHiddenItems);
-  };
-
-  const [makeupItem, setMakeupItem] = useState({
-    img: '/img/dmer.jpg',
-    hall: '프라이빗 메이크업',
-    price: '가격: 4,000,000원',
-    date: '예약 가능 날짜 : 2024.07.19'
-  });
-
-  const [makeupHiddenItems, setMakeupHiddenItems] = useState([
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 메이크업',
-      price: '가격: 3,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    },
-    {
-      img: '/img/dmer.jpg',
-      hall: '프라이빗 메이크업',
-      price: '가격: 2,000,000원',
-      date: '예약 가능 날짜 : 2024.07.19'
-    }
-  ]);
-
-  const [makeupShowHidden, setMakeupShowHidden] = useState(false);
-
-  const toggleMakeupHiddenItems = () => {
-    setMakeupShowHidden(!makeupShowHidden);
-  };
-
-  const swapMakeupContent = (index) => {
-    const newMakeupItem = makeupHiddenItems[index];
-    const newMakeupHiddenItems = [...makeupHiddenItems];
-    newMakeupHiddenItems[index] = makeupItem;
-    setMakeupItem(newMakeupItem);
-    setMakeupHiddenItems(newMakeupHiddenItems);
-  };
-
-  const calculateTotal = () => {
-    // 각 항목의 가격에서 숫자 부분을 추출하여 합산
-    const price1 = parseInt(mainItem.price.split(':')[1].trim().replace(/[^\d]/g, ''));
-    const price2 = parseInt(studioItem.price.split(':')[1].trim().replace(/[^\d]/g, ''));
-    const price3 = parseInt(dressItem.price.split(':')[1].trim().replace(/[^\d]/g, ''));
-    const price4 = parseInt(makeupItem.price.split(':')[1].trim().replace(/[^\d]/g, ''));
-  
-    // 합산된 총합 계산
-    const total = price1 + price2 + price3 + price4;
-  
-    // 천 단위 구분 기호 포함하여 반환
-    return total.toLocaleString();
+  const handleCardClick = (item) => {
+    setMainItem(item);
   };
 
   useEffect(() => {
-    // FastAPI 서버로부터 데이터 요청
+    // 데이터 받아오기 예시
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:8500/upload');
-        console.log('Server response:', response.data); // 응답 데이터를 로그로 출력
-        
-        // 서버로부터 응답 받은 이미지 경로를 상태에 저장
-        const { groomImagePath, brideImagePath } = response.data;
-        console.log('Groom Image Path:', groomImagePath);
-        console.log('Bride Image Path:', brideImagePath);
-
-        // 서버에서 받은 경로를 사용하는 상태를 설정할 수 있음
-        // 예를 들어:
-        // setGroomImage(groomImagePath);
-        // setBrideImage(brideImagePath);
-        
+        const response = await axios.get('http://localhost:8500/data');
+        console.log('들어오니2hidden',response.data.hiddenItem);
+        console.log('들어오니1main',response.data.mainItem);
+        setHiddenItems(response.data.hiddenItems);
+        setMainItem(response.data.mainItem);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('데이터 로드 중 오류 발생:', error);
       }
     };
 
     fetchData();
-  }, []); // 빈 배열을 의존성으로 전달하여 컴포넌트 마운트 시 한 번만 호출
-
+  }, []);
+  
   return (
     <Container className="my-5">
       <Row className="justify-content-center">
-        <Col md={8} sm={10} xs={12}>
+        <Col md={8}>
           <Card className="m-auto p-4">
-            <Row className="my-1">
-              <Col className="Qtitle Qti2">가상 사진</Col>
-            </Row>
-            <Row className="my-4">
-              <Col className="m-auto text-center">
-                <div className="image-upload-box">
-                  <img src="/img/dmer.jpg" alt="Upload" />
-                </div>
-                {/* <div className={`image-upload-box ${groomUploaded ? 'uploaded' : ''}`}>
-                  <label 
-                    htmlFor="groom-upload" 
-                    className="custom-file-upload"
-                  >
-                    {groomUploaded ? "신랑 이미지가 업로드 되었습니다" : "사진"}
-                  </label>
-                  <input 
-                    id="groom-upload" 
-                    type="file" 
-                    onChange={handleGroomUpload}
-                    ref={husref}
-                  />
-                </div> */}
-              </Col>
-            </Row>
-
             <Row>
+              <Col className="Qtitle">Q 06.</Col>
+            </Row>
+            <Row className="my-2">
+              <Col className="Qti2">정보를 확인하세요</Col>
+            </Row>
+            <InfoCard item={mainItem} showArrow={false} />
+            {hiddenItems.map((item, index) => (
+              <InfoCard
+                key={index}
+                item={item}
+                onClick={() => handleCardClick(item)}
+                showArrow={false}
+              />
+            ))}
+            <Row className="my-5">
               <Col className="text-center">
-                <Button onClick={Back} className="me-4 btns">사진 저장</Button>
-              </Col>
-            </Row>
-
-            <Row className="mt-5 justify-content-center">
-              <Col md={9}>
-                <InfoCard item={mainItem} onClick={toggleHiddenItems} showArrow={true} />
-                {showHidden && hiddenItems.map((item, index) => (
-                  <InfoCard key={index} item={item} onClick={() => swapContent(index)} showArrow={false} />
-                ))}
-              </Col>
-            </Row>
-            <hr />
-            <Row className="mt-3 justify-content-center">
-              <Col md={9}>
-                <InfoCard item={studioItem} onClick={toggleStudioHiddenItems} showArrow={true} />
-                {studioShowHidden && studioHiddenItems.map((item, index) => (
-                  <InfoCard key={index} item={item} onClick={() => swapStudioContent(index)} showArrow={false} />
-                ))}
-              </Col>
-            </Row>
-            <hr />
-            <Row className="mt-3 justify-content-center">
-              <Col md={9}>
-                <InfoCard item={dressItem} onClick={toggleDressHiddenItems} showArrow={true} />
-                {dressShowHidden && dressHiddenItems.map((item, index) => (
-                  <InfoCard key={index} item={item} onClick={() => swapDressContent(index)} showArrow={false} />
-                ))}
-              </Col>
-            </Row>
-            <hr />
-            <Row className="mt-3 justify-content-center">
-              <Col md={9}>
-                <InfoCard item={makeupItem} onClick={toggleMakeupHiddenItems} showArrow={true} />
-                {makeupShowHidden && makeupHiddenItems.map((item, index) => (
-                  <InfoCard key={index} item={item} onClick={() => swapMakeupContent(index)} showArrow={false} />
-                ))}
-              </Col>
-            </Row>
-
-            <Row>
-              <Col className="my-5 text-center">
-                <Button onClick={Back} className="me-4 btns">일정 저장</Button>
-                <Button className="me-4 btns">총합 : {calculateTotal()}원</Button>
+                <Button onClick={Back} className="me-4 btns">이전</Button>
+                <Button onClick={Next} className="me-4 btns">다음</Button>
               </Col>
             </Row>
           </Card>

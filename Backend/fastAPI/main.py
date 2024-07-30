@@ -26,7 +26,6 @@ app.add_middleware(
 )
 
 UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', '../uploads/Aichoice')
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # 로그 설정
@@ -102,32 +101,100 @@ async def get_file(filename: str):
 @app.get("/data")
 async def get_data():
     data = {
-        "mainItem": {
-            "img": '/img/dmer.jpg',
-            "hall": '드메르호텔 호텔 홀',
-            "sit": '좌석수: 200~300석',
-            "price": '가격: 4,000,000원',
-            "date": '예약 가능 날짜 : 2024.07.19'
-        },
-        "hiddenItems": [
-            {
-                "img": '/img/dmer.jpg',
-                "hall": '드메호텔 호텔 홀',
-                "sit": '좌석수: 200~300석',
-                "price": '가격: {moneys}',
-                "date": '예약 가능 날짜 : {dates}'
-            },
-            {
+        "wedding-hall": {
+            "mainItem": {
                 "img": '/img/dmer.jpg',
                 "hall": '드메르호텔 호텔 홀',
                 "sit": '좌석수: 200~300석',
-                "price": '가격: 2,000,000원',
+                "price": '가격: 4,000,000원',
                 "date": '예약 가능 날짜 : 2024.07.19'
-            }
-        ]
+            },
+            "hiddenItems": [
+                {
+                    "img": '/img/hall.jpg',
+                    "hall": '드메호텔 호텔 홀',
+                    "sit": '좌석수: 200~300석',
+                    "price": '가격: 3,500,000원',
+                    "date": '예약 가능 날짜 : 2024.08.10'
+                },
+                {
+                    "img": '/img/hall.jpg',
+                    "hall": '드메르호텔 호텔 홀',
+                    "sit": '좌석수: 200~300석',
+                    "price": '가격: 2,500,000원',
+                    "date": '예약 가능 날짜 : 2024.08.20'
+                }
+            ]
+        },
+        "studio": {
+            "mainItem": {
+                "img": '/img/studio.jpg',
+                "name": '스타디오 사진관',
+                "price": '가격: 1,500,000원',
+                "date": '예약 가능 날짜 : 2024.08.01'
+            },
+            "hiddenItems": [
+                {
+                    "img": '/img/studio.jpg',
+                    "name": '비밀 스튜디오 A',
+                    "price": '가격: 1,200,000원',
+                    "date": '예약 가능 날짜 : 2024.08.05'
+                },
+                {
+                    "img": '/img/studio.jpg',
+                    "name": '비밀 스튜디오 B',
+                    "price": '가격: 1,000,000원',
+                    "date": '예약 가능 날짜 : 2024.08.15'
+                }
+            ]
+        },
+        "dress": {
+            "mainItem": {
+                "img": '/img/dress.jpg',
+                "name": '드레스 샵',
+                "price": '가격: 2,000,000원',
+                "date": '예약 가능 날짜 : 2024.08.15'
+            },
+            "hiddenItems": [
+                {
+                    "img": '/img/dress.jpg',
+                    "name": '비밀 드레스 A',
+                    "price": '가격: 1,800,000원',
+                    "date": '예약 가능 날짜 : 2024.08.12'
+                },
+                {
+                    "img": '/img/dress.jpg',
+                    "name": '비밀 드레스 B',
+                    "price": '가격: 1,600,000원',
+                    "date": '예약 가능 날짜 : 2024.08.20'
+                }
+            ]
+        },
+        "makeup": {
+            "mainItem": {
+                "img": '/img/makeup.jpg',
+                "name": '메이크업 전문',
+                "price": '가격: 350,000원',
+                "date": '예약 가능 날짜 : 2024.08.20'
+            },
+            "hiddenItems": [
+                {
+                    "img": '/img/makeup.jpg',
+                    "name": '비밀 메이크업 A',
+                    "price": '가격: 450,000원',
+                    "date": '예약 가능 날짜 : 2024.08.10'
+                },
+                {
+                    "img": '/img/makeup.jpg',
+                    "name": '비밀 메이크업 B',
+                    "price": '가격: 400,000원',
+                    "date": '예약 가능 날짜 : 2024.08.18'
+                }
+            ]
+        }
     }
+    
     return JSONResponse(content=data)
 
 if __name__ == '__main__':
-    
     uvicorn.run(app, host='127.0.0.1', port=8500)

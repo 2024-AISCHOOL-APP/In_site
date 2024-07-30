@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import Mypnavs from '../components/Mypage/Mypnavs';
+import Money_Cal from '../components/Mypage/Money_Cal';
 
 
 

@@ -1,0 +1,20 @@
+.num1 {
+    --bs-progress-bar-bg: #667BC6;
+}
+
+.num2 {
+    --bs-progress-bar-bg: #FDFFD2;
+}
+
+.num3 {
+    --bs-progress-bar-bg: #FFB4C2;
+}
+
+.num4 {
+    --bs-progress-bar-bg: #55AD9B;
+}
+
+.progress-bar {
+    color: black;
+    font-weight: bold;
+}

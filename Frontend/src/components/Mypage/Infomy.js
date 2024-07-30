@@ -16,6 +16,9 @@ const Infomy = () => {
   const [InfoPw, setInfoPw] = useState(''); // 해시된 비밀번호
   const [InfoPws, setInfoPws] = useState(''); // 새 비밀번호
 
+  //초기 화면 설정을 위한 변수
+  const [isLoading, setIsLoading] = useState(true);
+
   const mem_id = window.sessionStorage.getItem('mem_id');
 
   useEffect(() => {
@@ -27,13 +30,15 @@ const Infomy = () => {
         setInfoPhon(res.data.Myinfo[0].mem_phone);
         setInfoPw(res.data.Myinfo[0].mem_pw); // 해시된 비밀번호
       })
+
       .catch((error) => {
         console.error("Error fetching:", error);
+        setIsLoading(false);
       });
   }, [mem_id]);
 
   const handleUpdate = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     Swal.fire({
       title: '현재 비밀번호를 입력하세요',
@@ -49,19 +54,19 @@ const Infomy = () => {
     }).then((passwordResult) => {
       if (passwordResult.isConfirmed) {
         const inputPassword = passwordResult.value;
-        const hashedInputPassword = md5(inputPassword); 
-        console.log(hashedInputPassword,'입력받은 번호');
-        console.log(InfoPw,'db저장번호');
+        const hashedInputPassword = md5(inputPassword);
+        console.log(hashedInputPassword, '입력받은 번호');
+        console.log(InfoPw, 'db저장번호');
 
 
         if (hashedInputPassword === InfoPw) {
-        
+
           console.log("여기까지 들어오니?");
           const updatedInfo = {
             mem_email: InfoEmail,
             mem_nick: InfoNick,
             mem_phone: InfoPhon,
-            mem_pw: InfoPws ? md5(InfoPws) : InfoPw 
+            mem_pw: InfoPws ? md5(InfoPws) : InfoPw
           };
 
           axios.post(`/Myinfo/UpdateMyinfo/${mem_id}`, updatedInfo)
@@ -100,61 +105,61 @@ const Infomy = () => {
       cancelButtonText: '취소'
     }).then((result) => {
       if (result.isConfirmed) {
-            Swal.fire({
-              title: '현재 비밀번호를 입력하세요',
-              input: 'password',
-              inputAttributes: {
-                autocapitalize: 'off',
-                required: 'required',
-                minLength: 4
-              },
-              showCancelButton: true,
-              confirmButtonText: '확인',
-              cancelButtonText: '취소'
-            }).then((passwordResult) => {
-              if (passwordResult.isConfirmed) {
-                const inputPassword = passwordResult.value;
-                const hashedInputPassword = md5(inputPassword); 
-                console.log(hashedInputPassword,'입력받은 번호');
-                console.log(InfoPw,'db저장번호');
-        
-        
-                if (hashedInputPassword === InfoPw) {
-                
-                  console.log("여기까지 들어오니?");   
-                  axios.delete(`/Myinfo/Delete/${mem_id}`)
-                    .then(() => {
-                      Swal.fire({
-                        icon: 'success',
-                        text: '계정이 삭제 되었습니다..',
-                        confirmButtonText: '확인'
-                      });
-                    }).then(()=>{
-                      window.location.href = '/';
-                    })
-                    .catch((error) => {
-                      console.error("Error updating:", error);
-                      Swal.fire({
-                        icon: 'error',
-                        text: '계정삭제 실패하였습니다.',
-                        confirmButtonText: '확인'
-                      });
-                    });
-                } else {
+        Swal.fire({
+          title: '현재 비밀번호를 입력하세요',
+          input: 'password',
+          inputAttributes: {
+            autocapitalize: 'off',
+            required: 'required',
+            minLength: 4
+          },
+          showCancelButton: true,
+          confirmButtonText: '확인',
+          cancelButtonText: '취소'
+        }).then((passwordResult) => {
+          if (passwordResult.isConfirmed) {
+            const inputPassword = passwordResult.value;
+            const hashedInputPassword = md5(inputPassword);
+            console.log(hashedInputPassword, '입력받은 번호');
+            console.log(InfoPw, 'db저장번호');
+
+
+            if (hashedInputPassword === InfoPw) {
+
+              console.log("여기까지 들어오니?");
+              axios.delete(`/Myinfo/Delete/${mem_id}`)
+                .then(() => {
                   Swal.fire({
-                    icon: 'error',
-                    text: '비밀번호가 일치하지 않습니다.',
+                    icon: 'success',
+                    text: '계정이 삭제 되었습니다..',
                     confirmButtonText: '확인'
                   });
-                }
-              }
-            });;
+                }).then(() => {
+                  window.location.href = '/';
+                })
+                .catch((error) => {
+                  console.error("Error updating:", error);
+                  Swal.fire({
+                    icon: 'error',
+                    text: '계정삭제 실패하였습니다.',
+                    confirmButtonText: '확인'
+                  });
+                });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                text: '비밀번호가 일치하지 않습니다.',
+                confirmButtonText: '확인'
+              });
+            }
+          }
+        });;
       }
     });
   };
 
   return (
-    <Container>
+    <div>
       <Row>
         <Col className='my-3'>
           <h1>내 정보</h1>
@@ -254,10 +259,22 @@ const Infomy = () => {
         </Col>
 
         <Col lg={6}>
+          {/* 초기화면 표시 조건 */}
+          {isLoading ? (
+            <div>Loading...</div> // 데이터 로딩 중일 때 표시할 내용
+          ) : handleUpdate.length === 0 ? (
+            <div>
+              <p>데이터가 없습니다. 데이터를 추가해주세요.</p>
+              <Button variant="primary">데이터 추가</Button>
+            </div>
+          ) : (
+            <>
           <MyDonutCharts />
+          </>
+          )}
         </Col>
       </Row>
-    </Container>
+    </div >
   );
 };
 

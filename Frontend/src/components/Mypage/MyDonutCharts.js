@@ -36,7 +36,9 @@ const MyDonutCharts = () => {
           }));
 
           setDataMoney(formattedData);
+          setIsLoading(false);
           console.log('성공');
+        } else{
           setIsLoading(false);
         }
       })
@@ -82,7 +84,7 @@ const MyDonutCharts = () => {
         color: '#000',
         font: {
           weight: 'bold',
-          size : 20,
+          size: 20,
         },
         anchor: 'end',
         align: 'start',
@@ -91,13 +93,26 @@ const MyDonutCharts = () => {
     },
   };
 
-  // if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading data: {error.message}</p>;
 
   return (
-    <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-      <br /><br />
-      <Doughnut data={data} options={options}/>
+    <div>
+      {/* 초기화면 표시 조건 */}
+      {isLoading ? (
+        <div>Loading...</div> // 데이터 로딩 중일 때 표시할 내용
+      ) : dataMoney.length === 0 ? (
+        <div>
+          <p>데이터가 없습니다. '입력' 탭에서 데이터를 추가해주세요.</p>
+        </div>
+      ) : (
+        <>
+          <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+            <br /><br />
+            <Doughnut data={data} options={options} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

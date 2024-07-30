@@ -2,27 +2,27 @@ const express = require("express");
 const router = express.Router();
 const conn = require("../config/database");
 
-router.post("/:mem_id", (req, res) => {
-    let mem_id = req.params.mem_id; // URL에서 mem_id를 가져옴
-    console.log("내정보 라우터 mem_id:", mem_id);
+// router.post("/:mem_id", (req, res) => {
+//     let mem_id = req.params.mem_id; // URL에서 mem_id를 가져옴
+//     console.log("내정보 라우터 mem_id:", mem_id);
 
-    let sql = "SELECT * FROM tbl_moneys WHERE mem_id = ?"; // mem_id를 이용한 SQL 쿼리
+//     let sql = "SELECT * FROM tbl_moneys WHERE mem_id = ?"; // mem_id를 이용한 SQL 쿼리
     
-    conn.query(sql, [mem_id], (err, rows) => {
+//     conn.query(sql, [mem_id], (err, rows) => {
 
-        console.log("조회된 데이터:", rows); // 데이터 확인용 로그
+//         console.log("조회된 데이터:", rows); // 데이터 확인용 로그
 
-        if (rows.length > 0) {
-        console.log("데이터 가져와짐55");
-        res.json({
-            MyMoney: rows
-        });
-        } else {
-        console.log("내정보 라우터 값 문제");
-        res.status(404).json({ error: "데이터가 없습니다." });
-        }
-    });
-});
+//         if (rows.length > 0) {
+//         console.log("데이터 가져와짐55");
+//         res.json({
+//             MyMoney: rows
+//         });
+//         } else {
+//         console.log("내정보 라우터 값 문제");
+//         res.status(404).json({ error: "데이터가 없습니다." });
+//         }
+//     });
+// });
 
 router.post("/m/add", (req, res) => {
     const newEvent = req.body; // 클라이언트에서 전송된 새 객체

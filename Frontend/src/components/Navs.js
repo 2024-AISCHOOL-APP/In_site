@@ -57,7 +57,7 @@ function Navs() {
         <Container style={{ maxWidth: "80%" }}> {/* Changed maxWidth to 100% */}
           <Navbar.Brand onClick={() => navigateTo("/")}>
             <img
-              src="img/weddd.png"
+              src="img/WDP_b.png"
               alt="로고"
               className="navbar-logo"
             />

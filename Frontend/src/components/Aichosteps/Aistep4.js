@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Appdata } from '../../App';
 import "../../css/Aichost.css";
 import Swal from 'sweetalert2';
+import axios from "../../axios";
+
 
 const Aistep4 = () => {
   const data = useContext(Appdata);
@@ -37,7 +39,7 @@ const Aistep4 = () => {
 
   const Next = async () => {
     const mem_id = window.sessionStorage.getItem('mem_id');
-  
+
     if (mem_id) {
       const formData = new FormData();
       if (groomImage) {
@@ -46,8 +48,7 @@ const Aistep4 = () => {
       if (brideImage) {
         formData.append('brideImage', brideImage);
       }
-  
-      // Add finalData values to formData
+
       formData.append('lref', data.shareData.lref);
       formData.append('sref', data.shareData.sref);
       formData.append('dates', data.shareData.dates);
@@ -55,17 +56,13 @@ const Aistep4 = () => {
       formData.append('moneys', data.shareData.moneys);
       formData.append('persons', data.shareData.persons);
       formData.append('pluspersons', data.shareData.pluspersons);
-  
+
       try {
-        const response = await fetch('http://localhost:8500/upload', {
-          method: 'POST',
-          body: formData,
-        });
-  
-        if (response.ok) {
-          const result = await response.json();
-          const { groomImagePath, brideImagePath } = result;
-  
+        const response = await axios.post('http://localhost:8500/upload', formData);
+
+        if (response.status === 200) {
+          const { groomImagePath, brideImagePath } = response.data;
+
           let finalData = {
             lref: data.shareData.lref,
             sref: data.shareData.sref,
@@ -77,7 +74,7 @@ const Aistep4 = () => {
             groomImage: groomImagePath,
             brideImage: brideImagePath
           };
-  
+
           data.setShare(finalData);
           navigateTo("/Aichoice/2/3/4/5");
         } else {

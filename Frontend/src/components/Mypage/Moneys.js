@@ -1,31 +1,16 @@
-import React from 'react';
+import React, { memo } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import MyDonutChart from './MyDonutChart';
-
+import { Outlet } from 'react-router-dom';
+import Money_Tab from './Money_Tab';
+import Money_Cal from './Money_Cal';
 
 const Moneys = () => {
   return (
-    <Container>
-      <Row>
-        <Col className='my-3'>
-          <h1>가계부</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <MyDonutChart/>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={6}>
-          <MyDonutChart/>
-        </Col>
-        <Col lg={6}>
-          <MyDonutChart/>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+    <div>
+      <Money_Tab/>
+      <Outlet></Outlet>
+    </div>
+  )
+}
 
-export default Moneys;
+export default Moneys

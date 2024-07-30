@@ -93,7 +93,7 @@ const MyDonutCharts = () => {
     },
   };
 
-  // if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading data: {error.message}</p>;
 
   return (

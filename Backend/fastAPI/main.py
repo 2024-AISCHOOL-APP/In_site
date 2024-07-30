@@ -107,7 +107,7 @@ async def get_data():
                 "img": '/img/dmer.jpg',
                 "name": '드메르호텔 호텔 홀',
                 "sit": '200~300',
-                "price": '4,000,000',
+                "price": '4000000',
                 "date": '2024.07.19'
             },
            
@@ -116,7 +116,7 @@ async def get_data():
             "mainItem": {
                 "img": '/img/studio.jpg',
                 "name": '스타디오 사진관',
-                "price": '1,500,000',
+                "price": '1500000',
                 "date": ' 2024.08.01'
             },
           
@@ -125,7 +125,7 @@ async def get_data():
             "mainItem": {
                 "img": '/img/dress.jpg',
                 "name": '드레스 샵',
-                "price": '2,000,000',
+                "price": '2000000',
                 "date": ' 2024.08.15'
             },
 
@@ -134,7 +134,7 @@ async def get_data():
             "mainItem": {
                 "img": '/img/makeup.jpg',
                 "name": '메이크업 전문',
-                "price": '350,000',
+                "price": '350000',
                 "date": '2024.08.20'
             },
           

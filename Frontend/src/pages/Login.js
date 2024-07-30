@@ -75,13 +75,13 @@ function Login() {
 
   return (
     <>
-    <Row className="mb-3">
+    <Row className="mt-4">
     </Row>
-    <div className="mb-3">
+    <div className="mt-5">
       <div id="content" className="my-custom-content">
         <Container>
           <Row className="justify-content-md-center">
-            <Col lg={8} md={12} className="login-form-container">
+            <Col lg={8} md={12} sm={12} className="login-form-container">
               <div className="text-center mt-2">
                 <img
                   src="/img/wdp_log2.png"

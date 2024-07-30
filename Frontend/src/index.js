@@ -5,14 +5,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { CartProvider } from './components/CartContext'; // CartProvider를 import 합니다.
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-  {/* <React.StrictMode> */}
-    <App />
-  {/* </React.StrictMode> */}
+    {/* <React.StrictMode> */}
+    <CartProvider> {/* CartProvider로 App을 래핑합니다. */}
+      <App />
+    </CartProvider>
+    {/* </React.StrictMode> */}
   </BrowserRouter>
 );
 

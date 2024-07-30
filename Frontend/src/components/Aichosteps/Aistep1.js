@@ -77,6 +77,8 @@ const Aistep1 = () => {
             <Row>
               <Col md={11} sm={10} xs={10} className='m-auto'>
                 <Form.Select  ref={srefs}>
+                <option value="">선택하세요</option>
+
                   <option>남구</option>
                   <option>서구</option>
                   <option>북구</option>

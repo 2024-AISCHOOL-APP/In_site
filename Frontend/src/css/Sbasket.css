@@ -1,0 +1,25 @@
+/* Sbasket.css */
+.cart-item-image {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.delete-button {
+  border: none;
+  background: transparent;
+  color: #dc3545;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}

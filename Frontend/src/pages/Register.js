@@ -174,18 +174,18 @@ function Register() {
     <>
     <Row className="mt-5">
     </Row>
-    <div className="register-pag mt-5">
-      <Container>
+    <div className="register-pag my-5">
+      <Container className="my-5">
         <Row className="justify-content-md-center">
           <Col md={6} className="login-form-container">
-          <div className="text-center mb-4">
+          <div className="text-center mb-2">
                 <img
-                  src="/img/weddd2.png"
+                  src="/img/wdp_log2.png"
                   alt="Read Fit 로고"
                   className="login-logo"
                 />
               </div>
-            <h2 className="text-center mb-4">회원가입</h2>
+            <h2 className="text-center mb-1">회원가입</h2>
             <Form onSubmit={handleSubmit}>
               <InputGroup className="mb-3">
                 <InputGroup.Text>

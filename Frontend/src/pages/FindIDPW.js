@@ -109,14 +109,14 @@ const FindIDPW = () => {
   };
 
   return (
-    <div className="find-id-pw mt-5">
+    <div className="find-id-pw mt-4">
       <Container className="my-custom-content py-5">
         <Row className="justify-content-center">
           <Col lg={6} md={8} sm={10} xs={12} className="text-center">
             <img
-              src="/img/weddd2.png"
+              src="/img/wdp_log2.png"
               alt="Read Fit 로고"
-              className="login-logo mb-4"
+              className="login-logo mb-1"
             />
             <Form
               onSubmit={handleFindId}

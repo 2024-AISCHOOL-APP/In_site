@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import axios from "../../axios";
-import "../../css/Camodal.css";
+
 
 const Upmodal = ({ show, handleClose, start, end, titles, mem_id, locations, cal_Idx }) => {
   const [startDate, setStartDate] = useState('');

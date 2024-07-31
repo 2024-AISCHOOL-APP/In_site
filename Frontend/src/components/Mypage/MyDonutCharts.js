@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import axios from "../../axios";
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 // Chart.js의 요소를 등록합니다.
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -14,6 +16,9 @@ const MyDonutCharts = () => {
   const [error, setError] = useState(null);
 
   let mem_id = window.sessionStorage.getItem('mem_id');
+
+  const navigate = useNavigate();
+  const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
   useEffect(() => {
     axios
@@ -36,10 +41,10 @@ const MyDonutCharts = () => {
           }));
 
           setDataMoney(formattedData);
-          setIsLoading(false);
+          setIsLoading(false)
           console.log('성공');
-        } else{
-          setIsLoading(false);
+        } else {
+          setIsLoading(false)
         }
       })
       .catch((error) => {
@@ -93,26 +98,16 @@ const MyDonutCharts = () => {
     },
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading data: {error.message}</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  if (error) return <p className='mt-5'>
+    데이터가 없습니다. '가계부 입력' 탭에서 작성해주세요. <br/>
+      <Button className='mt-4' onClick={() => navigateTo("/Mypage/moneys")}>가계부 입력</Button>
+    </p>;
 
   return (
-    <div>
-      {/* 초기화면 표시 조건 */}
-      {isLoading ? (
-        <div>Loading...</div> // 데이터 로딩 중일 때 표시할 내용
-      ) : dataMoney.length === 0 ? (
-        <div>
-          <p>데이터가 없습니다. '입력' 탭에서 데이터를 추가해주세요.</p>
-        </div>
-      ) : (
-        <>
-          <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-            <br /><br />
-            <Doughnut data={data} options={options} />
-          </div>
-        </>
-      )}
+    <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+      <br /><br />
+      <Doughnut data={data} options={options} />
     </div>
   );
 };

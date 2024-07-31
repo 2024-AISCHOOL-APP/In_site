@@ -6,7 +6,7 @@ img {
 
 /* Carousel 섹션 스타일 */
 .carousel-section {
-  margin-bottom: 40px; /* 캐로셀 간의 간격 조정 */
+  margin-bottom: 80px; /* 캐로셀 간의 간격 조정 */
   position: relative; /* 제목을 절대 위치로 배치하기 위해 상대 위치 설정 */
 }
 
@@ -97,3 +97,42 @@ img {
   display: block;
   margin: 0; /* 이미지 주변의 여백 제거 */
 }
+
+
+/* Carousel 이미지 컨테이너 스타일 */
+.carousel-slide {
+  display: flex; /* 이미지를 가로로 배치 */
+  flex-wrap: nowrap; /* 이미지가 한 줄에 배치되도록 설정 */
+  overflow: hidden; /* 이미지 넘침 방지 */
+  gap: 10px;
+}
+
+/* 이미지 스타일 */
+.carousel-slide img {
+  width: calc(25% - 10px); /* 4장 이미지를 한 줄에 배치하기 위해 각 이미지 너비를 25%로 설정, 10px은 간격 조정 */
+  height: 350px; /* 이미지 높이 설정 */
+  object-fit: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+  border-radius: 10px; /* 이미지 모서리를 둥글게 */
+  margin: 0; /* 이미지 간의 여백 제거 */
+}
+
+
+/* 모바일에서 2장씩 보이도록 설정 */
+@media (max-width: 768px) {
+  .carousel-slide {
+    flex-wrap: wrap; /* 모바일에서 이미지가 여러 줄에 배치되도록 설정 */
+  }
+
+  .carousel-slide img {
+    width: calc(50% - 10px); /* 모바일에서 2장 이미지를 한 줄에 배치하기 위해 각 이미지 너비를 50%로 설정, 10px은 간격 조정 */
+    height: 200px; /* 모바일에서 이미지 높이 설정 */
+    object-fit: cover; /* 이미지가 컨테이너를 가득 채우되 비율 유지 */
+  }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    /* 스타일 추가 또는 수정 */
+    z-index: 1; /* Ensure controls are above other elements */
+}
+

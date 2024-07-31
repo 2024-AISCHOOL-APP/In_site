@@ -16,9 +16,6 @@ const Infomy = () => {
   const [InfoPw, setInfoPw] = useState(''); // 해시된 비밀번호
   const [InfoPws, setInfoPws] = useState(''); // 새 비밀번호
 
-  //초기 화면 설정을 위한 변수
-  const [isLoading, setIsLoading] = useState(true);
-
   const mem_id = window.sessionStorage.getItem('mem_id');
 
   useEffect(() => {
@@ -33,7 +30,6 @@ const Infomy = () => {
 
       .catch((error) => {
         console.error("Error fetching:", error);
-        setIsLoading(false);
       });
   }, [mem_id]);
 
@@ -259,19 +255,7 @@ const Infomy = () => {
         </Col>
 
         <Col lg={6}>
-          {/* 초기화면 표시 조건 */}
-          {isLoading ? (
-            <div>Loading...</div> // 데이터 로딩 중일 때 표시할 내용
-          ) : handleUpdate.length === 0 ? (
-            <div>
-              <p>데이터가 없습니다. 데이터를 추가해주세요.</p>
-              <Button variant="primary">데이터 추가</Button>
-            </div>
-          ) : (
-            <>
           <MyDonutCharts />
-          </>
-          )}
         </Col>
       </Row>
     </div >

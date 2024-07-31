@@ -150,7 +150,7 @@ const Money_In = () => {
       ) : dataMoney.length === 0 ? (
         <div>
           <p>데이터가 없습니다. 데이터를 추가해주세요.</p>
-          <button variant="primary" onClick={handleShowModal}>데이터 추가</button>
+          <button className='btn' variant="primary" onClick={handleShowModal}>데이터 추가</button>
         </div>
       ) : (
         <>

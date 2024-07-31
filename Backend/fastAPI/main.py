@@ -1,22 +1,18 @@
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi import FastAPI, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import os
 import logging
-import uvicorn
-# from datetime import datetime
-# import uuid
-# import shutil
+from wedding_model import load_tokenized_data, load_model_and_data, recommend_services_within_budget
+from fastapi.responses import JSONResponse
+import numpy as np
+import pandas as pd
+import mysql.connector
 
+# FastAPI 인스턴스 생성
 app = FastAPI()
 
 # CORS 설정 추가
-origins = [
-    "http://localhost:3000", "http://localhost:8300"
-    # 필요에 따라 다른 출처들을 추가하세요
-]
-
+origins = ["http://localhost:3000", "http://localhost:8300"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,30 +21,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', '../uploads/Aichoice')
-# os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 # 로그 설정
 logging.basicConfig(level=logging.INFO)
 
-# def generate_unique_filename(original_filename: str) -> str:
-#     """
-#     Generate a unique filename by adding a timestamp and a UUID.
-#     """
-#     extension = os.path.splitext(original_filename)[1]  # Extract file extension
-#     unique_id = uuid.uuid4().hex  # Generate a unique ID
-#     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')  # Current timestamp
-#     return f"{timestamp}_{unique_id}{extension}"
+# 추천 결과를 저장할 전역 변수
+recommendation_result = {}
 
-# class UploadResponse(BaseModel):
-#     groomImagePath: str
-#     brideImagePath: str
+# 요청 바디 정의
+class RecommendationRequest(BaseModel):
+    budget: int
+    user_latitude: float
+    user_longitude: float
 
-# @app.post("/upload", response_model=UploadResponse)
+# 예산 문자열을 숫자로 변환하는 함수
+def parse_budget(budget_str):
+    budget_str = budget_str.replace('만원', '').replace(' ', '')
+    if '이하' in budget_str:
+        return int(budget_str.split('이하')[0]) * 10000
+    elif '이상' in budget_str:
+        return int(budget_str.split('이상')[0]) * 10000
+    elif '~' in budget_str:
+        return int(budget_str.split('~')[1]) * 10000
+    else:
+        raise ValueError("Invalid budget format")
+
+# 데이터베이스 연결 설정
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host="project-db-stu3.smhrd.com",
+        user="Insa5_App_hacksim_3",
+        password="aischool3",
+        database="Insa5_App_hacksim_3",
+        port=3307
+    )
+    return connection
+
 @app.post("/upload")
 async def upload_images(
-    # groomImage: UploadFile = File(...),
-    # brideImage: UploadFile = File(...),
     lref: str = Form(...),
     sref: str = Form(...),
     dates: str = Form(...),
@@ -57,26 +66,8 @@ async def upload_images(
     persons: str = Form(...),
     pluspersons: str = Form(...)
 ):
-    # groom_image_url = ''
-    # bride_image_url = ''
+    global recommendation_result
 
-    # if groomImage:
-    #     unique_groom_filename = generate_unique_filename(groomImage.filename)
-    #     groom_path = os.path.join(UPLOAD_FOLDER, unique_groom_filename)
-    #     with open(groom_path, "wb") as buffer:
-    #         shutil.copyfileobj(groomImage.file, buffer)
-    #     logging.info(f"Groom image uploaded to: {groom_path}")
-    #     groom_image_url = f"/files/{unique_groom_filename}"
-
-    # if brideImage:
-    #     unique_bride_filename = generate_unique_filename(brideImage.filename)
-    #     bride_path = os.path.join(UPLOAD_FOLDER, unique_bride_filename)
-    #     with open(bride_path, "wb") as buffer:
-    #         shutil.copyfileobj(brideImage.file, buffer)
-    #     logging.info(f"Bride image uploaded to: {bride_path}")
-    #     bride_image_url = f"/files/{unique_bride_filename}"
-
-    # Log additional form data
     logging.info("Form Data Received:")
     logging.info(f"lref: {lref}")
     logging.info(f"sref: {sref}")
@@ -86,62 +77,106 @@ async def upload_images(
     logging.info(f"persons: {persons}")
     logging.info(f"pluspersons: {pluspersons}")
 
-    # return {"groomImagePath": groom_image_url, "brideImagePath": bride_image_url}
+    try:
+        budget = parse_budget(moneys)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-# @app.get("/files/{filename}")
-# async def get_file(filename: str):
-#     """
-#     Serve files from the UPLOAD_FOLDER directory.
-#     """
-#     file_path = os.path.join(UPLOAD_FOLDER, filename)
-#     if os.path.exists(file_path):
-#         return FileResponse(file_path)
-#     else:
-#         return JSONResponse({"error": "File not found"}, status_code=404)
+    user_latitude, user_longitude = map(float, sref.split(", "))
+
+    # 모델 및 데이터 로드
+    regressors, vectorizers = load_model_and_data('model_and_data.pkl')
+    dress_data, makeup_data, studio_data, wedding_data = load_tokenized_data()
+
+    # 추천 결과 생성
+    recommendation = recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude)
+
+    if recommendation:
+        recommendation_result = recommendation
+        return {"message": "Recommendation generated successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="No suitable recommendations found within the budget")
+
+@app.post("/recommend")
+def recommend(request: RecommendationRequest):
+    global recommendation_result
+
+    regressors, vectorizers = load_model_and_data('model_and_data.pkl')
+    dress_data, makeup_data, studio_data, wedding_data = load_tokenized_data()
+    recommendation = recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, request.budget, request.user_latitude, request.user_longitude)
+    
+    if recommendation:
+        recommendation_result = recommendation
+        return recommendation
+    else:
+        raise HTTPException(status_code=404, detail="No suitable recommendations found within the budget")
 
 @app.get("/data")
 async def get_data():
-    data = {
-        "wedding-hall": {
-            "mainItem": {
-                "img": '/img/dmer.jpg',
-                "name": '드메르호텔 호텔 홀',
-                "sit": '200~300',
-                "price": '4000000',
-                "date": '2024.07.19'
-            },
-           
-        },
-        "studio": {
-            "mainItem": {
-                "img": '/img/studio.jpg',
-                "name": '스타디오 사진관',
-                "price": '1500000',
-                "date": ' 2024.08.01'
-            },
-          
-        },
-        "dress": {
-            "mainItem": {
-                "img": '/img/dress.jpg',
-                "name": '드레스 샵',
-                "price": '2000000',
-                "date": ' 2024.08.15'
-            },
+    global recommendation_result
 
-        },
-        "makeup": {
-            "mainItem": {
-                "img": '/img/makeup.jpg',
-                "name": '메이크업 전문',
-                "price": '350000',
-                "date": '2024.08.20'
+    def convert_to_serializable(data):
+        if isinstance(data, np.int64):
+            return int(data)
+        if isinstance(data, pd.DataFrame):
+            return data.to_dict(orient='records')
+        raise TypeError(f"Object of type {type(data)} is not JSON serializable")
+
+    if not recommendation_result:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM tbl_product")
+            products = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            
+            # 데이터 변환
+            data = {"products": [convert_to_serializable(prod) for prod in products]}
+            return JSONResponse(content=data)
+        except mysql.connector.Error as err:
+            logging.error(f"Error: {err}")
+            raise HTTPException(status_code=500, detail="Database connection error")
+    else:
+        recommendation = recommendation_result['recommendations']
+        data = {
+            "wedding-hall": {
+                "mainItem": {
+                    "img": '/img/dmer.jpg',
+                    "name": recommendation['wedding'].iloc[0]['prod_name'],
+                    "sit": '200~300',
+                    "price": convert_to_serializable(recommendation['wedding'].iloc[0]['price']),
+                    "date": '2024.07.19'
+                },
             },
-          
+            "studio": {
+                "mainItem": {
+                    "img": '/img/studio.jpg',
+                    "name": recommendation['studio'].iloc[0]['prod_name'],
+                    "price": convert_to_serializable(recommendation['studio'].iloc[0]['price']),
+                    "date": '2024.08.01'
+                },
+            },
+            "dress": {
+                "mainItem": {
+                    "img": '/img/dress.jpg',
+                    "name": recommendation['dress'].iloc[0]['prod_name'],
+                    "price": convert_to_serializable(recommendation['dress'].iloc[0]['price']),
+                    "date": '2024.08.15'
+                },
+            },
+            "makeup": {
+                "mainItem": {
+                    "img": '/img/makeup.jpg',
+                    "name": recommendation['makeup'].iloc[0]['prod_name'],
+                    "price": convert_to_serializable(recommendation['makeup'].iloc[0]['price']),
+                    "date": '2024.08.20'
+                },
+            }
         }
-    }
-    
+
     return JSONResponse(content=data)
 
 if __name__ == '__main__':
+    import uvicorn
     uvicorn.run(app, host='127.0.0.1', port=8500)

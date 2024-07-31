@@ -129,4 +129,21 @@ router.get('/images', (req, res) => {
     });
 });
 
+
+router.post('/review/:board_seq', (req, res) => {
+  const { board_seq } = req.params;
+
+  try {
+      // 조회수 증가 쿼리
+       conn.query(
+          'UPDATE board SET board_views = board_views + 1 WHERE board_seq = ?',
+          [board_seq]
+      );
+      res.status(200).send({ message: '조회수 증가 완료' });
+  } catch (error) {
+      res.status(500).send({ message: '조회수 증가 실패', error });
+  }
+});
+
+
 module.exports = router;

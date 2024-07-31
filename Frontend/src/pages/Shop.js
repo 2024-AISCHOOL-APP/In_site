@@ -71,7 +71,7 @@ const Shop = () => {
           </Col>
         </Row>
 
-        <Row className="my-5">
+        <Row className="my-5 center-img3">
           <Col lg={6} md={6} sm={12}>
           <Image className="img-fluid2"
               src={selectedHallImage || storeDetail.store_img} 

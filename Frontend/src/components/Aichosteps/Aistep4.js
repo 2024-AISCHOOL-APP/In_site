@@ -1,157 +1,153 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
-import { Col, Container, Row, Button, Card, Image } from "react-bootstrap";
+import React, { useCallback, useContext, useState, useEffect } from "react";
+import { Col, Container, Row, Button, Card, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "../../axios";
 import { Appdata } from '../../App';
 import "../../css/Aichost.css";
-import Swal from 'sweetalert2';
-import axios from "../../axios";
 
+// Format price with comma
+const formatPrice = (price) => {
+  const number = parseInt(price, 10);
+  return new Intl.NumberFormat().format(number);
+};
 
+// InfoCard Component
+const InfoCard = ({ title, item }) => (
+  <Card className="mb-4 shadow-sm">
+    <Card.Header style={{ backgroundColor: '#DAC4FB' }}>
+      <h5 style={{ fontWeight: 'bold' }}>{title}</h5>
+    </Card.Header>
+    <Row noGutters>
+      <Col md={12} lg={12} xl={6}>
+        <Card.Img src={item.img} alt={item.name} />
+      </Col>
+      <Col md={12} lg={12} xl={6}>
+        <Card.Body>
+          <Card.Text className="mb-1 text-align-center">상호명 : {item.name}</Card.Text>
+          {item.sit && <Card.Text className="mb-1 text-align-center">좌석수 : {item.sit}석</Card.Text>}
+          <Card.Text className="mb-1 text-align-center">가격 : {formatPrice(item.price)}원</Card.Text>
+          <Card.Text className="mb-1 text-align-center">예약 가능 날짜 : {item.date}</Card.Text>
+        </Card.Body>
+      </Col>
+    </Row>
+  </Card>
+);
+
+// Aistep4 Component
 const Aistep4 = () => {
   const data = useContext(Appdata);
+  console.log(data, "6단계 확인");
+
   const navigate = useNavigate();
   const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
-  const [groomImage, setGroomImage] = useState(null);
-  const [brideImage, setBrideImage] = useState(null);
+  const [mainItem, setMainItem] = useState(null);
+  const [studioItem, setStudioItem] = useState(null);
+  const [dressItem, setDressItem] = useState(null);
+  const [makeupItem, setMakeupItem] = useState(null);
+  const [totalPrice, setTotalPrice] = useState('0'); // 상태 추가
 
-  const groomRef = useRef();
-  const brideRef = useRef();
+  // Fetch data and update state
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8500/data');
+        console.log('Server response:', response.data);
 
-  const handleFileUpload = (event, setImage) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
+        setMainItem(response.data['wedding-hall'].mainItem);
+        setStudioItem(response.data['studio'].mainItem);
+        setDressItem(response.data['dress'].mainItem);
+        setMakeupItem(response.data['makeup'].mainItem);
+
+        // Calculate and set total price
+        const total = calculateTotal(response.data);
+        setTotalPrice(total);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateTotal = (data) => {
+    if (!data['wedding-hall'] || !data['studio'] || !data['dress'] || !data['makeup']) return '0';
+
+    const parsePrice = (price) => parseInt(price, 10);
+
+    const total = [
+      data['wedding-hall'].mainItem,
+      data['studio'].mainItem,
+      data['dress'].mainItem,
+      data['makeup'].mainItem
+    ]
+      .map(item => parsePrice(item.price))
+      .reduce((sum, price) => sum + price, 0);
+
+    return formatPrice(total);
   };
 
-  const handleGroomUpload = (event) => {
-    handleFileUpload(event, setGroomImage);
-  };
-
-  const handleBrideUpload = (event) => {
-    handleFileUpload(event, setBrideImage);
-  };
-
-  const Back = () => {
+  const handleBack = () => {
     navigateTo(-1);
   };
 
-  const Next = async () => {
-    const mem_id = window.sessionStorage.getItem('mem_id');
-
-    if (mem_id) {
-      const formData = new FormData();
-      if (groomImage) {
-        formData.append('groomImage', groomImage);
-      }
-      if (brideImage) {
-        formData.append('brideImage', brideImage);
-      }
-
-      formData.append('lref', data.shareData.lref);
-      formData.append('sref', data.shareData.sref);
-      formData.append('dates', data.shareData.dates);
-      formData.append('times', data.shareData.times);
-      formData.append('moneys', data.shareData.moneys);
-      formData.append('persons', data.shareData.persons);
-      formData.append('pluspersons', data.shareData.pluspersons);
-
-      try {
-        const response = await axios.post('http://localhost:8500/upload', formData);
-
-        if (response.status === 200) {
-          const { groomImagePath, brideImagePath } = response.data;
-
-          let finalData = {
-            lref: data.shareData.lref,
-            sref: data.shareData.sref,
-            dates: data.shareData.dates,
-            times: data.shareData.times,
-            moneys: data.shareData.moneys,
-            persons: data.shareData.persons,
-            pluspersons: data.shareData.pluspersons,
-            groomImage: groomImagePath,
-            brideImage: brideImagePath
-          };
-
-          data.setShare(finalData);
-          navigateTo("/Aichoice/2/3/4/5");
-        } else {
-          console.error('파일 업로드 실패');
-        }
-      } catch (error) {
-        console.error('파일 업로드 중 오류 발생:', error);
-      }
-    } else {
-      Swal.fire({
-        icon: 'warning',
-        text: '로그인 후 이용해주세요',
-        confirmButtonText: '확인'
-      });
-    }
+  const handleNext = () => {
+    // Additional steps to be performed
   };
+
+  if (!mainItem || !studioItem || !dressItem || !makeupItem) {
+    return (
+      <Container className="text-center my-5">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container className="my-5">
       <Row className="justify-content-center">
-        <Col md={8}>
-          <Card className="m-auto p-4">
+        <Col md={8} sm={10} xs={12}>
+          <Card className="m-auto p-4 shadow-lg">
             <Row>
-              <Col className="Qtitle">Q 05.</Col>
-            </Row>
-            <Row className="my-2">
-              <Col className="Qti2">사진을 올려주세요</Col>
-            </Row>
-            <Row className="my-5">
-              <Col md={11} sm={10} xs={10} className="m-auto text-center">
-                <div className={`image-upload-box ${groomImage ? 'uploaded' : ''}`}>
-                  <label 
-                    htmlFor="groom-upload" 
-                    className="custom-file-upload"
-                  >
-                    {groomImage ? "신랑 이미지가 업로드 되었습니다" : "신랑 사진을 올려주세요"}
-                  </label>
-                  <input 
-                    id="groom-upload" 
-                    type="file" 
-                    onChange={handleGroomUpload}
-                    ref={groomRef}
-                  />
-                </div>
+              <Col className="text-center">
+                <h2 className="text-purple">결과</h2>
               </Col>
             </Row>
-
-            <Row>
-              <Col md={11} sm={10} xs={10} className="m-auto text-center">
-                <div className={`image-upload-box ${brideImage ? 'uploaded' : ''}`}>
-                  <label 
-                    htmlFor="bride-upload" 
-                    className="custom-file-upload"
-                  >
-                    {brideImage ? "신부 이미지가 업로드 되었습니다" : "신부 사진을 올려주세요"}
-                  </label>
-                  <input 
-                    id="bride-upload" 
-                    type="file" 
-                    onChange={handleBrideUpload}
-                    ref={brideRef}
-                  />
-                </div>
+            <Row className="mt-5">
+              <Col md={12}>
+                <InfoCard title="웨딩홀" item={mainItem} />
               </Col>
             </Row>
-
-            <Row>
-              <Col className="mt-3">
-                <Image src="/img/Warning.png" className="wicon" />
-                <span className="wrfon">전신사진과 얼굴 사진을 올려주세요</span>
+            <hr />
+            <Row className="mt-3">
+              <Col md={12}>
+                <InfoCard title="스튜디오" item={studioItem} />
               </Col>
             </Row>
-
-            <Row>
-              <Col className="my-5 text-center">
-                <Button onClick={Back} className="me-4 btns">이전</Button>
-                <Button onClick={Next} className="me-4 btns">결과</Button>
+            <hr />
+            <Row className="mt-3">
+              <Col md={12}>
+                <InfoCard title="드레스" item={dressItem} />
+              </Col>
+            </Row>
+            <hr />
+            <Row className="mt-3">
+              <Col md={12}>
+                <InfoCard title="메이크업" item={makeupItem} />
+              </Col>
+            </Row>
+            <Row className="text-center my-5">
+              <Col>
+                <Button className="me-4 btns">총합: {totalPrice}원</Button>
+              </Col>
+            </Row>
+            <Row className="text-center my-5">
+              <Col>
+                <Button onClick={handleBack} className="me-4 btns">취소</Button>
+                <Button onClick={handleNext} className="btns">일정저장</Button>
               </Col>
             </Row>
           </Card>

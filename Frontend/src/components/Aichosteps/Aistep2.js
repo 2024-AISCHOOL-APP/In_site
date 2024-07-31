@@ -1,54 +1,62 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import { Col, Container, Row, Form, Button, Card } from "react-bootstrap";
 import "../../css/Aichost.css";
 import { useNavigate } from "react-router-dom";
-import { useContext } from 'react';
 import { Appdata } from '../../App';
+import Swal from 'sweetalert2';
 
 const Aistep2 = () => {
+  const [dates, setDates] = useState('');
+  const [times, setTimes] = useState('');
+  const [moneys, setMoneys] = useState('');
 
-  const [dates,setDates] = useState('')
-  const [times,setTimes] = useState('')
-  const [moneys,setMoneys] = useState(0)
-
-  let datesref = useRef();
-  let timesref = useRef();
-  let moneysref = useRef();
   const navigate = useNavigate();
-
   const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
   const data = useContext(Appdata);
 
   console.log(data.shareData.lref);
 
-  function Back(){
-    navigateTo(-1)
+  const handleDateChange = (e) => {
+    setDates(e.target.value);
+  };
+
+  const handleTimeChange = (e) => {
+    setTimes(e.target.value);
+  };
+
+  const handleMoneyChange = (e) => {
+    setMoneys(e.target.value);
+  };
+
+  function Back() {
+    navigateTo(-1);
   }
 
+  console.log(times);
+  console.log(dates);
+  console.log(moneys);
 
-  function Next(){
-    setDates(datesref.current.value)
-    setTimes(timesref.current.value)
-    setMoneys(moneysref.current.value)
-
-  }
-
-
-  useEffect(()=>{
-  if(dates!== ''&& times !=='' && moneys !=='') {
-    
-    let result ={
-        lref : data.shareData.lref,
-        sref : data.shareData.sref,
-        dates : dates,
-        times : times,
-        moneys : moneys
+  function Next() {
+    if (dates === '' || times === '' || moneys === '') {
+      Swal.fire({
+        icon: 'warning',
+        text: '모든 필드를 선택해주세요',
+        confirmButtonText: '확인'
+      });
+      return;
     }
-    navigateTo("/Aichoice/2/3")
-    data.setShare(result)
-}
-},[dates,times,moneys])
+
+    let result = {
+      lref: data.shareData.lref,
+      sref: data.shareData.sref,
+      dates: dates,
+      times: times,
+      moneys: moneys
+    };
+    data.setShare(result);
+    navigateTo("/Aichoice/2/3");
+  }
 
   return (
     <Container className="my-5">
@@ -69,7 +77,7 @@ const Aistep2 = () => {
 
             <Row>
               <Col md={11} sm={10} xs={10} className="m-auto">
-                <Form.Control type="date" className="my-3" ref={datesref} />
+                <Form.Control type="date" className="my-3" value={dates} onChange={handleDateChange} />
               </Col>
             </Row>
             <Row className="my-3">
@@ -78,7 +86,7 @@ const Aistep2 = () => {
 
             <Row>
               <Col md={11} sm={10} xs={10} className="m-auto">
-                <Form.Control type="time" className="my-3" ref={timesref} />
+                <Form.Control type="time" className="my-3" value={times} onChange={handleTimeChange} />
               </Col>
             </Row>
             <Row className="my-3">
@@ -87,21 +95,21 @@ const Aistep2 = () => {
 
             <Row>
               <Col md={11} sm={10} xs={10} className="m-auto">
-              <Form.Select  ref={moneysref}>
-                  <option>400만원 이하</option>
-                  <option>400만원 ~ 500만원</option>
-                  <option>500만원 ~ 600만원</option>
-                  <option>600만원 ~ 700만원</option>
-                  <option>700만원 이상</option>
+                <Form.Select value={moneys} onChange={handleMoneyChange}>
+                  <option value="">선택하세요</option>
+                  <option value="400만원 이하">400만원 이하</option>
+                  <option value="400만원 ~ 500만원">400만원 ~ 500만원</option>
+                  <option value="500만원 ~ 600만원">500만원 ~ 600만원</option>
+                  <option value="600만원 ~ 700만원">600만원 ~ 700만원</option>
+                  <option value="700만원 이상">700만원 이상</option>
                 </Form.Select>
-                {/* <Form.Control type="number" className="my-3"  ref={moneysref}/> */}
               </Col>
             </Row>
 
             <Row>
               <Col className="my-5 text-center">
-              <Button  onClick={Back} className="me-4 btns">취소</Button>
-              <Button  onClick={Next} className="me-4 btns">다음</Button>
+                <Button onClick={Back} className="me-4 btns">취소</Button>
+                <Button onClick={Next} className="me-4 btns">다음</Button>
               </Col>
             </Row>
           </Card>

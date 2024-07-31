@@ -23,7 +23,6 @@ import Aistep1 from "./components/Aichosteps/Aistep1";
 import Aistep2 from "./components/Aichosteps/Aistep2";
 import Aistep3 from "./components/Aichosteps/Aistep3";
 import Aistep4 from "./components/Aichosteps/Aistep4";
-import Aistep5 from "./components/Aichosteps/Aistep5";
 import Money_Cal from "./components/Mypage/Money_Cal";
 import Money_Chart from "./components/Mypage/Money_Chart";
 import Money_In from "./components/Mypage/Money_In";
@@ -64,7 +63,6 @@ function App() {
             <Route path="/Aichoice/2" element={<Aistep2 />} />
             <Route path="/Aichoice/2/3" element={<Aistep3 />} />
             <Route path="/Aichoice/2/3/4" element={<Aistep4 />} />
-            <Route path="/Aichoice/2/3/4/5" element={<Aistep5 />} />
         </Route>
         <Route path="/Shop/:store_idx" element={<Shop />}/>
       </Routes>

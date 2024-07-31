@@ -5,13 +5,13 @@ import axios from "../../axios";
 import { Appdata } from '../../App';
 import "../../css/Aichost.css";
 
-// Format price with comma
+// 가격을 콤마로 포맷팅하는 함수
 const formatPrice = (price) => {
   const number = parseInt(price, 10);
   return new Intl.NumberFormat().format(number);
 };
 
-// InfoCard Component
+// InfoCard 컴포넌트
 const InfoCard = ({ title, item }) => (
   <Card className="mb-4 shadow-sm">
     <Card.Header style={{ backgroundColor: '#DAC4FB' }}>
@@ -33,7 +33,7 @@ const InfoCard = ({ title, item }) => (
   </Card>
 );
 
-// Aistep4 Component
+// Aistep4 컴포넌트
 const Aistep4 = () => {
   const data = useContext(Appdata);
   console.log(data, "6단계 확인");
@@ -47,24 +47,24 @@ const Aistep4 = () => {
   const [makeupItem, setMakeupItem] = useState(null);
   const [totalPrice, setTotalPrice] = useState('0'); // 상태 추가
 
-  // Fetch data and update state
+  // 데이터 가져와서 상태 업데이트
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8500/data');
-        console.log('Server response:', response.data);
+        console.log('서버 응답:', response.data);
 
         setMainItem(response.data['wedding-hall'].mainItem);
         setStudioItem(response.data['studio'].mainItem);
         setDressItem(response.data['dress'].mainItem);
         setMakeupItem(response.data['makeup'].mainItem);
 
-        // Calculate and set total price
+        // 총 가격 계산 및 설정
         const total = calculateTotal(response.data);
         setTotalPrice(total);
 
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('데이터 가져오기 오류:', error);
       }
     };
 
@@ -93,7 +93,7 @@ const Aistep4 = () => {
   };
 
   const handleNext = () => {
-    // Additional steps to be performed
+    // 추가 작업 수행
   };
 
   if (!mainItem || !studioItem || !dressItem || !makeupItem) {

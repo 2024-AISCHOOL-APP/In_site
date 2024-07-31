@@ -32,58 +32,58 @@ const Aistep3 = () => {
   console.log(persons);
   console.log(pluspersons);
 
-  const Next = async () => {
-    const mem_id = window.sessionStorage.getItem('mem_id');
-    if (!mem_id) {
+const Next = async () => {
+  const mem_id = window.sessionStorage.getItem('mem_id');
+  if (!mem_id) {
       Swal.fire({
-        icon: 'warning',
-        text: '로그인 후 이용해주세요',
-        confirmButtonText: '확인'
+          icon: 'warning',
+          text: '로그인 후 이용해주세요',
+          confirmButtonText: '확인'
       });
       return;
-    }
+  }
 
-    if (persons === '' || pluspersons === '') {
+  if (persons === '' || pluspersons === '') {
       Swal.fire({
-        icon: 'warning',
-        text: '모든 필드를 입력해주세요',
-        confirmButtonText: '확인'
+          icon: 'warning',
+          text: '모든 필드를 입력해주세요',
+          confirmButtonText: '확인'
       });
       return;
-    }
+  }
 
-    const formData = new FormData();
-    formData.append('lref', data.shareData.lref);
-    formData.append('sref', data.shareData.sref);
-    formData.append('dates', data.shareData.dates);
-    formData.append('times', data.shareData.times);
-    formData.append('moneys', data.shareData.moneys);
-    formData.append('persons', persons);
-    formData.append('pluspersons', pluspersons);
+  const formData = new FormData();
+  formData.append('lref', data.shareData.lref);
+  formData.append('sref', data.shareData.sref);
+  formData.append('dates', data.shareData.dates);
+  formData.append('times', data.shareData.times);
+  formData.append('moneys', data.shareData.moneys);
+  formData.append('persons', persons);
+  formData.append('pluspersons', pluspersons);
 
-    try {
+  try {
       const response = await axios.post('http://localhost:8500/upload', formData);
 
       if (response.status === 200) {
-        let finalData = {
-          lref: data.shareData.lref,
-          sref: data.shareData.sref,
-          dates: data.shareData.dates,
-          times: data.shareData.times,
-          moneys: data.shareData.moneys,
-          persons: persons,
-          pluspersons: pluspersons,
-        };
+          let finalData = {
+              lref: data.shareData.lref,
+              sref: data.shareData.sref,
+              dates: data.shareData.dates,
+              times: data.shareData.times,
+              moneys: data.shareData.moneys,
+              persons: persons,
+              pluspersons: pluspersons,
+          };
 
-        data.setShare(finalData);
-        navigateTo("/Aichoice/2/3/4");
+          data.setShare(finalData);
+          navigateTo("/Aichoice/2/3/4");
       } else {
-        console.error('파일 업로드 실패');
+          console.error('파일 업로드 실패');
       }
-    } catch (error) {
+  } catch (error) {
       console.error('파일 업로드 중 오류 발생:', error);
-    }
-  };
+  }
+};
 
   return (
     <Container className="my-5">
@@ -106,11 +106,11 @@ const Aistep3 = () => {
               <Col md={11} sm={10} xs={10} className="m-auto">
                 <Form.Select value={persons} onChange={handlePersonsChange}>
                   <option value="">선택하세요</option>
-                  <option>200명 이하</option>
-                  <option>200명 ~ 250명</option>
-                  <option>250명 ~ 300명</option>
-                  <option>300명 ~ 350명</option>
-                  <option>350명 이상</option>
+                  <option value='200'>200명 이하</option>
+                  <option value='250'>200명 ~ 250명</option>
+                  <option value='300'>250명 ~ 300명</option>
+                  <option value='350'>300명 ~ 350명</option>
+                  <option value='400'>350명 이상</option>
                 </Form.Select>
               </Col>
             </Row>

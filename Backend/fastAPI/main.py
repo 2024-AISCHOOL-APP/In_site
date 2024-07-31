@@ -48,13 +48,31 @@ def parse_budget(budget_str):
 # 데이터베이스 연결 설정
 def get_db_connection():
     connection = mysql.connector.connect(
-        host="project-db-stu3.smhrd.com",
-        user="Insa5_App_hacksim_3",
-        password="aischool3",
-        database="Insa5_App_hacksim_3",
-        port=3307
+        host = "project-db-stu3.smhrd.com",
+        user = "Insa5_App_hacksim_3",
+        password = "aischool3",
+        database = "Insa5_App_hacksim_3",
+        port = 3307
     )
     return connection
+
+# DB에서 상품 정보를 가져오는 함수
+def get_product_info_by_idx(idx, table):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        if table == 'tbl_product':
+            query = "SELECT prod_idx, prod_img FROM tbl_product WHERE prod_idx = %s"
+        else:
+            query = "SELECT store_idx, store_img FROM tbl_store WHERE store_idx = %s"
+        cursor.execute(query, (int(idx),))  # idx를 int로 변환
+        product_info = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        return product_info
+    except mysql.connector.Error as err:
+        logging.error(f"Database error: {err}")
+        return None
 
 @app.post("/upload")
 async def upload_images(
@@ -83,31 +101,18 @@ async def upload_images(
         raise HTTPException(status_code=400, detail=str(e))
 
     user_latitude, user_longitude = map(float, sref.split(", "))
+    guest_count = int(persons)
 
     # 모델 및 데이터 로드
     regressors, vectorizers = load_model_and_data('model_and_data.pkl')
     dress_data, makeup_data, studio_data, wedding_data = load_tokenized_data()
 
     # 추천 결과 생성
-    recommendation = recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude)
+    recommendation = recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude, guest_count)
 
     if recommendation:
         recommendation_result = recommendation
         return {"message": "Recommendation generated successfully"}
-    else:
-        raise HTTPException(status_code=404, detail="No suitable recommendations found within the budget")
-
-@app.post("/recommend")
-def recommend(request: RecommendationRequest):
-    global recommendation_result
-
-    regressors, vectorizers = load_model_and_data('model_and_data.pkl')
-    dress_data, makeup_data, studio_data, wedding_data = load_tokenized_data()
-    recommendation = recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, request.budget, request.user_latitude, request.user_longitude)
-    
-    if recommendation:
-        recommendation_result = recommendation
-        return recommendation
     else:
         raise HTTPException(status_code=404, detail="No suitable recommendations found within the budget")
 
@@ -126,7 +131,7 @@ async def get_data():
         try:
             connection = get_db_connection()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM tbl_product")
+            cursor.execute("SELECT * FROM tbl_store")
             products = cursor.fetchall()
             cursor.close()
             connection.close()
@@ -134,24 +139,40 @@ async def get_data():
             # 데이터 변환
             data = {"products": [convert_to_serializable(prod) for prod in products]}
             return JSONResponse(content=data)
+
         except mysql.connector.Error as err:
             logging.error(f"Error: {err}")
             raise HTTPException(status_code=500, detail="Database connection error")
     else:
         recommendation = recommendation_result['recommendations']
+        
+        def get_img_by_idx(idx, category):
+            if category == 'wedding':
+                table = 'tbl_product'
+                img_col = 'prod_img'
+            else:
+                table = 'tbl_store'
+                img_col = 'store_img'
+            product_info = get_product_info_by_idx(idx, table)
+            if product_info:
+                return product_info.get(img_col, '/img/default.jpg')
+            else:
+                logging.warning(f"No image found for idx {idx} in {category}")
+                return '/img/default.jpg'
+        
         data = {
             "wedding-hall": {
                 "mainItem": {
-                    "img": '/img/dmer.jpg',
+                    "img": get_img_by_idx(int(recommendation['wedding'].iloc[0]['prod_idx']), 'wedding'),  # idx를 int로 변환
                     "name": recommendation['wedding'].iloc[0]['prod_name'],
-                    "sit": '200~300',
+                    "sit": int(recommendation['wedding'].iloc[0]['guest_count']),
                     "price": convert_to_serializable(recommendation['wedding'].iloc[0]['price']),
                     "date": '2024.07.19'
                 },
             },
             "studio": {
                 "mainItem": {
-                    "img": '/img/studio.jpg',
+                    "img": get_img_by_idx(int(recommendation['studio'].iloc[0]['prod_idx']), 'studio'),  # idx를 int로 변환
                     "name": recommendation['studio'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['studio'].iloc[0]['price']),
                     "date": '2024.08.01'
@@ -159,7 +180,7 @@ async def get_data():
             },
             "dress": {
                 "mainItem": {
-                    "img": '/img/dress.jpg',
+                    "img": get_img_by_idx(int(recommendation['dress'].iloc[0]['prod_idx']), 'dress'),  # idx를 int로 변환
                     "name": recommendation['dress'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['dress'].iloc[0]['price']),
                     "date": '2024.08.15'
@@ -167,7 +188,7 @@ async def get_data():
             },
             "makeup": {
                 "mainItem": {
-                    "img": '/img/makeup.jpg',
+                    "img": get_img_by_idx(int(recommendation['makeup'].iloc[0]['prod_idx']), 'makeup'),  # idx를 int로 변환
                     "name": recommendation['makeup'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['makeup'].iloc[0]['price']),
                     "date": '2024.08.20'

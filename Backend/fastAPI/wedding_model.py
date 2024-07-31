@@ -31,12 +31,26 @@ def add_predicted_scores_parallel(data, regressor, vectorizer):
     result = Parallel(n_jobs=-1)(delayed(add_predicted_scores)(group, regressor, vectorizer) for name, group in data.groupby('category'))
     return pd.concat(result)
 
+# guest_count를 피처에 추가
+def add_predicted_scores(data, regressor, vectorizer, guest_count=None):
+    features = vectorizer.transform(data['tokens'])
+    
+    if 'wedding' in data.columns:
+        guest_count_column = np.full((features.shape[0], 1), guest_count)
+        features = np.hstack((data[['price', 'latitude', 'longitude']].values, features.toarray(), guest_count_column))
+    else:
+        features = np.hstack((data[['price', 'latitude', 'longitude']].values, features.toarray()))
+    
+    data['predicted_score'] = regressor.predict(features)
+    return data
+
 # 선형 프로그래밍을 사용하여 최적 조합 찾기
-def find_best_combination(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude):
+# find_best_combination 함수에 guest_count 추가
+def find_best_combination(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude, guest_count):
     dress_data = add_predicted_scores(dress_data, regressors['dress'], vectorizers['dress'])
     makeup_data = add_predicted_scores(makeup_data, regressors['makeup'], vectorizers['makeup'])
     studio_data = add_predicted_scores(studio_data, regressors['studio'], vectorizers['studio'])
-    wedding_data = add_predicted_scores(wedding_data, regressors['wedding'], vectorizers['wedding'])
+    wedding_data = add_predicted_scores(wedding_data, regressors['wedding'], vectorizers['wedding'], guest_count)
     
     dress_data = dress_data.dropna(subset=['price'])
     makeup_data = makeup_data.dropna(subset=['price'])
@@ -92,8 +106,8 @@ def find_best_combination(dress_data, makeup_data, studio_data, wedding_data, re
         return pd.DataFrame(), 0
 
 # 추천 생성
-def recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude):
-    selected_items, total_price = find_best_combination(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude)
+def recommend_services_within_budget(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude, guest_count):
+    selected_items, total_price = find_best_combination(dress_data, makeup_data, studio_data, wedding_data, regressors, vectorizers, budget, user_latitude, user_longitude, guest_count)
     
     if selected_items.empty:
         return None

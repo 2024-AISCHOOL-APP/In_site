@@ -4,6 +4,7 @@ import "../../css/Aichost.css";
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Appdata } from '../../App';
+import Swal from 'sweetalert2';
 
 const Aistep1 = () => {
     const navigate = useNavigate();
@@ -25,10 +26,16 @@ const Aistep1 = () => {
   function Next(){
     setLref(lrefs.current.value)
     setSref(srefs.current.value)
+    if (srefs.current.value == '') {
+      Swal.fire({
+        icon: 'warning',
+        text: '모든 필드를 선택해주세요',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
 
   }
-
-
   useEffect(()=>{
   if(lref!== ''&& sref !=='') {
     
@@ -77,13 +84,12 @@ const Aistep1 = () => {
             <Row>
               <Col md={11} sm={10} xs={10} className='m-auto'>
                 <Form.Select  ref={srefs}>
-                <option value="">선택하세요</option>
-
-                  <option>남구</option>
-                  <option>서구</option>
-                  <option>북구</option>
-                  <option>동구</option>
-                  <option>광산구</option>
+                  <option value="">선택하세요</option>
+                  <option value="35.1329295, 126.902357">남구</option>
+                  <option value="35.1519278, 126.8902034">서구</option>
+                  <option value="35.1742068, 126.912188">북구</option>
+                  <option value="35.1459525, 126.9231488">동구</option>
+                  <option value="35.1395924, 126.7937701">광산구</option>
                 </Form.Select>
               </Col>
             </Row>

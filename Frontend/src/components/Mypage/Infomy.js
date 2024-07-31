@@ -161,8 +161,8 @@ const Infomy = () => {
   return (
     <div>
       <Row>
-        <Col className='my-3'>
-          <h1>내 정보</h1>
+        <Col className='my-4'>
+          {/* <h1>내 정보</h1> */}
         </Col>
       </Row>
       <Row>

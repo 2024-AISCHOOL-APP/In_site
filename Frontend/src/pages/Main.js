@@ -82,11 +82,6 @@ function Main() {
         </Row>
       </Container>
       <Container className="mt-4">
-        <Row className="my-3">
-          <Col className="carou">
-            <Carousels />
-          </Col>
-        </Row>
         <Row>
           <Col>
             <Mnav  onCategorySelect={handleCategorySelect} />

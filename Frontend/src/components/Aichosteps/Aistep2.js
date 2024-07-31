@@ -97,11 +97,11 @@ const Aistep2 = () => {
               <Col md={11} sm={10} xs={10} className="m-auto">
                 <Form.Select value={moneys} onChange={handleMoneyChange}>
                   <option value="">선택하세요</option>
-                  <option value="400만원 이하">400만원 이하</option>
-                  <option value="400만원 ~ 500만원">400만원 ~ 500만원</option>
-                  <option value="500만원 ~ 600만원">500만원 ~ 600만원</option>
-                  <option value="600만원 ~ 700만원">600만원 ~ 700만원</option>
-                  <option value="700만원 이상">700만원 이상</option>
+                  <option value="500만원 이하">500만원 이하</option>
+                  <option value="500만원 ~ 700만원">500만원 ~ 700만원</option>
+                  <option value="700만원 ~ 800만원">700만원 ~ 800만원</option>
+                  <option value="800만원 ~ 1000만원">800만원 ~ 1000만원</option>
+                  <option value="1000만원 이상">1000만원 이상</option>
                 </Form.Select>
               </Col>
             </Row>

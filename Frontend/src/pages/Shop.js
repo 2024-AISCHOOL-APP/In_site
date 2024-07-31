@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Map from "../components/Map";
 import Carousels3 from "../components/Carousel3";
+import Swal from 'sweetalert2';
 import "../css/shop.css";
 
 const formatPrice = (price) => {
@@ -17,6 +18,11 @@ const Shop = () => {
   const [selectedHall, setSelectedHall] = useState('');
   const [selectedInfo, setSelectedInfo] = useState({ guestCount: '', price: '' });
   const [selectedHallImage, setSelectedHallImage] = useState('');
+
+  let mem_id = window.sessionStorage.getItem('mem_id');
+
+  const navigate = useNavigate();
+  const navigateTo = useCallback((path) => navigate(path), [navigate]);
 
   useEffect(() => {
     const fetchStoreDetail = async () => {
@@ -49,7 +55,14 @@ const Shop = () => {
 
     if (selected) {
         console.log(selected.prod_img, "Selected product image");
-        setSelectedInfo({ guestCount: selected.prod_info, price: selected.prod_price === 0 ? null : selected.prod_price });
+        setSelectedInfo({ 
+          prod_idx: selected.prod_idx,
+          guestCount: selected.prod_info,
+          price: selected.prod_price === 0 ? null : selected.prod_price ,
+          prod_img :selected.prod_img,
+          prod_name : selected.prod_name
+        });
+  
         setSelectedHallImage(selected.prod_img || ''); // 선택된 홀의 이미지 URL 업데이트
     } else {
         setSelectedInfo({ guestCount: '', price: null });
@@ -58,8 +71,35 @@ const Shop = () => {
 };
 
   console.log(selectedHallImage.prod_img);
+  
+  const handleAddToCart = async () => {
+    try {
+      const item = {
+        prod_idx: selectedInfo.prod_idx,
+        mem_id: mem_id, // 실제 사용자 ID로 대체
+        prod_cnt: 1, // 기본 수량
+        prod_price:selectedInfo.price,
+        prod_img : selectedInfo.prod_img,
+        prod_name : selectedInfo.prod_name
+      };
 
- 
+      await axios.post('/shop/cart/add', item); // 서버에 아이템 추가 요청
+      Swal.fire({
+        title: '장바구니 추가 성공',
+        text: '장바구니로 이동하시겠습니까?',
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: '네',
+        cancelButtonText: '아니요'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigateTo("/Mypage/Sbasket");
+        }
+      });
+    } catch (error) {
+      console.error("장바구니 추가 오류:", error);
+    }
+  };
 
   return (
     <>
@@ -73,7 +113,7 @@ const Shop = () => {
 
         <Row className="my-5 center-img3">
           <Col lg={6} md={6} sm={12}>
-          <Image className="img-fluid2"
+            <Image className="img-fluid2"
               src={selectedHallImage || storeDetail.store_img} 
               alt="Selected Hall" 
               fluid 
@@ -117,19 +157,9 @@ const Shop = () => {
                 )}
               </>
             )}
-            {/* <Row className="mb-3 align-items-center">
-              <Col className="d-flex align-items-center">
-                <span className="sdates mb-0 pe-2">일정 :</span>
-                <Form.Control
-                  type="date"
-                  className="mb-0"
-                  style={{ display: "inline-block", width: "50%" }}
-                />
-              </Col>
-            </Row> */}
             <Row>
               <Col>
-                <Button variant="success" type="submit" className="login-button mt-5">
+                <Button variant="success" type="submit" className="login-button mt-5" onClick={handleAddToCart} >
                   장바구니
                 </Button>
               </Col>
@@ -155,7 +185,7 @@ const Shop = () => {
           <Col>
             <Map lat={storeDetail.lat} lon={storeDetail.lon} />
           </Col>
-        </Row>
+        </Row> 
       </Container>
     </>
   );

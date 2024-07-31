@@ -54,6 +54,8 @@ const Aistep2 = () => {
       times: times,
       moneys: moneys
     };
+    console.log("Form Data to be sent:", result); // 데이터를 전송하기 전에 출력
+
     data.setShare(result);
     navigateTo("/Aichoice/2/3");
   }
@@ -99,8 +101,8 @@ const Aistep2 = () => {
                   <option value="">선택하세요</option>
                   <option value="500만원 이하">500만원 이하</option>
                   <option value="500만원 ~ 700만원">500만원 ~ 700만원</option>
-                  <option value="700만원 ~ 800만원">700만원 ~ 800만원</option>
-                  <option value="800만원 ~ 1000만원">800만원 ~ 1000만원</option>
+                  <option value="700만원 ~ 900만원">700만원 ~ 900만원</option>
+                  <option value="900만원 ~ 1000만원">900만원 ~ 1000만원</option>
                   <option value="1000만원 이상">1000만원 이상</option>
                 </Form.Select>
               </Col>

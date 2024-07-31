@@ -101,34 +101,18 @@ html, body {
   padding-left: 0;
 }
 
-/* 카루젤 스타일 */
-.carou {
-  display: none; 
-}
 
 @media (max-width: 767px) {
-  .carou {
-    display: block; 
-  }
-  .video-container {
-    display: none;
-  }
-  /* .text-lg-right {
-    text-align: left !important;
-  }
 
-  .d-lg-flex {
-    display: flex !important;
-  }
-  .d-lg-none {
-    display: none !important;
-  } */
+
 
   .mkt{
     display: none;
   }
 
-
+  .video-container{
+    margin-top: 55px;
+  }
 
   .video-overlay h1 {
     font-size: 2rem;
@@ -143,3 +127,5 @@ html, body {
     padding: 0.5rem 1rem;
   }
 }
+
+

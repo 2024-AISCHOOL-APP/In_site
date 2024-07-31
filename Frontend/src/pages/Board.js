@@ -37,7 +37,7 @@ function Board() {
             <Row className="mt-5"></Row>
             <Container className="my-5">
                 <Row className="my-3">
-                    <Col className="justify-content-left">
+                    <Col className="d-flex justify-content-left">
                         <h3>공지사항</h3>
                     </Col>
                 </Row>

@@ -82,11 +82,6 @@ function Main() {
         </Row>
       </Container>
       <Container className="mt-4">
-        <Row className="my-3">
-          <Col className="carou">
-            <Carousels />
-          </Col>
-        </Row>
         <Row>
           <Col>
             <Mnav  onCategorySelect={handleCategorySelect} />
@@ -142,8 +137,8 @@ function Main() {
             lg={6}
             className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
-            <h1 className="text-center">캘린더</h1>
-            <p className="text-center">기능</p>
+            <h1 className="text-center">AI웨딩플랜</h1>
+            <p className="text-center">맞춤형 AI 추천으로 최적의 웨딩홀, 스튜디오, 드레스, 메이크업 업체를 제안받으세요.</p>
           </Col>
         </Row>
         <Row
@@ -156,7 +151,7 @@ function Main() {
             className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
             <h1 className="text-center">캘린더</h1>
-            <p className="text-center">기능</p>
+            <p className="text-center">직관적인 캘린더에서 일정 관리, 장소와 시간의 색상 구분으로 일정을 명확하게 확인하세요.</p>
           </Col>
           <Col
             lg={6}
@@ -180,8 +175,8 @@ function Main() {
             lg={6}
             className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
-            <h1 className="text-center">캘린더</h1>
-            <p className="text-center">기능</p>
+            <h1 className="text-center">가계부</h1>
+            <p className="text-center">입력한 거래 내역을 캘린더와 차트에서 시각화하여 지출을 쉽게 관리하고 분석하세요.</p>
           </Col>
         </Row>
         <Row
@@ -193,8 +188,8 @@ function Main() {
             lg={6}
             className="my-3 d-none d-lg-flex flex-column align-items-center justify-content-center mkt"
           >
-            <h1 className="text-center">캘린더</h1>
-            <p className="text-center">기능</p>
+            <h1 className="text-center">장바구니</h1>
+            <p className="text-center">각 업체의 상세 페이지에서 장바구니에 추가한 항목들을 중앙에서 편리하게 관리하세요.</p>
           </Col>
           <Col
             lg={6}

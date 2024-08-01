@@ -92,7 +92,7 @@ const Aistep2 = () => {
               </Col>
             </Row>
             <Row className="my-3">
-              <Col className="Qtit3">예상 금액을 적어주세요</Col>
+              <Col className="Qtit3">예상 금액을 선택 해주세요</Col>
             </Row>
 
             <Row>

@@ -1,8 +1,8 @@
-numpy
-pandas
-scipy
-scikit-learn==0.24.2
-fastapi
-uvicorn
-joblib
 konlpy
+scipy
+joblib
+fastapi
+pydantic
+mysql-connector-python
+
+pip install -r requirements.txt

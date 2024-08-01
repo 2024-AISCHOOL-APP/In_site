@@ -3,50 +3,37 @@ import { Button, Col, Container, Row, Table, Tab, Tabs, ButtonGroup, ProgressBar
 import axios from "../../axios";
 import Money_Modal from './Money_Modal';
 import Money_Cal from './Money_Cal';
+import Swal from 'sweetalert2';
 
 const Money_In = () => {
-
   const [dataMoney, setDataMoney] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectMoney, setSelectMoney] = useState(null); //수정할 항목
-  //체크된 아이템 담을 배열
   const [checkItems, setCheckItems] = useState([]);
-
-  // 초기 화면 표시를 위한 로딩 상태
   const [isLoading, setIsLoading] = useState(true);
 
-  // mem_id로 연결
   const mem_id = window.sessionStorage.getItem('mem_id');
   console.log('mem_id:', mem_id);
 
-  //체크박스 단일 선택
   const handleSingleCheck = (checked, moneys_idx) => {
     if (checked) {
-      //단일 선택시 체크된 아이템 배열에 추가
       setCheckItems(prev => [...prev, moneys_idx]);
     } else {
-      {
-        //단일 선택 해제 시 체크된 아이템 제외한 배열(필터)
-        setCheckItems(checkItems.filter((el) => el !== moneys_idx));
-      }
+      setCheckItems(checkItems.filter((el) => el !== moneys_idx));
     }
   };
 
-  //체크박스 전체 선택
   const handleAllCheck = (checked) => {
     if (checked) {
-      //전체 선택 클릭시 데이터 모든 아이템(id)을 담은 배열로 checkitems 상태 업데이트
       const idArray = dataMoney.map((el) => el.moneys_idx);
       setCheckItems(idArray);
     } else {
-      //전체 선택 해제시 checkitems 을 빈 배열로 상태 업데이트
       setCheckItems([]);
     }
   };
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    // return new Date(dateString).substring(0,11)
     return new Date(dateString).toLocaleDateString('ko-KR', options).replace('/\./g', '-').replace('/\s+/g', '');
   };
 
@@ -96,7 +83,6 @@ const Money_In = () => {
             };
           });
           setDataMoney(sortDataByDateDesc(formattedData));
-
         } else {
           console.error("MyMoney 데이터가 없습니다.");
         }
@@ -111,28 +97,53 @@ const Money_In = () => {
       const moneyEdit = dataMoney.find(item => item.moneys_idx === checkItems[0]);
       setSelectMoney(moneyEdit); // 선택된 항목을 수정 상태로 변경
       setShowModal(true);
-
     } else {
-      alert('하나의 항목만 선택해주세요.')
+      Swal.fire({
+        icon: 'warning',
+        title: '경고',
+        text: '하나의 항목만 선택해주세요.'
+      });
     }
   };
 
   const handleDelete = () => {
-    axios
-      .delete('/Money/m/delete', { data: { ids: checkItems } })
-      .then((res) => {
-        if (res.data) {
-          //삭제되면 프론트의 상태 업데이트
-          setDataMoney(dataMoney.filter((item) => !checkItems.includes(item.moneys_idx)));
-          setCheckItems([]);
-          alert('정말 삭제하시겠습니까?')
-        } else {
-          console.error("삭제 실패:", res.data);
-        }
-      })
-      .catch((err) => {
-        console.error("삭제 요청 실패:", err);
+    if(checkItems.length<1){
+      Swal.fire({
+        icon: 'warning',
+        title: '경고',
+        text: '항목을 선택해주세요.'
       });
+    }
+    else{
+    Swal.fire({
+      title: '정말 삭제하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete('/Money/m/delete', { data: { ids: checkItems } })
+          .then((res) => {
+            if (res.data) {
+              setDataMoney(dataMoney.filter((item) => !checkItems.includes(item.moneys_idx)));
+              setCheckItems([]);
+              Swal.fire({
+                icon: 'success',
+                title: '삭제 완료',
+                text: '선택된 항목이 삭제되었습니다.'
+              });
+            } else {
+              console.error("삭제 실패:", res.data);
+            }
+          })
+          .catch((err) => {
+            console.error("삭제 요청 실패:", err);
+          });
+      }
+    });
+  }
   }
 
   const handleCloseModal = () => setShowModal(false);
@@ -144,9 +155,8 @@ const Money_In = () => {
 
   return (
     <div>
-      {/* 초기화면 표시 조건 */}
       {isLoading ? (
-        <div>Loading...</div> // 데이터 로딩 중일 때 표시할 내용
+        <div>Loading...</div>
       ) : dataMoney.length === 0 ? (
         <div>
           <p>데이터가 없습니다. 데이터를 추가해주세요.</p>
@@ -179,7 +189,6 @@ const Money_In = () => {
                   <td>
                     <input type='checkbox' name={`select-${dataMoney.moneys_idx}`}
                       onChange={(e) => handleSingleCheck(e.target.checked, dataMoney.moneys_idx)}
-                      //체크된 아이템 배열에 해당 아이템이 있으면 선택 활성화, 아닐시 해제
                       checked={checkItems.includes(dataMoney.moneys_idx)} />
                   </td>
                   <td>{dataMoney.category_name}</td>

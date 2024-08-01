@@ -30,4 +30,15 @@
     font-size: 0.7em;
 } */
 
-
+@media (max-width: 768px) {
+    .fc {
+      font-size: 14px; /* 글꼴 크기 조정 */
+      margin: 0; /* 마진 조정 */
+    }
+    .fc-toolbar {
+      padding: 0 10px; /* 툴바의 패딩 조정 */
+    }
+    .fc-daygrid-day-number {
+      font-size: 12px; /* 날짜 숫자 크기 조정 */
+    }
+  }

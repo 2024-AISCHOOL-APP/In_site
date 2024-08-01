@@ -108,9 +108,9 @@ const Aistep2 = () => {
             </Row>
 
             <Row>
-              <Col className="my-5 text-center">
-                <Button onClick={Back} className="me-4 btns">취소</Button>
-                <Button onClick={Next} className="me-4 btns">다음</Button>
+            <Col className='mt-5 text-center'>
+                <Button  onClick={Back} className="me-2 btns">취소</Button>
+                <Button  onClick={Next} className="btns">다음</Button>
               </Col>
             </Row>
           </Card>

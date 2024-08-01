@@ -107,6 +107,14 @@ const Money_In = () => {
   };
 
   const handleDelete = () => {
+    if(checkItems.length<1){
+      Swal.fire({
+        icon: 'warning',
+        title: '경고',
+        text: '항목을 선택해주세요.'
+      });
+    }
+    else{
     Swal.fire({
       title: '정말 삭제하시겠습니까?',
       icon: 'warning',
@@ -135,6 +143,7 @@ const Money_In = () => {
           });
       }
     });
+  }
   }
 
   const handleCloseModal = () => setShowModal(false);

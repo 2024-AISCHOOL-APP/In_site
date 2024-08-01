@@ -95,7 +95,7 @@ const Next = async () => {
             </Row>
             <Row className="my-2">
               <Col className="Qti2">
-                예식을 원하는 희망날짜와 시간을 선택 해주세요
+                예상 하객수를 선택해주세요
               </Col>
             </Row>
             <Row className="my-3">

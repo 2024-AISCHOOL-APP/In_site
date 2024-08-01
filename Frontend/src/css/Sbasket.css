@@ -1,0 +1,80 @@
+.sbasket-container {
+  margin-top: 3rem;
+}
+
+.sbasket-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sbasket-empty {
+  text-align: center;
+}
+
+.sbasket-table {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sbasket-total {
+  text-align: end;
+  margin-top: 2rem;
+}
+
+.cart-item-image {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.delete-button {
+  border: none;
+  background: transparent;
+  color: #dc3545;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+.table_ddddd{
+  text-align : center;
+  vertical-align : middle;
+}
+
+@media (max-width: 768px) {
+  .sbasket-table {
+    display: block;
+  }
+  .sbasket-table thead {
+    display: none;
+  }
+  .sbasket-table tbody, .sbasket-table tr, .sbasket-table td {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .sbasket-table td {
+    padding: 10px;
+    position: relative;
+  }
+  .sbasket-table td::before {
+    display: none; /* 모바일 화면에서 data-label 숨김 */
+  }
+  .delete-button {
+    display: block;
+    width: 100%; /* 삭제 버튼을 전체 너비로 설정 */
+    padding: 0.5rem;
+    margin: 0 auto;
+  }
+  .delete-button span {
+    display: none; /* 버튼 텍스트 숨김 */
+  }
+  .sbasket-total {
+    text-align: center !important;
+  }
+}

@@ -1,0 +1,8 @@
+konlpy
+scipy
+joblib
+fastapi
+pydantic
+mysql-connector-python
+
+pip install -r requirements.txt

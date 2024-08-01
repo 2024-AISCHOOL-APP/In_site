@@ -1,0 +1,48 @@
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: -100px;
+  }
+  
+  .main-image {
+    width: 478px; /* Fixed width */
+    height: 370px; /* Fixed height */
+    object-fit: cover; /* Ensure the image covers the box */
+    margin-right: 20px; /* Move the main image 20px to the right */
+  }
+  
+  .main-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    margin-left: 20px; /* Move the text 20px to the right */
+  }
+  
+  .main-text h3 {
+    margin-bottom: 10px;
+  }
+  
+  .thumbnail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between thumbnails */
+    margin-top: 20px;
+  }
+  
+  .thumbnail-img {
+    width: 120px; /* Width of the thumbnail */
+    height: 120px; /* Height of the thumbnail */
+    object-fit: cover; /* Ensures the image fits within the dimensions without distortion */
+    cursor: pointer;
+    border: 2px solid transparent; /* Border to highlight on hover */
+    transition: border-color 0.3s; /* Smooth transition for border color change */
+  }
+  
+  .thumbnail-img:hover {
+    border-color: #007bff; /* Border color on hover */
+  }
+  

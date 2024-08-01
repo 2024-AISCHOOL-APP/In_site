@@ -107,9 +107,9 @@ function Main() {
             <Mcard
               key={index}
               store_img={ca.store_img}
-              positivePercentage={50}
-              negativePercentage={50}
-              reviewCount={45}
+              positivePercentage={ca.positive}
+              negativePercentage={100-ca.positive}
+              reviewCount={ca.total_reviews}
               store={ca.store_name}
               reviews={ca.store_info}
               store_seq={ca.store_idx}

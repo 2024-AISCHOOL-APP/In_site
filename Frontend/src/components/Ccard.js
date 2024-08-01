@@ -3,8 +3,17 @@ import { Col, Card, Button } from 'react-bootstrap';
 import CartContext from '../components/CartContext';
 import "../css/Mcard.css";
 import { Link } from 'react-router-dom';
+import {
+  faEye,
+  faThumbsUp,
+  faThumbsDown,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Ccard = ({ store_img, store, store_idx, store_info, price }) => {
+
+const Ccard = ({ store_img, store, store_idx, store_info, price,positivePercentage, negativePercentage,reviewCount}) => {
   const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = () => {
@@ -22,6 +31,18 @@ const Ccard = ({ store_img, store, store_idx, store_info, price }) => {
           <Card.Title className="product-title">{store}</Card.Title>
           <div className="review-container">
             <span className="review-text">{store_info}</span>
+          </div>
+          <hr className="product-divider" />
+          <div className="product-hover-info">
+            <span>
+              <FontAwesomeIcon icon={faEye} /> {reviewCount}
+            </span>
+            <span>
+              <FontAwesomeIcon icon={faThumbsUp} /> {positivePercentage}%
+            </span>
+            <span>
+              <FontAwesomeIcon icon={faThumbsDown} /> {negativePercentage}%
+            </span>
           </div>
         </Card.Body>
       </Card>

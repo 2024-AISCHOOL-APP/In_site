@@ -42,6 +42,8 @@ const Category = () => {
     fetchCa();
   }, [selectedCategory.category_p_name]);
 
+
+
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const itemsPerPage = 8;
@@ -96,7 +98,7 @@ const Category = () => {
           {selectedCategory.category_name}
         </Col>
       </Row>
-
+      
       <Row>
         {paginatedWeds.map((we, index) => (
           <Ccard
@@ -105,6 +107,9 @@ const Category = () => {
             store={we.store_name}
             store_idx={we.store_idx}
             store_info={we.store_info}
+            positivePercentage={we.positive}
+            negativePercentage={100-we.positive}
+            reviewCount={we.total_reviews}
           />
         ))}
       </Row>

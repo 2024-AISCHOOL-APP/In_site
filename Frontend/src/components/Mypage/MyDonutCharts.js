@@ -22,12 +22,22 @@ const MyDonutCharts = () => {
 
   useEffect(() => {
     axios
-      .get(`/saved_recommendations/${mem_id}`)
+      .post(`/Money/${mem_id}`)
       .then((res) => {
-        if (res.data.savedRecommendations) {
-          const formattedData = res.data.savedRecommendations.map(item => ({
-            title: item.prod_name,
-            price: item.prod_price
+        if (res.data.MyMoney) {
+          const formattedEvents = res.data.MyMoney.reduce((acc, item) => {
+            const { category_name, moneys_amount } = item;
+            if (acc[category_name]) {
+              acc[category_name] += moneys_amount;
+            } else {
+              acc[category_name] = moneys_amount;
+            }
+            return acc;
+          }, {});
+
+          const formattedData = Object.keys(formattedEvents).map(category_name => ({
+            title: category_name,
+            price: formattedEvents[category_name]
           }));
 
           setDataMoney(formattedData);
@@ -88,6 +98,7 @@ const MyDonutCharts = () => {
     },
   };
 
+  // if (isLoading) return <p>Loading...</p>;
   if (error) return <p className='mt-5'>
     데이터가 없습니다. '가계부 입력' 탭에서 작성해주세요. <br/>
       <Button className='mt-4' onClick={() => navigateTo("/Mypage/moneys")}>가계부 입력</Button>

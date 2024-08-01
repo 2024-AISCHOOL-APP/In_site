@@ -35,6 +35,8 @@ const InfoCard = ({ title, item }) => (
 
 // Aistep4 컴포넌트
 const Aistep4 = () => {
+  let mem_id = window.sessionStorage.getItem('mem_id');
+
   const data = useContext(Appdata);
   console.log(data, "6단계 확인");
 
@@ -99,8 +101,49 @@ const Aistep4 = () => {
     navigateTo(-1);
   };
 
-  const handleNext = () => {
-    // 추가 작업 수행
+  const handleSave = async () => {
+    try {
+      const saveData = {
+        mem_id,
+        weddingHall: {
+          name: mainItem.name,
+          price: mainItem.price,
+          sit: mainItem.sit,
+          img: mainItem.img,
+          date: mainItem.date,
+        },
+        studio: {
+          name: studioItem.name,
+          price: studioItem.price,
+          sit: studioItem.sit,
+          img: studioItem.img,
+          date: studioItem.date,
+        },
+        dress: {
+          name: dressItem.name,
+          price: dressItem.price,
+          sit: dressItem.sit,
+          img: dressItem.img,
+          date: dressItem.date,
+        },
+        makeup: {
+          name: makeupItem.name,
+          price: makeupItem.price,
+          sit: makeupItem.sit,
+          img: makeupItem.img,
+          date: makeupItem.date,
+        },
+        totalPrice,
+      };
+
+      const response = await axios.post('/Myinfo/s/save', saveData);
+      console.log('저장 응답:', response.data);
+      alert('추천 결과가 저장되었습니다.');
+      navigateTo('/mypage');
+    } catch (error) {
+      console.error('저장 오류:', error);
+      alert('추천 결과 저장에 실패했습니다.');
+    }
   };
 
   if (!mainItem || !studioItem || !dressItem || !makeupItem) {
@@ -154,7 +197,7 @@ const Aistep4 = () => {
             <Row className="text-center mt-5">
               <Col>
                 <Button onClick={handleBack} className="me-2 btns">취소</Button>
-                <Button onClick={handleNext} className="btns">일정저장</Button>
+                <Button onClick={handleSave} className="btns">저장</Button>
               </Col>
             </Row>
           </Card>

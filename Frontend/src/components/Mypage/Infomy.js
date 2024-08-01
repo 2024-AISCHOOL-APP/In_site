@@ -7,6 +7,7 @@ import '../../css/Infomy.css';
 import Swal from 'sweetalert2';
 import axios from "../../axios";
 import md5 from 'md5';
+import SbzzFile from './SbzzFile';
 
 const Infomy = () => {
   const [InfoId, setInfoId] = useState('');
@@ -255,7 +256,9 @@ const Infomy = () => {
         </Col>
 
         <Col lg={6}>
-          <MyDonutCharts />
+          {/* <MyDonutCharts /> */}
+          나의 AI웨딩 플랜 결과
+          <SbzzFile></SbzzFile>
         </Col>
       </Row>
     </div >

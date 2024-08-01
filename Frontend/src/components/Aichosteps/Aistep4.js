@@ -151,10 +151,10 @@ const Aistep4 = () => {
                 <Button className="me-4 btns">총합: {totalPrice}원</Button>
               </Col>
             </Row>
-            <Row className="text-center my-5">
+            <Row className="text-center mt-5">
               <Col>
-                <Button onClick={handleBack} className="me-4 btns">취소</Button>
-                <Button onClick={handleNext} className="btns">저장</Button>
+                <Button onClick={handleBack} className="me-2 btns">취소</Button>
+                <Button onClick={handleNext} className="btns">일정저장</Button>
               </Col>
             </Row>
           </Card>

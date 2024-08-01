@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../axios";
 import "../css/DetailPage.css"; // CSS 파일에서 스타일을 정의합니다.
-import { Row, Button, Form, Modal } from "react-bootstrap";
+import { Row, Button, Form, Modal, Col } from "react-bootstrap";
 
 const DetailPage = () => {
   const { board_seq } = useParams();
@@ -102,10 +102,11 @@ const DetailPage = () => {
         <div className="header-container">
           <h1 className="detail-header">공지사항 작성</h1>
         </div>
-        <div className="detail-container">
+        <div className="detail-container my-5">
           {seq === '0' && !isEditing && (
-            <div className="button-group">
-              <Button onClick={handleEdit} variant='warning' className="btn">
+            <Row className="button-group">
+              <Col>
+              <Button onClick={handleEdit} variant='warning' className="btn me-2">
                 수정
               </Button>
               <Button 
@@ -115,7 +116,8 @@ const DetailPage = () => {
               >
                 삭제
               </Button>
-            </div>
+              </Col>
+            </Row>
           )}
           {isEditing ? (
             <div className="detail-content">

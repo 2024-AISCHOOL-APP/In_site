@@ -65,39 +65,43 @@ const Sbasket = () => {
   };
 
   return (
-    <Container className="my-5">
-      <h2 className="text-center mb-4">장바구니</h2>
-      {dataMoney.length === 0 ? (
-        <p className="text-center">장바구니가 비어 있습니다.</p>
-      ) : (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>이미지</th>
-              <th>상품명</th>
-              <th>가격</th>
-              <th>삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataMoney.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  <Image src={item.prod_img} rounded style={{ width: "100px", height: "100px" }} />
-                </td>
-                <td>{item.prod_name}</td>
-                <td>{item.prod_price ? item.prod_price.toLocaleString() : "0"}원</td>
-                <td>
-                  <Button variant="danger" onClick={() => handleDelete(item.cart_idx)}>
-                    삭제
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-      <h3 className="text-end">총 가격: {totalPrice.toLocaleString()}원</h3>
+    <Container className="sbasket-container">
+      <Row className="justify-content-center">
+        <Col xs={12} md={10}>
+          <h2 className="sbasket-header">장바구니</h2>
+          {dataMoney.length === 0 ? (
+            <p className="sbasket-empty">장바구니가 비어 있습니다.</p>
+          ) : (
+            <Table responsive striped bordered hover className="sbasket-table">
+              <thead>
+                <tr>
+                  <th>이미지</th>
+                  <th>상품명</th>
+                  <th>가격</th>
+                  <th>삭제</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dataMoney.map((item, index) => (
+                  <tr key={index} >
+                    <td data-label="이미지">
+                      <Image src={item.prod_img} rounded className="cart-item-image" />
+                    </td>
+                    <td data-label="상품명" className="table_ddddd">{item.prod_name}</td>
+                    <td data-label="가격" className="table_ddddd">{item.prod_price ? item.prod_price.toLocaleString() : "0"}원</td>
+                    <td data-label="삭제" className="table_ddddd">
+                      <Button variant="danger" onClick={() => handleDelete(item.cart_idx)}>
+                        <span>삭제</span>
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+          <h3 className="sbasket-total">총 가격: {totalPrice.toLocaleString()}원</h3>
+        </Col>
+      </Row>
     </Container>
   );
 };

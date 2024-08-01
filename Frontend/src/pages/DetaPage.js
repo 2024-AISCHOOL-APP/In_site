@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../axios";
 import "../css/DetailPage.css"; // CSS 파일에서 스타일을 정의합니다.
-import { Row, Button, Form, Modal, Col } from "react-bootstrap";
+import { Row, Button, Form, Col } from "react-bootstrap";
+import Swal from 'sweetalert2';
 
 const DetailPage = () => {
   const { board_seq } = useParams();
@@ -12,7 +13,6 @@ const DetailPage = () => {
   const [editedContent, setEditedContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const seq = window.sessionStorage.getItem('mem_seq');
 
@@ -36,15 +36,6 @@ const DetailPage = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/board/${board_seq}`);
-      navigate('/Board');
-    } catch (error) {
-      console.error("게시글 삭제 도중 오류 발생:", error);
-    }
   };
 
   const handleSave = async () => {
@@ -73,8 +64,18 @@ const DetailPage = () => {
       if (response.data.img) {
         setPreviewImage(`http://localhost:8300${response.data.img}?${new Date().getTime()}`);
       }
+      Swal.fire({
+        icon: 'success',
+        text: '수정 성공!',
+        confirmButtonText: '확인'
+      });
     } catch (error) {
       console.error("게시글 수정 도중 오류 발생:", error);
+      Swal.fire({
+        icon: 'error',
+        text: '수정 도중 오류가 발생했습니다.',
+        confirmButtonText: '확인'
+      });
     }
   };
 
@@ -95,27 +96,55 @@ const DetailPage = () => {
     setSelectedFile(null);
   };
 
+  function deletepost() {
+    Swal.fire({
+      icon: 'question',
+      text: '정말 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`/board/${board_seq}`);
+          Swal.fire({
+            icon: 'success',
+            text: '삭제 성공!',
+            confirmButtonText: '확인'
+          }).then(() => {
+            navigate('/Board');
+          });
+        } catch (error) {
+          console.error("게시글 삭제 도중 오류 발생:", error);
+          Swal.fire({
+            icon: 'error',
+            text: '삭제 도중 오류가 발생했습니다.',
+            confirmButtonText: '확인'
+          });
+        }
+      }
+    });
+  }
+
   return (
     <>
       <Row className="mt-5"></Row>
       <div className="my-5">
-        <div className="header-container">
-          <h1 className="detail-header">공지사항 작성</h1>
-        </div>
+        <Row className="mt-5"></Row>
         <div className="detail-container my-5">
           {seq === '0' && !isEditing && (
             <Row className="button-group">
               <Col>
-              <Button onClick={handleEdit} variant='warning' className="btn me-2">
-                수정
-              </Button>
-              <Button 
-                onClick={() => setShowDeleteModal(true)} 
-                variant='danger' 
-                className="btn"
-              >
-                삭제
-              </Button>
+                <Button onClick={handleEdit} variant='warning' className="btn me-2">
+                  수정
+                </Button>
+                <Button 
+                  onClick={deletepost} 
+                  variant='danger' 
+                  className="btn"
+                >
+                  삭제
+                </Button>
               </Col>
             </Row>
           )}
@@ -188,28 +217,6 @@ const DetailPage = () => {
           )}
         </div>
       </div>
-
-      {/* 삭제 확인 모달 */}
-      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>삭제 확인</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-            취소
-          </Button>
-          <Button 
-            variant="danger" 
-            onClick={async () => {
-              await handleDelete();
-              setShowDeleteModal(false);
-            }}
-          >
-            삭제
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };

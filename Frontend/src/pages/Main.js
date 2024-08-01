@@ -131,7 +131,7 @@ function Main() {
             lg={6}
             className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
-            <img src="img/dmer.jpg" alt="Description" />
+            <img src="img/aire.png" alt="Description" />
           </Col>
           <Col
             lg={6}
@@ -157,7 +157,7 @@ function Main() {
             lg={6}
             className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
-            <img src="img/dmer.jpg" />
+            <img src="img/cal.png" />
           </Col>
         </Row>
         <Row
@@ -169,7 +169,7 @@ function Main() {
             lg={6}
             className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
-            <img src="img/dmer.jpg" />
+            <img src="img/gage.png" />
           </Col>
           <Col
             lg={6}
@@ -195,7 +195,7 @@ function Main() {
             lg={6}
             className="my-3 d-flex justify-content-center align-items-center login-form-container"
           >
-            <img src="img/dmer.jpg" />
+            <img src="img/jang.png" />
           </Col>
         </Row>
       </Container>

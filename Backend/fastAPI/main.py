@@ -7,6 +7,8 @@ from fastapi.responses import JSONResponse
 import numpy as np
 import pandas as pd
 import mysql.connector
+import random
+from datetime import datetime, timedelta
 
 # FastAPI 인스턴스 생성
 app = FastAPI()
@@ -26,6 +28,8 @@ logging.basicConfig(level=logging.INFO)
 
 # 추천 결과를 저장할 전역 변수
 recommendation_result = {}
+# 날짜를 저장할 전역 변수
+wedding_date_str = ""
 
 # 요청 바디 정의
 class RecommendationRequest(BaseModel):
@@ -84,7 +88,7 @@ async def upload_images(
     persons: str = Form(...),
     pluspersons: str = Form(...)
 ):
-    global recommendation_result
+    global recommendation_result, wedding_date_str
 
     logging.info("Form Data Received:")
     logging.info(f"lref: {lref}")
@@ -94,6 +98,8 @@ async def upload_images(
     logging.info(f"moneys: {moneys}")
     logging.info(f"persons: {persons}")
     logging.info(f"pluspersons: {pluspersons}")
+
+    wedding_date_str = dates
 
     try:
         budget = parse_budget(moneys)
@@ -118,7 +124,7 @@ async def upload_images(
 
 @app.get("/data")
 async def get_data():
-    global recommendation_result
+    global recommendation_result, wedding_date_str
 
     def convert_to_serializable(data):
         if isinstance(data, np.int64):
@@ -160,6 +166,16 @@ async def get_data():
                 logging.warning(f"No image found for idx {idx} in {category}")
                 return '/img/default.jpg'
         
+        def random_date(start_date, end_date):
+            delta = end_date - start_date
+            random_days = random.randint(0, delta.days)
+            return start_date + timedelta(days=random_days)
+        
+        wedding_date = datetime.strptime(wedding_date_str, "%Y-%m-%d")
+        studio_date = random_date(wedding_date - timedelta(days=180), wedding_date - timedelta(days=90))
+        dress_date = random_date(studio_date - timedelta(days=30), studio_date - timedelta(days=10))
+        makeup_date = studio_date
+
         data = {
             "wedding-hall": {
                 "mainItem": {
@@ -167,7 +183,7 @@ async def get_data():
                     "name": recommendation['wedding'].iloc[0]['prod_name'],
                     "sit": int(recommendation['wedding'].iloc[0]['guest_count']),
                     "price": convert_to_serializable(recommendation['wedding'].iloc[0]['price']),
-                    "date": '2024.07.19'
+                    "date": wedding_date.strftime("%Y-%m-%d")
                 },
             },
             "studio": {
@@ -175,7 +191,7 @@ async def get_data():
                     "img": get_img_by_idx(int(recommendation['studio'].iloc[0]['prod_idx']), 'studio'),  # idx를 int로 변환
                     "name": recommendation['studio'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['studio'].iloc[0]['price']),
-                    "date": '2024.08.01'
+                    "date": studio_date.strftime("%Y-%m-%d")
                 },
             },
             "dress": {
@@ -183,7 +199,7 @@ async def get_data():
                     "img": get_img_by_idx(int(recommendation['dress'].iloc[0]['prod_idx']), 'dress'),  # idx를 int로 변환
                     "name": recommendation['dress'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['dress'].iloc[0]['price']),
-                    "date": '2024.08.15'
+                    "date": dress_date.strftime("%Y-%m-%d")
                 },
             },
             "makeup": {
@@ -191,7 +207,7 @@ async def get_data():
                     "img": get_img_by_idx(int(recommendation['makeup'].iloc[0]['prod_idx']), 'makeup'),  # idx를 int로 변환
                     "name": recommendation['makeup'].iloc[0]['prod_name'],
                     "price": convert_to_serializable(recommendation['makeup'].iloc[0]['price']),
-                    "date": '2024.08.20'
+                    "date": makeup_date.strftime("%Y-%m-%d")
                 },
             }
         }

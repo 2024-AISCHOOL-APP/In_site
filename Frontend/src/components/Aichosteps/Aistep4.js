@@ -54,10 +54,18 @@ const Aistep4 = () => {
         const response = await axios.get('http://localhost:8500/data');
         console.log('서버 응답:', response.data);
 
-        setMainItem(response.data['wedding-hall'].mainItem);
-        setStudioItem(response.data['studio'].mainItem);
-        setDressItem(response.data['dress'].mainItem);
-        setMakeupItem(response.data['makeup'].mainItem);
+        if (response.data['wedding-hall']) {
+          setMainItem(response.data['wedding-hall'].mainItem);
+        }
+        if (response.data['studio']) {
+          setStudioItem(response.data['studio'].mainItem);
+        }
+        if (response.data['dress']) {
+          setDressItem(response.data['dress'].mainItem);
+        }
+        if (response.data['makeup']) {
+          setMakeupItem(response.data['makeup'].mainItem);
+        }
 
         // 총 가격 계산 및 설정
         const total = calculateTotal(response.data);
@@ -72,16 +80,15 @@ const Aistep4 = () => {
   }, []);
 
   const calculateTotal = (data) => {
-    if (!data['wedding-hall'] || !data['studio'] || !data['dress'] || !data['makeup']) return '0';
-
     const parsePrice = (price) => parseInt(price, 10);
 
     const total = [
-      data['wedding-hall'].mainItem,
-      data['studio'].mainItem,
-      data['dress'].mainItem,
-      data['makeup'].mainItem
+      data['wedding-hall']?.mainItem,
+      data['studio']?.mainItem,
+      data['dress']?.mainItem,
+      data['makeup']?.mainItem
     ]
+      .filter(item => item !== null && item !== undefined)
       .map(item => parsePrice(item.price))
       .reduce((sum, price) => sum + price, 0);
 
@@ -147,7 +154,7 @@ const Aistep4 = () => {
             <Row className="text-center my-5">
               <Col>
                 <Button onClick={handleBack} className="me-4 btns">취소</Button>
-                <Button onClick={handleNext} className="btns">일정저장</Button>
+                <Button onClick={handleNext} className="btns">저장</Button>
               </Col>
             </Row>
           </Card>

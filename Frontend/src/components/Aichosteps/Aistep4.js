@@ -145,9 +145,9 @@ const Aistep4 = () => {
               </Col>
             </Row>
             <Row className="text-center my-5">
-              <Col>
-                <Button onClick={handleBack} className="me-4 btns">취소</Button>
-                <Button onClick={handleNext} className="btns">일정저장</Button>
+            <Col className='mt-5 text-center'>
+                <Button  onClick={handleBack} className="me-2 btns">취소</Button>
+                <Button  onClick={handleNext} className="btns">저장</Button>
               </Col>
             </Row>
           </Card>

@@ -122,7 +122,7 @@ const Shop = () => {
               }}
             />
           </Col>
-          <Col lg={6} md={6} sm={12} className="t2 login-form-container">
+          <Col lg={6} md={6} sm={12} className="t2 login-form-container mt-5">
             <Row className="mb-3 mt-4">
               <Col>
                 <Form.Select onChange={handleSelectChange}>

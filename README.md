@@ -1,22 +1,21 @@
-# 📎 꽃 보러 갈래?(팀명: 아름답조)
-![image](https://user-images.githubusercontent.com/25995055/178401309-2a2ffc86-ef45-439b-bfd8-6978312100bc.png)
+# 📎 웨딩팡 (팀명: 인사이트)
+![image](https://github.com/user-attachments/assets/7ba95e1a-784d-45a0-b496-4218e5391899)
+
 
 
 ## 👀 서비스 소개
-* 서비스명:  꽃 개화 시기별 우리 지역 근처 데이트/드라이브 추천 장소 및 꽃 축제 추천 
-* 서비스설명: 
+* 서비스명:  유사도 분석 기반 개인 맞춤형 웨딩 플랜 웹서비스
+* 서비스설명: 광주 지역 내 결혼 예정자를 대상으로 데이터를 입력 받아 웨딩 플랜 서비스 제공
 <br>
 
 ## 📅 프로젝트 기간
-2022.04.22 ~ 2022.06.03 (6주)
+2024.07.02 ~ 2024.08.02 (4주)
 <br>
 
 ## ⭐ 주요 기능
-* 기능1
-* 기능2
-* 기능3
-* 기능4
-* 기능5
+* AI 웨딩플랜 기능
+* 날씨 고려 일정 관리 페이지
+* 가계부 관리 페이지
 <br>
 
 ## ⛏ 기술스택
@@ -28,9 +27,7 @@
     <tr>
         <td>사용언어</td>
         <td>
-            <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white"/>
-            <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/>
-            <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Python-007396?style=for-the-badge&logo=java&logoColor=white"/>     
             <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"/>
         </td>
     </tr>
@@ -38,29 +35,25 @@
         <td>라이브러리</td>
         <td>
             <img src="https://img.shields.io/badge/BootStrap-7952B3?style=for-the-badge&logo=BootStrap&logoColor=white"/>
-            <img src="https://img.shields.io/badge/KakaoMap-FFCD00?style=for-the-badge&logo=Kakao&logoColor=white"/>
+            <img src="https://img.shields.io/badge/OpenWeather-FFCD00?style=for-the-badge&logo=Kakao&logoColor=white"/>
         </td>
     </tr>
     <tr>
         <td>개발도구</td>
         <td>
-            <img src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=Eclipse&logoColor=white"/>
-            <img src="https://img.shields.io/badge/RaskpberryPi-A22846?style=for-the-badge&logo=RaskpberryPi&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white"/>
             <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white"/>
         </td>
     </tr>
     <tr>
         <td>서버환경</td>
         <td>
-            <img src="https://img.shields.io/badge/Apache Tomcat-D22128?style=for-the-badge&logo=Apache Tomcat&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Node.js-D22128?style=for-the-badge&logo=Apache Tomcat&logoColor=white"/>
         </td>
     </tr>
     <tr>
         <td>데이터베이스</td>
         <td>
-            <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Oracle 11g-F80000?style=for-the-badge&logo=Oracle&logoColor=white"/>
+            <img src="https://img.shields.io/badge/MySQL-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"/>
         </td>
     </tr>
     <tr>
@@ -76,33 +69,50 @@
 <br>
 
 ## ⚙ 시스템 아키텍처(구조) 예시 
-![서비스 아키텍처](https://user-images.githubusercontent.com/25995055/169925538-15867bd9-aa0b-42fc-a39b-88981e926e51.png)
-<br>
+![image](https://github.com/user-attachments/assets/7d875652-8795-4d45-998f-47afae330b0f)
+
 
 ## 📌 SW유스케이스
-![image](https://user-images.githubusercontent.com/25995055/178401023-9a015e66-aa6e-4d74-8564-9b1f9d306649.png)
+![image](https://github.com/user-attachments/assets/6fe9cb1b-3fce-46ea-9423-028b802e4477)
+
 <br>
 
 ## 📌 서비스 흐름도
-![image](https://user-images.githubusercontent.com/25995055/178401048-d6484bda-a2d7-40e1-998b-2bd195cd9f89.png)
-<br>
+![image](https://github.com/user-attachments/assets/fc567834-673c-4b52-8afa-e4d2ffad0054)
 
-## 📌 ER다이어그램
-![image](https://user-images.githubusercontent.com/25995055/169925318-102784c2-893f-4fd7-bec9-a54c44b669d4.png)
 <br>
 
 ## 🖥 화면 구성
 
-### 로그인/회원가입/회원괸리/회원수정/회원탈퇴
-![image](https://user-images.githubusercontent.com/25995055/178401098-95f15a0e-a2de-415e-83d5-883bb4cb0656.png)
+### 메인페이지
+![image](https://github.com/user-attachments/assets/4c9a2ce1-b0a5-403c-a43b-14a0fefe70f3)
+
 <br>
 
-### 옷 정보/코디 추천(날씨, 팁, 오늘의 코디, 참고할 수 있는 코디)
-![image](https://user-images.githubusercontent.com/25995055/178401127-287e6de2-4396-49fc-a107-59c4d5cd55c7.png)
+### 회원가입/로그인/아이디, 비밀번호 찾기
+![image](https://github.com/user-attachments/assets/15b081e0-4882-45f9-9d28-8ef930657602)
+![image](https://github.com/user-attachments/assets/bb320782-1f15-42e1-ad56-334109b91356)
+![image](https://github.com/user-attachments/assets/565da886-1f4d-438e-9ad7-34017ba3f604)
+
 <br>
 
-### 일정/고객센터
-![image](https://user-images.githubusercontent.com/25995055/178401150-861f0e93-0f40-4fae-98c1-2099bf513c8d.png)
+### 마이페이지(일정, 가계부, 장바구니)
+![image](https://github.com/user-attachments/assets/4c996954-4d10-46f9-9731-bb9f280f9315)
+![image](https://github.com/user-attachments/assets/d34195ca-9cbe-48dd-b70e-90ea794219c1)
+![image](https://github.com/user-attachments/assets/39d76e10-bc4c-493d-88fc-3281e2c3f574)
+![image](https://github.com/user-attachments/assets/2151939b-c0d8-4cbe-abe3-a24a49dbef87)
+
+<br>
+
+### 마이페이지(AI웨딩플랜)
+![ReadMe2](https://github.com/user-attachments/assets/13beebe4-bb66-4d9f-a031-705851567304)
+
+<br>
+
+### 공지사항, 카테고리 페이지 
+![rm3](https://github.com/user-attachments/assets/a9539067-1e82-4d5f-9cd1-0704f197beea)
+![rm4](https://github.com/user-attachments/assets/00972924-f47f-4948-aa22-1a5a0aac336b)
+
 <br>
 
 ## 👨‍👩‍👦‍👦 팀원 역할
@@ -115,17 +125,17 @@
     <td align="center"><img src="https://pbs.twimg.com/media/B-n6uPYUUAAZSUx.png" width="100" height="100"/></td>
   </tr>
   <tr>
-    <td align="center"><strong>홍O동</strong></td>
-    <td align="center"><strong>홍O동</strong></td>
-    <td align="center"><strong>홍O동</strong></td>
-    <td align="center"><strong>홍O동</strong></td>
-    <td align="center"><strong>홍O동</strong></td>
+    <td align="center"><strong>권예지</strong></td>
+    <td align="center"><strong>이진근</strong></td>
+    <td align="center"><strong>장유정</strong></td>
+    <td align="center"><strong>이상범</strong></td>
+    <td align="center"><strong>김지만</strong></td>
   </tr>
   <tr>
-    <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Backend</b></td>
-    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>Project Manager</b></td>
+    <td align="center"><b>Frontend&<br>Backend</b></td>
+    <td align="center"><b>Frontend&<br>Backend</b></td>
+    <td align="center"><b>Deep Learning</b></td>
     <td align="center"><b>Deep Learning</b></td>
   </tr>
   <tr>
@@ -141,8 +151,8 @@
 개념: 문제 해결을 위해 문제의 원인을 논리적이고 체계적으로 찾는 일이며 제품이나 프로세스의 운영을 재개
 프로젝트 진행하는 동안 발생했던 이슈 중 가장 기억에 남았던 문제와 해결 프로세스 나열(2~5가지 정도)
   
-* 문제1<br>
- 문제점 설명 및 해결방안
- 
-* 문제2<br>
- 문제점 설명 및 해결방안
+* 문제 : 초기 모델링 결과값 도출 속도 : 30분<br>
+- 최종 결과값 도출 속도 : 2초
+- 어느 코드에서 속도가 오래 걸렸는지 log 추적 결과
+- 데이터 토큰화 과정에서 가장 속도가 많이 걸림
+- pickles 라이브러리 사용해 토큰값을 미리 저장해 경량화했더니 속도 감소
